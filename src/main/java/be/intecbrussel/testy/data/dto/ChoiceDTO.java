@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class ChoiceDTO implements Serializable {
 
     // JACKSON
-    private long id;
+    private Long id;
 
     private double weight;
 
@@ -20,7 +20,7 @@ public class ChoiceDTO implements Serializable {
 
     private String explanation;
 
-    public ChoiceDTO(long id, double weight, String header, String body, String image, String explanation) {
+    public ChoiceDTO(Long id, double weight, String header, String body, String image, String explanation) {
         this.id = id;
         this.weight = weight;
         this.header = header;
@@ -32,7 +32,7 @@ public class ChoiceDTO implements Serializable {
     public ChoiceDTO() {
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
@@ -56,7 +56,7 @@ public class ChoiceDTO implements Serializable {
         return this.explanation;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -100,7 +100,7 @@ public class ChoiceDTO implements Serializable {
     public int hashCode() {
         final int PRIME = 59;
         int result = 1;
-        final long $id = this.getId();
+        final Long $id = this.getId();
         result = result * PRIME + (int) ($id >>> 32 ^ $id);
         return result;
     }

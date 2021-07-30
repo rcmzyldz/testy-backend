@@ -10,7 +10,7 @@ import java.util.Set;
 public class QuestionDTO implements Serializable {
 
     // JACKSON
-    private long id;
+    private Long id;
 
     private String header;
 
@@ -18,7 +18,7 @@ public class QuestionDTO implements Serializable {
 
     private final Set<ChoiceDTO> choices = new HashSet<>();
 
-    public QuestionDTO(long id, String header, String body) {
+    public QuestionDTO(Long id, String header, String body) {
         this.id = id;
         this.header = header;
         this.body = body;
@@ -35,11 +35,11 @@ public class QuestionDTO implements Serializable {
         this.choices.remove(choice);
     }
 
-    public void removeChoice(long questionId) {
+    public void removeChoice(Long questionId) {
         this.choices.removeIf(choice -> choice.getId() == questionId);
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
@@ -55,7 +55,7 @@ public class QuestionDTO implements Serializable {
         return this.choices;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -87,7 +87,7 @@ public class QuestionDTO implements Serializable {
     public int hashCode() {
         final int PRIME = 59;
         int result = 1;
-        final long $id = this.getId();
+        final Long $id = this.getId();
         result = result * PRIME + (int) ($id >>> 32 ^ $id);
         return result;
     }

@@ -8,8 +8,7 @@ import java.io.Serializable;
 
 public class UserDTO implements Serializable {
     
-        // JACKSON
-        private long id;
+        private Long id;
 
         private String firstName;
 
@@ -42,7 +41,7 @@ public class UserDTO implements Serializable {
     public UserDTO() {
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
@@ -90,7 +89,7 @@ public class UserDTO implements Serializable {
         return this.profile;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -161,7 +160,7 @@ public class UserDTO implements Serializable {
     public int hashCode() {
         final int PRIME = 59;
         int result = 1;
-        final long $id = this.getId();
+        final Long $id = this.getId();
         result = result * PRIME + (int) ($id >>> 32 ^ $id);
         return result;
     }

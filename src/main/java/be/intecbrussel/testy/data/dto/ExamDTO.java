@@ -2,7 +2,7 @@ package be.intecbrussel.testy.data.dto;
 
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class ExamDTO implements Serializable {
 
-    private long id;
+    private Long id;
 
     private String code;
 
@@ -18,13 +18,13 @@ public class ExamDTO implements Serializable {
 
     private String body;
 
-    private Timestamp started;
+    private Instant started;
 
-    private Timestamp ended;
+    private Instant ended;
 
     private final Set<QuestionDTO> questions = new HashSet<>();
 
-    public ExamDTO(long id, String code, String header, String body, Timestamp started, Timestamp ended) {
+    public ExamDTO(Long id, String code, String header, String body, Instant started, Instant ended) {
         this.id = id;
         this.code = code;
         this.header = header;
@@ -44,11 +44,11 @@ public class ExamDTO implements Serializable {
         this.questions.remove(question);
     }
 
-    public void removeQuestion(long questionId){
+    public void removeQuestion(Long questionId){
         this.questions.removeIf(question -> question.getId() == questionId);
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
@@ -64,11 +64,11 @@ public class ExamDTO implements Serializable {
         return this.body;
     }
 
-    public Timestamp getStarted() {
+    public Instant getStarted() {
         return this.started;
     }
 
-    public Timestamp getEnded() {
+    public Instant getEnded() {
         return this.ended;
     }
 
@@ -76,7 +76,7 @@ public class ExamDTO implements Serializable {
         return this.questions;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -92,11 +92,11 @@ public class ExamDTO implements Serializable {
         this.body = body;
     }
 
-    public void setStarted(Timestamp started) {
+    public void setStarted(Instant started) {
         this.started = started;
     }
 
-    public void setEnded(Timestamp ended) {
+    public void setEnded(Instant ended) {
         this.ended = ended;
     }
 
@@ -120,7 +120,7 @@ public class ExamDTO implements Serializable {
     public int hashCode() {
         final int PRIME = 59;
         int result = 1;
-        final long $id = this.getId();
+        final Long $id = this.getId();
         result = result * PRIME + (int) ($id >>> 32 ^ $id);
         return result;
     }

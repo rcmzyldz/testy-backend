@@ -1,12 +1,14 @@
 package be.intecbrussel.testy.data.entity;
 
 import org.hibernate.validator.constraints.URL;
+import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -15,12 +17,12 @@ import java.util.UUID;
 // JPA
 @Entity(name = "user")
 
-public class UserEntity extends AuditableEntity<String> implements java.io.Serializable  {
+public class UserEntity implements java.io.Serializable, Persistable<Long> {
 
     @Id
     @GeneratedValue
     private
-    long id;
+    Long id;
 
     @NotEmpty
     private
@@ -76,7 +78,7 @@ public class UserEntity extends AuditableEntity<String> implements java.io.Seria
         this.exams.remove(exam);
     }
 
-    public void removeExam(long examId){
+    public void removeExam(Long examId){
         this.exams.removeIf(exam -> exam.getId() == examId);
     }
 
@@ -85,8 +87,13 @@ public class UserEntity extends AuditableEntity<String> implements java.io.Seria
     private
     String profile = "https://www.testy-exams.com/user/anonymous";
 
-    public long getId() {
+    public Long getId() {
         return this.id;
+    }
+
+    @Override
+    public boolean isNew() {
+        return Objects.isNull(this.id);
     }
 
     public @NotEmpty String getFirstName() {
@@ -137,7 +144,7 @@ public class UserEntity extends AuditableEntity<String> implements java.io.Seria
         return this.profile;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -189,25 +196,22 @@ public class UserEntity extends AuditableEntity<String> implements java.io.Seria
         return "UserEntity(id=" + this.getId() + ", firstName=" + this.getFirstName() + ", lastName=" + this.getLastName() + ", email=" + this.getEmail() + ", phone=" + this.getPhone() + ", password=" + this.getPassword() + ", roles=" + this.getRoles() + ", session=" + this.getSession() + ", activation=" + this.getActivation() + ", activated=" + this.isActivated() + ", authenticated=" + this.isAuthenticated() + ", exams=" + this.getExams() + ", profile=" + this.getProfile() + ")";
     }
 
-    public boolean equals(final Object o) {
-        if (o == this) return true;
-        if (!(o instanceof UserEntity)) return false;
-        final UserEntity other = (UserEntity) o;
-        if (!other.canEqual((Object) this)) return false;
-        if (!super.equals(o)) return false;
-        if (this.getId() != other.getId()) return false;
-        return true;
-    }
+
 
     protected boolean canEqual(final Object other) {
         return other instanceof UserEntity;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserEntity)) return false;
+        UserEntity that = (UserEntity) o;
+        return Objects.equals(getId(), that.getId());
+    }
+
+    @Override
     public int hashCode() {
-        final int PRIME = 59;
-        int result = super.hashCode();
-        final long $id = this.getId();
-        result = result * PRIME + (int) ($id >>> 32 ^ $id);
-        return result;
+        return Objects.hash(getId());
     }
 }

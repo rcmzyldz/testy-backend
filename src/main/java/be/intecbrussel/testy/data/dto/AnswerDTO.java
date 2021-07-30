@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class AnswerDTO implements Serializable {
 
-    private long id;
+    private Long id;
 
     private String header;
 
@@ -15,7 +15,7 @@ public class AnswerDTO implements Serializable {
 
     private byte[] document;
 
-    public AnswerDTO(long id, String header, String body, byte[] document) {
+    public AnswerDTO(Long id, String header, String body, byte[] document) {
         this.id = id;
         this.header = header;
         this.body = body;
@@ -25,7 +25,7 @@ public class AnswerDTO implements Serializable {
     public AnswerDTO() {
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
@@ -41,7 +41,7 @@ public class AnswerDTO implements Serializable {
         return this.document;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -77,7 +77,7 @@ public class AnswerDTO implements Serializable {
     public int hashCode() {
         final int PRIME = 59;
         int result = 1;
-        final long $id = this.getId();
+        final Long $id = this.getId();
         result = result * PRIME + (int) ($id >>> 32 ^ $id);
         return result;
     }

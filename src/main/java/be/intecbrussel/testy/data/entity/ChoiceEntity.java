@@ -1,19 +1,22 @@
 package be.intecbrussel.testy.data.entity;
 
+import org.springframework.data.domain.Persistable;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+import java.util.Objects;
 
 
 // JPA
 @Entity(name = "choice")
 
-public class ChoiceEntity extends AuditableEntity<String> implements java.io.Serializable {
+public class ChoiceEntity implements java.io.Serializable, Persistable<Long> {
 
     @Id
     @GeneratedValue
     private
-    long id;
+    Long id;
 
     @PositiveOrZero
     private
@@ -39,8 +42,13 @@ public class ChoiceEntity extends AuditableEntity<String> implements java.io.Ser
     public ChoiceEntity() {
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
+    }
+
+    @Override
+    public boolean isNew() {
+        return Objects.isNull(this.id);
     }
 
     public @PositiveOrZero double getWeight() {
@@ -67,7 +75,7 @@ public class ChoiceEntity extends AuditableEntity<String> implements java.io.Ser
         return this.question;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -99,25 +107,20 @@ public class ChoiceEntity extends AuditableEntity<String> implements java.io.Ser
         return "ChoiceEntity(id=" + this.getId() + ", weight=" + this.getWeight() + ", header=" + this.getHeader() + ", body=" + this.getBody() + ", image=" + this.getImage() + ", explanation=" + this.getExplanation() + ", question=" + this.getQuestion() + ")";
     }
 
-    public boolean equals(final Object o) {
-        if (o == this) return true;
-        if (!(o instanceof ChoiceEntity)) return false;
-        final ChoiceEntity other = (ChoiceEntity) o;
-        if (!other.canEqual((Object) this)) return false;
-        if (!super.equals(o)) return false;
-        if (this.getId() != other.getId()) return false;
-        return true;
-    }
-
     protected boolean canEqual(final Object other) {
         return other instanceof ChoiceEntity;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ChoiceEntity)) return false;
+        ChoiceEntity that = (ChoiceEntity) o;
+        return Objects.equals(getId(), that.getId());
+    }
+
+    @Override
     public int hashCode() {
-        final int PRIME = 59;
-        int result = super.hashCode();
-        final long $id = this.getId();
-        result = result * PRIME + (int) ($id >>> 32 ^ $id);
-        return result;
+        return Objects.hash(getId());
     }
 }

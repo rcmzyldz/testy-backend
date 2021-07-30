@@ -1,22 +1,24 @@
 package be.intecbrussel.testy.data.entity;
 
 
+import org.springframework.data.domain.Persistable;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 
 // JPA
 @Entity(name = "exam")
 
-public class ExamEntity extends AuditableEntity<String> implements java.io.Serializable {
+public class ExamEntity implements java.io.Serializable, Persistable<Long> {
 
     @Id
     @GeneratedValue
-    private
-    long id;
+    private Long id;
 
     @NotNull
     private
@@ -30,17 +32,13 @@ public class ExamEntity extends AuditableEntity<String> implements java.io.Seria
     private
     String body;
 
-    @Transient
-    private
-    Timestamp started;
+    private Instant started;
 
-    @Transient
-    private
-    Timestamp ended;
+    private Instant ended;
 
     @JoinTable(name = "exam_students",
             joinColumns = @JoinColumn(name = "exam_id"),
-            inverseJoinColumns = @JoinColumn(name = "USER_ENTITY_ID"))
+            inverseJoinColumns = @JoinColumn(name = "student_id"))
     @ManyToMany
     private final Set<UserEntity> students = new HashSet<>();
 
@@ -55,27 +53,32 @@ public class ExamEntity extends AuditableEntity<String> implements java.io.Seria
         this.students.remove(user);
     }
 
-    public void removeStudent(long studentId) {
+    public void removeStudent(Long studentId) {
         this.students.removeIf(student -> student.getId() == studentId);
     }
 
     @OneToMany(mappedBy = "exam")
     private final Set<QuestionEntity> questions = new HashSet<>();
 
-    public void addQuestion(QuestionEntity question){
+    public void addQuestion(QuestionEntity question) {
         this.questions.add(question);
     }
 
-    public void removeQuestion(QuestionEntity question){
+    public void removeQuestion(QuestionEntity question) {
         this.questions.remove(question);
     }
 
-    public void removeQuestion(long questionId){
+    public void removeQuestion(Long questionId) {
         this.questions.removeIf(question -> question.getId() == questionId);
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
+    }
+
+    @Override
+    public boolean isNew() {
+        return Objects.isNull(this.id);
     }
 
     public @NotNull String getCode() {
@@ -90,11 +93,11 @@ public class ExamEntity extends AuditableEntity<String> implements java.io.Seria
         return this.body;
     }
 
-    public Timestamp getStarted() {
+    public Instant getStarted() {
         return this.started;
     }
 
-    public Timestamp getEnded() {
+    public Instant getEnded() {
         return this.ended;
     }
 
@@ -106,7 +109,7 @@ public class ExamEntity extends AuditableEntity<String> implements java.io.Seria
         return this.questions;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -122,11 +125,11 @@ public class ExamEntity extends AuditableEntity<String> implements java.io.Seria
         this.body = body;
     }
 
-    public void setStarted(Timestamp started) {
+    public void setStarted(Instant started) {
         this.started = started;
     }
 
-    public void setEnded(Timestamp ended) {
+    public void setEnded(Instant ended) {
         this.ended = ended;
     }
 
@@ -134,25 +137,21 @@ public class ExamEntity extends AuditableEntity<String> implements java.io.Seria
         return "ExamEntity(id=" + this.getId() + ", code=" + this.getCode() + ", header=" + this.getHeader() + ", body=" + this.getBody() + ", started=" + this.getStarted() + ", ended=" + this.getEnded() + ", students=" + this.getStudents() + ", questions=" + this.getQuestions() + ")";
     }
 
-    public boolean equals(final Object o) {
-        if (o == this) return true;
-        if (!(o instanceof ExamEntity)) return false;
-        final ExamEntity other = (ExamEntity) o;
-        if (!other.canEqual((Object) this)) return false;
-        if (!super.equals(o)) return false;
-        if (this.getId() != other.getId()) return false;
-        return true;
-    }
 
     protected boolean canEqual(final Object other) {
         return other instanceof ExamEntity;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ExamEntity)) return false;
+        ExamEntity that = (ExamEntity) o;
+        return Objects.equals(getId(), that.getId());
+    }
+
+    @Override
     public int hashCode() {
-        final int PRIME = 59;
-        int result = super.hashCode();
-        final long $id = this.getId();
-        result = result * PRIME + (int) ($id >>> 32 ^ $id);
-        return result;
+        return Objects.hash(getId());
     }
 }

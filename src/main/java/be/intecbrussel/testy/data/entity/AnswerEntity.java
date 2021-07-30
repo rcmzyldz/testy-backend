@@ -1,17 +1,19 @@
 package be.intecbrussel.testy.data.entity;
 
+import org.springframework.data.domain.Persistable;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 // JPA
 @Entity(name = "answer")
 
-public class AnswerEntity extends AuditableEntity<String> implements java.io.Serializable {
+public class AnswerEntity implements java.io.Serializable, Persistable<Long> {
 
     @Id
     @GeneratedValue
-    private
-    long id;
+    private Long id;
 
     @NotNull
     private
@@ -24,15 +26,20 @@ public class AnswerEntity extends AuditableEntity<String> implements java.io.Ser
 
     private byte[] document;
 
-    @OneToOne(cascade = { CascadeType.PERSIST }, fetch = FetchType.EAGER)
+    @OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private
     QuestionEntity question;
 
     public AnswerEntity() {
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
+    }
+
+    @Override
+    public boolean isNew() {
+        return Objects.isNull(this.id);
     }
 
     public @NotNull String getHeader() {
@@ -51,7 +58,7 @@ public class AnswerEntity extends AuditableEntity<String> implements java.io.Ser
         return this.question;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -75,25 +82,20 @@ public class AnswerEntity extends AuditableEntity<String> implements java.io.Ser
         return "AnswerEntity(id=" + this.getId() + ", header=" + this.getHeader() + ", body=" + this.getBody() + ", document=" + java.util.Arrays.toString(this.getDocument()) + ", question=" + this.getQuestion() + ")";
     }
 
-    public boolean equals(final Object o) {
-        if (o == this) return true;
-        if (!(o instanceof AnswerEntity)) return false;
-        final AnswerEntity other = (AnswerEntity) o;
-        if (!other.canEqual((Object) this)) return false;
-        if (!super.equals(o)) return false;
-        if (this.getId() != other.getId()) return false;
-        return true;
-    }
-
     protected boolean canEqual(final Object other) {
         return other instanceof AnswerEntity;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AnswerEntity)) return false;
+        AnswerEntity that = (AnswerEntity) o;
+        return Objects.equals(getId(), that.getId());
+    }
+
+    @Override
     public int hashCode() {
-        final int PRIME = 59;
-        int result = super.hashCode();
-        final long $id = this.getId();
-        result = result * PRIME + (int) ($id >>> 32 ^ $id);
-        return result;
+        return Objects.hash(getId());
     }
 }
