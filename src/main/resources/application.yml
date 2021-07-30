@@ -1,0 +1,54 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        search:
+          backend:
+            directory:
+              type: local-heap
+  data:
+    jpa:
+      repositories:
+        enabled: true
+  
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/testydb?createDatabaseIfNotExist=true&autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
+    username: ${MYSQL_HOST_USERNAME:testy}
+    password: ${MYSQL_HOST_PASSWORD:testy}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    initialization-mode: always
+
+  security:
+    user:
+      name: ${SPRING_SECURITY_USERNAME}
+      password: ${SPRING_SECURITY_PASSWORD}
+      roles: ${SPRING_SECURITY_ROLES}
+
+  application:
+    name: testy-full-stack
+
+  jackson:
+    serialization.indent_output: true
+    default-property-inclusion: non_null
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${SPRING_MAIL_USERNAME}
+    password: ${SPRING_MAIL_PASSWORD}
+    properties:
+      mail-smtp-auth: true
+      mail-smtp-starttls-enable: true
+
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        exclude: env, beans
