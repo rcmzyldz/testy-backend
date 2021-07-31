@@ -1,5 +1,7 @@
 package be.intecbrussel.testy.data.entity;
 
+import be.intecbrussel.testy.data.DTOMapper;
+import be.intecbrussel.testy.data.dto.UserDTO;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.data.domain.Persistable;
 
@@ -7,17 +9,14 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 // LOMBOK
 
 // JPA
 @Entity(name = "user")
 
-public class UserEntity implements java.io.Serializable, Persistable<Long> {
+public class UserEntity implements java.io.Serializable, Persistable<Long>, DTOMapper<UserDTO> {
 
     public UserEntity() {
     }
@@ -132,13 +131,16 @@ public class UserEntity implements java.io.Serializable, Persistable<Long> {
 
     // @ValidRole
     @NotEmpty
-    private String roles = "ROLE_ANONYMOUS";
+    private String roles;
 
     public String getRoles() {
         return roles;
     }
 
     public void setRoles(String roles) {
+        if (Objects.isNull(roles)) {
+            roles = "ROLE_ANONYMOUS";
+        }
         this.roles = roles;
     }
 
@@ -181,32 +183,32 @@ public class UserEntity implements java.io.Serializable, Persistable<Long> {
         return this;
     }
 
-    private boolean activated;
+    private Boolean activated;
 
-    public boolean isActivated() {
+    public Boolean isActivated() {
         return activated;
     }
 
-    public void setActivated(boolean activated) {
+    public void setActivated(Boolean activated) {
         this.activated = activated;
     }
 
-    public UserEntity withActivated(boolean activated) {
+    public UserEntity withActivated(Boolean activated) {
         setActivated(activated);
         return this;
     }
 
-    private boolean authenticated;
+    private Boolean authenticated;
 
-    public boolean isAuthenticated() {
+    public Boolean isAuthenticated() {
         return authenticated;
     }
 
-    public void setAuthenticated(boolean authenticated) {
+    public void setAuthenticated(Boolean authenticated) {
         this.authenticated = authenticated;
     }
 
-    public UserEntity withAuthenticated(boolean authenticated) {
+    public UserEntity withAuthenticated(Boolean authenticated) {
         setAuthenticated(authenticated);
         return this;
     }
@@ -285,7 +287,6 @@ public class UserEntity implements java.io.Serializable, Persistable<Long> {
         return Objects.isNull(this.id);
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -318,5 +319,30 @@ public class UserEntity implements java.io.Serializable, Persistable<Long> {
         sb.append(", profile='").append(profile).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public UserDTO toDTO() {
+
+        final var dto = new UserDTO()
+                .withId(Objects.requireNonNull(this.getId()))
+                .withFirstName(Objects.requireNonNull(this.getFirstName()))
+                .withLastName(Objects.requireNonNull(this.getLastName()))
+                .withEmail(Objects.requireNonNull(this.getEmail()))
+                .withPhone(Objects.requireNonNull(this.getPhone()))
+                .withPassword(Objects.requireNonNull(this.getPassword()))
+                .withRoles(Objects.requireNonNull(this.getRoles()))
+                .withSession(Objects.requireNonNull(this.getSession()))
+                .withActivation(Objects.requireNonNull(this.getActivation()))
+                .withActivated(Objects.requireNonNull(this.isActivated()))
+                .withAuthenticated(Objects.requireNonNull(this.isAuthenticated()))
+                .withScore(Objects.requireNonNull(this.getScore()))
+                .withProfile(Objects.requireNonNull(this.getProfile()));
+
+        for (ExamEntity exam : getExams()) {
+            dto.addExam(exam.toDTO());
+        }
+
+        return dto;
     }
 }

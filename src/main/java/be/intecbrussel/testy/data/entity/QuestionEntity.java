@@ -1,6 +1,8 @@
 package be.intecbrussel.testy.data.entity;
 
 
+import be.intecbrussel.testy.data.DTOMapper;
+import be.intecbrussel.testy.data.dto.QuestionDTO;
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
@@ -14,7 +16,7 @@ import java.util.Set;
 // JPA
 @Entity(name = "question")
 
-public class QuestionEntity implements java.io.Serializable, Persistable<Long> {
+public class QuestionEntity implements java.io.Serializable, Persistable<Long>, DTOMapper<QuestionDTO> {
 
     public QuestionEntity() {
     }
@@ -111,6 +113,10 @@ public class QuestionEntity implements java.io.Serializable, Persistable<Long> {
     @OneToMany(mappedBy = "question")
     private final Set<ExamEntity> exams = new LinkedHashSet<>();
 
+    public Set<ExamEntity> getExams() {
+        return exams;
+    }
+
     public void addExam(ExamEntity exam) {
         this.exams.add(exam);
     }
@@ -167,5 +173,24 @@ public class QuestionEntity implements java.io.Serializable, Persistable<Long> {
         sb.append(", exams=").append(exams);
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public QuestionDTO toDTO() {
+        final var dto = new QuestionDTO()
+                .withId(Objects.requireNonNull(this.getId()))
+                .withHeader(Objects.requireNonNull(this.getHeader()))
+                .withBody(Objects.requireNonNull(this.getBody()))
+                .withAnswer(Objects.requireNonNull(this.getAnswer().toDTO()));
+
+        for (ChoiceEntity choice : getChoices()) {
+            dto.addChoice(choice.toDTO());
+        }
+
+        for (ExamEntity exam : getExams()) {
+            dto.addExam(exam.toDTO());
+        }
+
+        return dto;
     }
 }

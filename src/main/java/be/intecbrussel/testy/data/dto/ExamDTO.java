@@ -133,6 +133,21 @@ public class ExamDTO implements java.io.Serializable {
         return this;
     }
 
+    private Double score;
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
+    }
+
+    public ExamDTO withScore(Double score) {
+        setScore(score);
+        return this;
+    }
+
     public boolean isNew() {
         return Objects.isNull(this.id);
     }

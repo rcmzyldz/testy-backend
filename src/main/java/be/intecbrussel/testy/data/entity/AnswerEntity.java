@@ -1,5 +1,7 @@
 package be.intecbrussel.testy.data.entity;
 
+import be.intecbrussel.testy.data.DTOMapper;
+import be.intecbrussel.testy.data.dto.AnswerDTO;
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
@@ -10,7 +12,7 @@ import java.util.Objects;
 // JPA
 @Entity(name = "answer")
 
-public class AnswerEntity implements java.io.Serializable, Persistable<Long> {
+public class AnswerEntity implements java.io.Serializable, Persistable<Long>, DTOMapper<AnswerDTO> {
 
     public AnswerEntity() {
     }
@@ -129,5 +131,10 @@ public class AnswerEntity implements java.io.Serializable, Persistable<Long> {
         sb.append(", questionId=").append(question.getId());
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public AnswerDTO toDTO() {
+        return null;
     }
 }

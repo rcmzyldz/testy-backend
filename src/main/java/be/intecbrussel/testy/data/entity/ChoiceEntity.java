@@ -1,5 +1,7 @@
 package be.intecbrussel.testy.data.entity;
 
+import be.intecbrussel.testy.data.DTOMapper;
+import be.intecbrussel.testy.data.dto.ChoiceDTO;
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
@@ -12,7 +14,7 @@ import java.util.Objects;
 // JPA
 @Entity(name = "choice")
 
-public class ChoiceEntity implements java.io.Serializable, Persistable<Long> {
+public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, DTOMapper<ChoiceDTO> {
 
     public ChoiceEntity() {
     }
@@ -180,5 +182,10 @@ public class ChoiceEntity implements java.io.Serializable, Persistable<Long> {
         sb.append(", questionId=").append(question.getId());
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public ChoiceDTO toDTO() {
+        return null;
     }
 }

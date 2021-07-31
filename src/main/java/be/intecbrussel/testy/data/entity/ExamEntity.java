@@ -1,5 +1,7 @@
 package be.intecbrussel.testy.data.entity;
 
+import be.intecbrussel.testy.data.DTOMapper;
+import be.intecbrussel.testy.data.dto.ExamDTO;
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
@@ -11,7 +13,7 @@ import java.util.Objects;
 // JPA
 @Entity(name = "exam")
 
-public class ExamEntity implements java.io.Serializable, Persistable<Long> {
+public class ExamEntity implements java.io.Serializable, Persistable<Long>, DTOMapper<ExamDTO> {
 
     public ExamEntity() {
     }
@@ -149,6 +151,21 @@ public class ExamEntity implements java.io.Serializable, Persistable<Long> {
         return this;
     }
 
+    private Double score;
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
+    }
+
+    public ExamEntity withScore(Double score) {
+        setScore(score);
+        return this;
+    }
+
     @Override
     public boolean isNew() {
         return Objects.isNull(this.id);
@@ -180,5 +197,21 @@ public class ExamEntity implements java.io.Serializable, Persistable<Long> {
         sb.append(", ended=").append(ended);
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public ExamDTO toDTO() {
+        final var dto = new ExamDTO()
+                .withId(Objects.requireNonNull(this.getId()))
+                .withCode(Objects.requireNonNull(this.getCode()))
+                .withHeader(Objects.requireNonNull(this.getHeader()))
+                .withBody(Objects.requireNonNull(this.getBody()))
+                .withStudent(Objects.requireNonNull(this.getStudent().toDTO()))
+                .withQuestion(Objects.requireNonNull(this.getQuestion().toDTO()))
+                .withStarted(Objects.requireNonNull(this.getStarted()))
+                .withEnded(Objects.requireNonNull(this.getEnded()))
+                .withScore(Objects.requireNonNull(this.getScore()));
+
+        return dto;
     }
 }
