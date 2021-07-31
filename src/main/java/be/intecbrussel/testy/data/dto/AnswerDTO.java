@@ -1,5 +1,6 @@
 package be.intecbrussel.testy.data.dto;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class AnswerDTO implements java.io.Serializable{
@@ -90,5 +91,28 @@ public class AnswerDTO implements java.io.Serializable{
         return Objects.isNull(this.id);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AnswerDTO)) return false;
+        AnswerDTO answerDTO = (AnswerDTO) o;
+        return Objects.equals(getHeader(), answerDTO.getHeader()) && Objects.equals(getBody(), answerDTO.getBody()) && Objects.equals(getQuestion().getId(), answerDTO.getQuestion().getId());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getHeader(), getBody(), getQuestion());
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("AnswerDTO{");
+        sb.append("id=").append(id);
+        sb.append(", header='").append(header).append('\'');
+        sb.append(", body='").append(body).append('\'');
+        sb.append(", document=").append(document == null ? "null" : Arrays.asList(document).toString());
+        sb.append(", questionId=").append(question.getId());
+        sb.append('}');
+        return sb.toString();
+    }
 }

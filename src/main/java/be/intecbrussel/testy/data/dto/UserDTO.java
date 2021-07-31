@@ -252,5 +252,37 @@ public class UserDTO implements java.io.Serializable {
         return Objects.isNull(this.id);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserDTO)) return false;
+        UserDTO userDTO = (UserDTO) o;
+        return Objects.equals(getEmail(), userDTO.getEmail()) && Objects.equals(getPhone(), userDTO.getPhone());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getEmail(), getPhone());
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("UserDTO{");
+        sb.append("id=").append(id);
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", phone='").append(phone).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", roles='").append(roles).append('\'');
+        sb.append(", session='").append(session).append('\'');
+        sb.append(", activation='").append(activation).append('\'');
+        sb.append(", activated=").append(activated);
+        sb.append(", authenticated=").append(authenticated);
+        sb.append(", exams=").append(exams);
+        sb.append(", score=").append(score);
+        sb.append(", profile='").append(profile).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

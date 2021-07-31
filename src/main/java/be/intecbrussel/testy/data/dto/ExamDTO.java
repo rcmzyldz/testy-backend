@@ -151,4 +151,33 @@ public class ExamDTO implements java.io.Serializable {
     public boolean isNew() {
         return Objects.isNull(this.id);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ExamDTO)) return false;
+        ExamDTO examDTO = (ExamDTO) o;
+        return Objects.equals(getCode(), examDTO.getCode()) && Objects.equals(getStudent(), examDTO.getStudent()) && Objects.equals(getQuestion(), examDTO.getQuestion());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCode(), getStudent(), getQuestion());
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("ExamDTO{");
+        sb.append("id=").append(id);
+        sb.append(", code='").append(code).append('\'');
+        sb.append(", header='").append(header).append('\'');
+        sb.append(", body='").append(body).append('\'');
+        sb.append(", studentId=").append(student.getId());
+        sb.append(", questionId=").append(question.getId());
+        sb.append(", started=").append(started);
+        sb.append(", ended=").append(ended);
+        sb.append(", score=").append(score);
+        sb.append('}');
+        return sb.toString();
+    }
 }

@@ -186,6 +186,16 @@ public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, DT
 
     @Override
     public ChoiceDTO toDTO() {
-        return null;
+        final var dto = new ChoiceDTO()
+                .withId(Objects.requireNonNull(this.getId()))
+                .withWeight(Objects.requireNonNull(this.getWeight()))
+                .withHeader(Objects.requireNonNull(this.getHeader()))
+                .withBody(Objects.requireNonNull(this.getBody()))
+                .withImage(Objects.requireNonNull(this.getImage()))
+                .withDocument(Objects.requireNonNull(this.getDocument()))
+                .withExplanation(Objects.requireNonNull(this.getExplanation()))
+                .withQuestion(Objects.requireNonNull(this.getQuestion().toDTO()));
+
+        return dto;
     }
 }

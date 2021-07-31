@@ -126,4 +126,29 @@ public class QuestionDTO implements java.io.Serializable {
         return Objects.isNull(this.id);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof QuestionDTO)) return false;
+        QuestionDTO that = (QuestionDTO) o;
+        return Objects.equals(getHeader(), that.getHeader()) && Objects.equals(getBody(), that.getBody()) && getChoices().containsAll(that.getChoices());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getHeader(), getBody(), getChoices());
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("QuestionDTO{");
+        sb.append("id=").append(id);
+        sb.append(", header='").append(header).append('\'');
+        sb.append(", body='").append(body).append('\'');
+        sb.append(", choices=").append(choices);
+        sb.append(", answerId=").append(answer.getId());
+        sb.append(", exams=").append(exams);
+        sb.append('}');
+        return sb.toString();
+    }
 }
