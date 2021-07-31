@@ -1,10 +1,13 @@
 package be.intecbrussel.testy.data.dto;
 
+import be.intecbrussel.testy.data.EntityMapper;
+import be.intecbrussel.testy.data.entity.ExamEntity;
+
 import java.time.Instant;
 import java.util.Objects;
 
 
-public class ExamDTO implements java.io.Serializable {
+public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
 
     public ExamDTO() {
     }
@@ -179,5 +182,21 @@ public class ExamDTO implements java.io.Serializable {
         sb.append(", score=").append(score);
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public ExamEntity toEntity() {
+        final var entity = new ExamEntity()
+                .withId(Objects.requireNonNull(this.getId()))
+                .withCode(Objects.requireNonNull(this.getCode()))
+                .withHeader(Objects.requireNonNull(this.getHeader()))
+                .withBody(Objects.requireNonNull(this.getBody()))
+                .withStudent(Objects.requireNonNull(this.getStudent().toEntity()))
+                .withQuestion(Objects.requireNonNull(this.getQuestion().toEntity()))
+                .withStarted(Objects.requireNonNull(this.getStarted()))
+                .withEnded(Objects.requireNonNull(this.getEnded()))
+                .withScore(Objects.requireNonNull(this.getScore()));
+
+        return entity;
     }
 }

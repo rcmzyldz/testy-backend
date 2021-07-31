@@ -1,9 +1,12 @@
 package be.intecbrussel.testy.data.dto;
 
+import be.intecbrussel.testy.data.EntityMapper;
+import be.intecbrussel.testy.data.entity.ChoiceEntity;
+
 import java.util.Arrays;
 import java.util.Objects;
 
-public class ChoiceDTO implements java.io.Serializable {
+public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntity> {
 
     public ChoiceDTO() {
     }
@@ -163,5 +166,20 @@ public class ChoiceDTO implements java.io.Serializable {
         sb.append(", questionId=").append(question.getId());
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public ChoiceEntity toEntity() {
+        final var entity = new ChoiceEntity()
+                .withId(Objects.requireNonNull(this.getId()))
+                .withWeight(Objects.requireNonNull(this.getWeight()))
+                .withHeader(Objects.requireNonNull(this.getHeader()))
+                .withBody(Objects.requireNonNull(this.getBody()))
+                .withImage(Objects.requireNonNull(this.getImage()))
+                .withDocument(Objects.requireNonNull(this.getDocument()))
+                .withExplanation(Objects.requireNonNull(this.getExplanation()))
+                .withQuestion(Objects.requireNonNull(this.getQuestion().toEntity()));
+
+        return entity;
     }
 }

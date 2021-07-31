@@ -52,7 +52,7 @@ public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, DT
         this.weight = weight;
     }
 
-    public ChoiceEntity with(Double weight){
+    public ChoiceEntity withWeight(Double weight){
         setWeight(weight);
         return this;
     }

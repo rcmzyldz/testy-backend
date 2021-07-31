@@ -1,9 +1,12 @@
 package be.intecbrussel.testy.data.dto;
 
+import be.intecbrussel.testy.data.EntityMapper;
+import be.intecbrussel.testy.data.entity.AnswerEntity;
+
 import java.util.Arrays;
 import java.util.Objects;
 
-public class AnswerDTO implements java.io.Serializable{
+public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntity> {
 
     public AnswerDTO() {
     }
@@ -114,5 +117,17 @@ public class AnswerDTO implements java.io.Serializable{
         sb.append(", questionId=").append(question.getId());
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public AnswerEntity toEntity() {
+        final var entity = new AnswerEntity()
+                .withId(Objects.requireNonNull(this.getId()))
+                .withHeader(Objects.requireNonNull(this.getHeader()))
+                .withBody(Objects.requireNonNull(this.getBody()))
+                .withDocument(Objects.requireNonNull(this.getDocument()))
+                .withQuestion(Objects.requireNonNull(this.getQuestion().toEntity()));
+
+        return entity;
     }
 }

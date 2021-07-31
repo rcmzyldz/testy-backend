@@ -1,11 +1,14 @@
 package be.intecbrussel.testy.data.dto;
 
+import be.intecbrussel.testy.data.EntityMapper;
+import be.intecbrussel.testy.data.entity.UserEntity;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-public class UserDTO implements java.io.Serializable {
+public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
 
     public UserDTO() {
     }
@@ -152,32 +155,32 @@ public class UserDTO implements java.io.Serializable {
         return this;
     }
 
-    private boolean activated;
+    private Boolean activated;
 
-    public boolean isActivated() {
+    public Boolean isActivated() {
         return activated;
     }
 
-    public void setActivated(boolean activated) {
+    public void setActivated(Boolean activated) {
         this.activated = activated;
     }
 
-    public UserDTO withActivated(boolean activated) {
+    public UserDTO withActivated(Boolean activated) {
         setActivated(activated);
         return this;
     }
 
-    private boolean authenticated;
+    private Boolean authenticated;
 
-    public boolean isAuthenticated() {
+    public Boolean isAuthenticated() {
         return authenticated;
     }
 
-    public void setAuthenticated(boolean authenticated) {
+    public void setAuthenticated(Boolean authenticated) {
         this.authenticated = authenticated;
     }
 
-    public UserDTO withAuthenticated(boolean authenticated) {
+    public UserDTO withAuthenticated(Boolean authenticated) {
         setAuthenticated(authenticated);
         return this;
     }
@@ -284,5 +287,29 @@ public class UserDTO implements java.io.Serializable {
         sb.append(", profile='").append(profile).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public UserEntity toEntity() {
+        final var entity = new UserEntity()
+                .withId(Objects.requireNonNull(this.getId()))
+                .withFirstName(Objects.requireNonNull(this.getFirstName()))
+                .withLastName(Objects.requireNonNull(this.getLastName()))
+                .withEmail(Objects.requireNonNull(this.getEmail()))
+                .withPhone(Objects.requireNonNull(this.getPhone()))
+                .withPassword(Objects.requireNonNull(this.getPassword()))
+                .withRoles(Objects.requireNonNull(this.getRoles()))
+                .withSession(Objects.requireNonNull(this.getSession()))
+                .withActivation(Objects.requireNonNull(this.getActivation()))
+                .withActivated(Objects.requireNonNull(this.isActivated()))
+                .withAuthenticated(Objects.requireNonNull(this.isAuthenticated()))
+                .withScore(Objects.requireNonNull(this.getScore()))
+                .withProfile(Objects.requireNonNull(this.getProfile()));
+
+        for (ExamDTO exam : getExams()) {
+            entity.addExam(exam.toEntity());
+        }
+
+        return entity;
     }
 }
