@@ -6,8 +6,6 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
-// LOMBOK
-
 public class ExamDTO implements Serializable {
 
     private Long id;
@@ -24,16 +22,11 @@ public class ExamDTO implements Serializable {
 
     private final Set<QuestionDTO> questions = new HashSet<>();
 
-    public ExamDTO(Long id, String code, String header, String body, Instant started, Instant ended) {
-        this.id = id;
-        this.code = code;
-        this.header = header;
-        this.body = body;
-        this.started = started;
-        this.ended = ended;
+    public ExamDTO() {
     }
 
-    public ExamDTO() {
+    public ExamDTO(Long id) {
+        this.id = id;
     }
 
     public void addQuestion(QuestionDTO question){
@@ -100,28 +93,5 @@ public class ExamDTO implements Serializable {
         this.ended = ended;
     }
 
-    public String toString() {
-        return "ExamDTO(id=" + this.getId() + ", code=" + this.getCode() + ", header=" + this.getHeader() + ", body=" + this.getBody() + ", started=" + this.getStarted() + ", ended=" + this.getEnded() + ", questions=" + this.getQuestions() + ")";
-    }
 
-    public boolean equals(final Object o) {
-        if (o == this) return true;
-        if (!(o instanceof ExamDTO)) return false;
-        final ExamDTO other = (ExamDTO) o;
-        if (!other.canEqual((Object) this)) return false;
-        if (this.getId() != other.getId()) return false;
-        return true;
-    }
-
-    protected boolean canEqual(final Object other) {
-        return other instanceof ExamDTO;
-    }
-
-    public int hashCode() {
-        final int PRIME = 59;
-        int result = 1;
-        final Long $id = this.getId();
-        result = result * PRIME + (int) ($id >>> 32 ^ $id);
-        return result;
-    }
 }

@@ -33,6 +33,10 @@ public class AnswerEntity implements java.io.Serializable, Persistable<Long> {
     public AnswerEntity() {
     }
 
+    public AnswerEntity(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return this.id;
     }

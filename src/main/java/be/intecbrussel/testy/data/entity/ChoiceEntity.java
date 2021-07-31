@@ -36,10 +36,13 @@ public class ChoiceEntity implements java.io.Serializable, Persistable<Long> {
     private String explanation;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    private
-    QuestionEntity question;
+    private QuestionEntity question;
 
     public ChoiceEntity() {
+    }
+
+    public ChoiceEntity(Long id) {
+        this.id = id;
     }
 
     public Long getId() {

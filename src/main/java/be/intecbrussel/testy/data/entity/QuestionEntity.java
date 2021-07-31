@@ -32,6 +32,10 @@ public class QuestionEntity implements java.io.Serializable, Persistable<Long> {
     public QuestionEntity() {
     }
 
+    public QuestionEntity(Long id) {
+        this.id = id;
+    }
+
     public void addChoice(ChoiceEntity choice){
         this.choices.add(choice);
     }
@@ -41,7 +45,7 @@ public class QuestionEntity implements java.io.Serializable, Persistable<Long> {
     }
 
     public void removeChoice(Long choiceId){
-        this.choices.removeIf(choice -> choice.getId() == choiceId);
+        this.choices.removeIf(choice -> Objects.requireNonNull(choice.getId()).equals(choiceId));
     }
 
     @OneToOne

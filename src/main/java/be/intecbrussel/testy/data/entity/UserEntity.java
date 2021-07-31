@@ -64,8 +64,10 @@ public class UserEntity implements java.io.Serializable, Persistable<Long> {
 
     private boolean authenticated = false;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "student")
     private final Set<ExamEntity> exams = new HashSet<>();
+
+    private Double score;
 
     public UserEntity() {
     }
@@ -195,8 +197,6 @@ public class UserEntity implements java.io.Serializable, Persistable<Long> {
     public String toString() {
         return "UserEntity(id=" + this.getId() + ", firstName=" + this.getFirstName() + ", lastName=" + this.getLastName() + ", email=" + this.getEmail() + ", phone=" + this.getPhone() + ", password=" + this.getPassword() + ", roles=" + this.getRoles() + ", session=" + this.getSession() + ", activation=" + this.getActivation() + ", activated=" + this.isActivated() + ", authenticated=" + this.isAuthenticated() + ", exams=" + this.getExams() + ", profile=" + this.getProfile() + ")";
     }
-
-
 
     protected boolean canEqual(final Object other) {
         return other instanceof UserEntity;
