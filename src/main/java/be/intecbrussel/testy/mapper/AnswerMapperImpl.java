@@ -24,7 +24,7 @@ public class AnswerMapperImpl implements AnswerMapper {
         if ( source.getBody() != null ) {
             answerDTO.setBody( source.getBody() );
         }
-        byte[] document = source.getDocument();
+        Byte[] document = source.getDocument();
         if ( document != null ) {
             answerDTO.setDocument( Arrays.copyOf( document, document.length ) );
         }
@@ -47,7 +47,7 @@ public class AnswerMapperImpl implements AnswerMapper {
         if ( source.getBody() != null ) {
             answerEntity.setBody( source.getBody() );
         }
-        byte[] document = source.getDocument();
+        Byte[] document = source.getDocument();
         if ( document != null ) {
             answerEntity.setDocument( Arrays.copyOf( document, document.length ) );
         }
@@ -68,7 +68,7 @@ public class AnswerMapperImpl implements AnswerMapper {
         if ( source.getBody() != null ) {
             destination.setBody( source.getBody() );
         }
-        byte[] document = source.getDocument();
+        Byte[] document = source.getDocument();
         if ( document != null ) {
             destination.setDocument( Arrays.copyOf( document, document.length ) );
         }

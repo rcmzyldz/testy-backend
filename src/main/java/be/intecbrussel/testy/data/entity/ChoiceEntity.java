@@ -5,6 +5,7 @@ import org.springframework.data.domain.Persistable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+import java.util.Arrays;
 import java.util.Objects;
 
 
@@ -13,31 +14,6 @@ import java.util.Objects;
 
 public class ChoiceEntity implements java.io.Serializable, Persistable<Long> {
 
-    @Id
-    @GeneratedValue
-    private
-    Long id;
-
-    @PositiveOrZero
-    private
-    double weight;
-
-    @NotNull
-    private
-    String header;
-
-    @NotNull
-    @Lob
-    private
-    String body;
-
-    private String image;
-
-    private String explanation;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private QuestionEntity question;
-
     public ChoiceEntity() {
     }
 
@@ -45,73 +21,137 @@ public class ChoiceEntity implements java.io.Serializable, Persistable<Long> {
         this.id = id;
     }
 
-    public Long getId() {
-        return this.id;
-    }
+    @Id
+    @GeneratedValue
+    private Long id;
 
     @Override
-    public boolean isNew() {
-        return Objects.isNull(this.id);
-    }
-
-    public @PositiveOrZero double getWeight() {
-        return this.weight;
-    }
-
-    public @NotNull String getHeader() {
-        return this.header;
-    }
-
-    public @NotNull String getBody() {
-        return this.body;
-    }
-
-    public String getImage() {
-        return this.image;
-    }
-
-    public String getExplanation() {
-        return this.explanation;
-    }
-
-    public QuestionEntity getQuestion() {
-        return this.question;
+    public Long getId() {
+        return this.id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setWeight(@PositiveOrZero double weight) {
+    public ChoiceEntity withId(Long id) {
+        setId(id);
+        return this;
+    }
+
+    @PositiveOrZero
+    private Double weight;
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 
-    public void setHeader(@NotNull String header) {
+    public ChoiceEntity with(Double weight){
+        setWeight(weight);
+        return this;
+    }
+
+    @NotNull
+    private String header;
+
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
         this.header = header;
     }
 
-    public void setBody(@NotNull String body) {
+    public ChoiceEntity withHeader(String header) {
+        setHeader(header);
+        return this;
+    }
+
+    @NotNull
+    @Lob
+    private String body;
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
         this.body = body;
     }
 
-    public void setImage(String image) {
+    public ChoiceEntity withBody(String body) {
+        setBody(body);
+        return this;
+    }
+
+    private Byte[] image;
+
+    public Byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(Byte[] image) {
         this.image = image;
+    }
+
+    public ChoiceEntity withImage(Byte[] image) {
+        setImage(image);
+        return this;
+    }
+
+    private Byte[] document;
+
+    public Byte[] getDocument() {
+        return document;
+    }
+
+    public void setDocument(Byte[] document) {
+        this.document = document;
+    }
+
+    public ChoiceEntity withDocument(Byte[] document) {
+        setDocument(document);
+        return this;
+    }
+
+    private String explanation;
+
+    public String getExplanation() {
+        return explanation;
     }
 
     public void setExplanation(String explanation) {
         this.explanation = explanation;
     }
 
+    public ChoiceEntity withExplanation(String explanation) {
+        setExplanation(explanation);
+        return this;
+    }
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private QuestionEntity question;
+
+    public QuestionEntity getQuestion() {
+        return question;
+    }
+
     public void setQuestion(QuestionEntity question) {
         this.question = question;
     }
 
-    public String toString() {
-        return "ChoiceEntity(id=" + this.getId() + ", weight=" + this.getWeight() + ", header=" + this.getHeader() + ", body=" + this.getBody() + ", image=" + this.getImage() + ", explanation=" + this.getExplanation() + ", question=" + this.getQuestion() + ")";
+    public ChoiceEntity withQuestion(QuestionEntity question) {
+        setQuestion(question);
+        return this;
     }
 
-    protected boolean canEqual(final Object other) {
-        return other instanceof ChoiceEntity;
+    @Override
+    public boolean isNew() {
+        return Objects.isNull(this.id);
     }
 
     @Override
@@ -125,5 +165,20 @@ public class ChoiceEntity implements java.io.Serializable, Persistable<Long> {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("ChoiceEntity{");
+        sb.append("id=").append(id);
+        sb.append(", weight=").append(weight);
+        sb.append(", header='").append(header).append('\'');
+        sb.append(", body='").append(body).append('\'');
+        sb.append(", image=").append(image == null ? "null" : Arrays.asList(image).toString());
+        sb.append(", document=").append(document == null ? "null" : Arrays.asList(document).toString());
+        sb.append(", explanation='").append(explanation).append('\'');
+        sb.append(", questionId=").append(question.getId());
+        sb.append('}');
+        return sb.toString();
     }
 }

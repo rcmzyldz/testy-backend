@@ -1,167 +1,256 @@
 package be.intecbrussel.testy.data.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
 
-import java.io.Serializable;
-
-// LOMBOK
-
-public class UserDTO implements Serializable {
-    
-        private Long id;
-
-        private String firstName;
-
-        private String lastName;
-
-        private String email;
-
-        private String phone;
-
-        private String password;
-
-        private String roles;
-
-        private String session;
-
-        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-        private
-        String activation;
-
-        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-        private
-        boolean activated;
-
-        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-        private
-        boolean authenticated;
-
-        private String profile;
+public class UserDTO implements java.io.Serializable {
 
     public UserDTO() {
     }
 
+    public UserDTO(Long id) {
+        this.id = id;
+    }
+
+    private Long id;
+
     public Long getId() {
-        return this.id;
-    }
-
-    public String getFirstName() {
-        return this.firstName;
-    }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public String getPhone() {
-        return this.phone;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public String getRoles() {
-        return this.roles;
-    }
-
-    public String getSession() {
-        return this.session;
-    }
-
-    public String getActivation() {
-        return this.activation;
-    }
-
-    public boolean isActivated() {
-        return this.activated;
-    }
-
-    public boolean isAuthenticated() {
-        return this.authenticated;
-    }
-
-    public String getProfile() {
-        return this.profile;
+        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public UserDTO withId(Long id) {
+        setId(id);
+        return this;
+    }
+
+    private String firstName;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public UserDTO withFirstName(String firstName) {
+        setFirstName(firstName);
+        return this;
+    }
+
+    private String lastName;
+
+    public String getLastName() {
+        return lastName;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    public UserDTO withLastName(String lastName) {
+        setLastName(lastName);
+        return this;
+    }
+
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public UserDTO withEmail(String email) {
+        setEmail(email);
+        return this;
+    }
+
+    private String phone;
+
+    public String getPhone() {
+        return phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
+    public UserDTO withPhone(String phone) {
+        setPhone(phone);
+        return this;
+    }
+
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserDTO withPassword(String password) {
+        setPassword(password);
+        return this;
+    }
+
+    private String roles;
+
+    public String getRoles() {
+        return roles;
     }
 
     public void setRoles(String roles) {
         this.roles = roles;
     }
 
+    public UserDTO withRoles(String roles) {
+        setRoles(roles);
+        return this;
+    }
+
+    private String session;
+
+    public String getSession() {
+        return session;
+    }
+
     public void setSession(String session) {
         this.session = session;
     }
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    public UserDTO withSession(String session) {
+        setSession(session);
+        return this;
+    }
+
+    private String activation;
+
+    public String getActivation() {
+        return activation;
+    }
+
     public void setActivation(String activation) {
+        if (Objects.isNull(activation)) {
+            activation = UUID.randomUUID().toString();
+        }
         this.activation = activation;
     }
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    public UserDTO withActivation(String activation) {
+        setActivation(activation);
+        return this;
+    }
+
+    private boolean activated;
+
+    public boolean isActivated() {
+        return activated;
+    }
+
     public void setActivated(boolean activated) {
         this.activated = activated;
     }
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    public UserDTO withActivated(boolean activated) {
+        setActivated(activated);
+        return this;
+    }
+
+    private boolean authenticated;
+
+    public boolean isAuthenticated() {
+        return authenticated;
+    }
+
     public void setAuthenticated(boolean authenticated) {
         this.authenticated = authenticated;
     }
 
+    public UserDTO withAuthenticated(boolean authenticated) {
+        setAuthenticated(authenticated);
+        return this;
+    }
+
+    private final Set<ExamDTO> exams = new HashSet<>();
+
+    public void addExam(ExamDTO exam) {
+        this.exams.add(exam);
+    }
+
+    public UserDTO withExam(ExamDTO exam) {
+        addExam(exam);
+        return this;
+    }
+
+    public void removeExam(ExamDTO exam) {
+        this.exams.remove(exam);
+    }
+
+    public UserDTO withoutExam(ExamDTO exam) {
+        removeExam(exam);
+        return this;
+    }
+
+    public void removeExam(Long examId) {
+        this.exams.removeIf(exam -> Objects.equals(exam.getId(), examId));
+    }
+
+    public UserDTO withoutExam(Long examId) {
+        removeExam(examId);
+        return this;
+    }
+
+    public Set<ExamDTO> getExams() {
+        return exams;
+    }
+
+    private Double score;
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
+    }
+
+    public UserDTO withScore(Double score) {
+        setScore(score);
+        return this;
+    }
+
+    private String profile;
+
+    public String getProfile() {
+        return profile;
+    }
+
     public void setProfile(String profile) {
+        if (Objects.isNull(profile)) {
+            profile = "https://www.testy-exams.com/user/anonymous";
+        }
         this.profile = profile;
     }
 
-    public String toString() {
-        return "UserDTO(id=" + this.getId() + ", firstName=" + this.getFirstName() + ", lastName=" + this.getLastName() + ", email=" + this.getEmail() + ", phone=" + this.getPhone() + ", password=" + this.getPassword() + ", roles=" + this.getRoles() + ", session=" + this.getSession() + ", activation=" + this.getActivation() + ", activated=" + this.isActivated() + ", authenticated=" + this.isAuthenticated() + ", profile=" + this.getProfile() + ")";
+    public UserDTO withProfile(String profile) {
+        setProfile(profile);
+        return this;
     }
 
-    public boolean equals(final Object o) {
-        if (o == this) return true;
-        if (!(o instanceof UserDTO)) return false;
-        final UserDTO other = (UserDTO) o;
-        if (!other.canEqual((Object) this)) return false;
-        if (this.getId() != other.getId()) return false;
-        return true;
+    public boolean isNew() {
+        return Objects.isNull(this.id);
     }
 
-    protected boolean canEqual(final Object other) {
-        return other instanceof UserDTO;
-    }
 
-    public int hashCode() {
-        final int PRIME = 59;
-        int result = 1;
-        final Long $id = this.getId();
-        result = result * PRIME + (int) ($id >>> 32 ^ $id);
-        return result;
-    }
 }

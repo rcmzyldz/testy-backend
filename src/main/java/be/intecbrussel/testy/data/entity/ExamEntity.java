@@ -13,34 +13,6 @@ import java.util.Objects;
 
 public class ExamEntity implements java.io.Serializable, Persistable<Long> {
 
-    @Id
-    @GeneratedValue
-    private Long id;
-
-    @NotNull
-    private
-    String code;
-
-    @NotNull
-    private
-    String header;
-
-    @Lob
-    private
-    String body;
-
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    private UserEntity student;
-
-    @ManyToOne
-    @JoinColumn(name = "question_id")
-    private QuestionEntity question;
-
-    private Instant started;
-
-    private Instant ended;
-
     public ExamEntity() {
     }
 
@@ -48,71 +20,138 @@ public class ExamEntity implements java.io.Serializable, Persistable<Long> {
         this.id = id;
     }
 
+    @Id
+    @GeneratedValue
+    private Long id;
+
     public Long getId() {
         return this.id;
-    }
-
-    @Override
-    public boolean isNew() {
-        return Objects.isNull(this.id);
-    }
-
-    public @NotNull String getCode() {
-        return this.code;
-    }
-
-    public @NotNull String getHeader() {
-        return this.header;
-    }
-
-    public String getBody() {
-        return this.body;
-    }
-
-    public Instant getStarted() {
-        return this.started;
-    }
-
-    public Instant getEnded() {
-        return this.ended;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setCode(@NotNull String code) {
+    public ExamEntity withId(Long id) {
+        setId(id);
+        return this;
+    }
+
+    @NotNull
+    private String code;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
         this.code = code;
     }
 
-    public void setHeader(@NotNull String header) {
+    public ExamEntity withCode(String code) {
+        setCode(code);
+        return this;
+    }
+
+    @NotNull
+    private String header;
+
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
         this.header = header;
+    }
+
+    public ExamEntity withHeader(String header) {
+        setHeader(header);
+        return this;
+    }
+
+    @Lob
+    private String body;
+
+    public String getBody() {
+        return body;
     }
 
     public void setBody(String body) {
         this.body = body;
     }
 
+    public ExamEntity withBody(String body) {
+        setBody(body);
+        return this;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private UserEntity student;
+
+    public UserEntity getStudent() {
+        return student;
+    }
+
+    public void setStudent(UserEntity student) {
+        this.student = student;
+    }
+
+    public ExamEntity withStudent(UserEntity student) {
+        setStudent(student);
+        return this;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "question_id")
+    private QuestionEntity question;
+
+    public QuestionEntity getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(QuestionEntity question) {
+        this.question = question;
+    }
+
+    public ExamEntity withQuestion(QuestionEntity question) {
+        setQuestion(question);
+        return this;
+    }
+
+    private Instant started;
+
+    public Instant getStarted() {
+        return started;
+    }
+
     public void setStarted(Instant started) {
         this.started = started;
+    }
+
+    public ExamEntity withStarted(Instant started) {
+        setStarted(started);
+        return this;
+    }
+
+    private Instant ended;
+
+    public Instant getEnded() {
+        return ended;
     }
 
     public void setEnded(Instant ended) {
         this.ended = ended;
     }
 
+    public ExamEntity withEnded(Instant ended) {
+        setEnded(ended);
+        return this;
+    }
+
     @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("ExamEntity{");
-        sb.append("id=").append(id);
-        sb.append(", code='").append(code).append('\'');
-        sb.append(", header='").append(header).append('\'');
-        sb.append(", body='").append(body).append('\'');
-        sb.append(", student=").append(student);
-        sb.append(", started=").append(started);
-        sb.append(", ended=").append(ended);
-        sb.append('}');
-        return sb.toString();
+    public boolean isNew() {
+        return Objects.isNull(this.id);
     }
 
     @Override
@@ -126,5 +165,20 @@ public class ExamEntity implements java.io.Serializable, Persistable<Long> {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("ExamEntity{");
+        sb.append("id=").append(id);
+        sb.append(", code='").append(code).append('\'');
+        sb.append(", header='").append(header).append('\'');
+        sb.append(", body='").append(body).append('\'');
+        sb.append(", studentId=").append(student.getId());
+        sb.append(", questionId=").append(question.getId());
+        sb.append(", started=").append(started);
+        sb.append(", ended=").append(ended);
+        sb.append('}');
+        return sb.toString();
     }
 }

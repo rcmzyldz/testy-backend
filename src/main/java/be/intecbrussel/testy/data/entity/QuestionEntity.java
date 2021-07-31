@@ -5,6 +5,7 @@ import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,20 +16,6 @@ import java.util.Set;
 
 public class QuestionEntity implements java.io.Serializable, Persistable<Long> {
 
-    @Id
-    @GeneratedValue
-    private
-    Long id;
-
-    private String header;
-
-    @Lob
-    private
-    String body;
-
-    @OneToMany(mappedBy = "question", cascade = { CascadeType.ALL })
-    private final Set<ChoiceEntity> choices = new HashSet<>();
-
     public QuestionEntity() {
     }
 
@@ -36,82 +23,124 @@ public class QuestionEntity implements java.io.Serializable, Persistable<Long> {
         this.id = id;
     }
 
-    public void addChoice(ChoiceEntity choice){
-        this.choices.add(choice);
-    }
-
-    public void removeChoice(ChoiceEntity choice){
-        this.choices.remove(choice);
-    }
-
-    public void removeChoice(Long choiceId){
-        this.choices.removeIf(choice -> Objects.requireNonNull(choice.getId()).equals(choiceId));
-    }
-
-    @OneToOne
-    @JoinColumn
-    private
-    AnswerEntity answer;
-
-    @ManyToOne
-    private
-    ExamEntity exam;
-
-    public Long getId() {
-        return this.id;
-    }
+    @Id
+    @GeneratedValue
+    private Long id;
 
     @Override
-    public boolean isNew() {
-        return Objects.isNull(this.id);
-    }
-
-    public String getHeader() {
-        return this.header;
-    }
-
-    public String getBody() {
-        return this.body;
-    }
-
-    public Set<ChoiceEntity> getChoices() {
-        return this.choices;
-    }
-
-    public AnswerEntity getAnswer() {
-        return this.answer;
-    }
-
-    public ExamEntity getExam() {
-        return this.exam;
+    public Long getId() {
+        return this.id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public QuestionEntity withId(Long id) {
+        setId(id);
+        return this;
+    }
+
+    private String header;
+
+    public String getHeader() {
+        return header;
+    }
+
     public void setHeader(String header) {
         this.header = header;
+    }
+
+    public QuestionEntity withHeader(String header) {
+        setHeader(header);
+        return this;
+    }
+
+    @Lob
+    private String body;
+
+    public String getBody() {
+        return body;
     }
 
     public void setBody(String body) {
         this.body = body;
     }
 
+    public QuestionEntity withBody(String body) {
+        setBody(body);
+        return this;
+    }
+
+    @OneToMany(mappedBy = "question", cascade = {CascadeType.ALL})
+    private final Set<ChoiceEntity> choices = new HashSet<>();
+
+    public void addChoice(ChoiceEntity choice) {
+        this.choices.add(choice);
+    }
+
+    public void removeChoice(ChoiceEntity choice) {
+        this.choices.remove(choice);
+    }
+
+    public void removeChoice(Long choiceId) {
+        this.choices.removeIf(choice -> Objects.requireNonNull(choice.getId()).equals(choiceId));
+    }
+
+    public Set<ChoiceEntity> getChoices() {
+        return choices;
+    }
+
+    @OneToOne
+    @JoinColumn
+    private AnswerEntity answer;
+
+    public AnswerEntity getAnswer() {
+        return answer;
+    }
+
     public void setAnswer(AnswerEntity answer) {
         this.answer = answer;
     }
 
-    public void setExam(ExamEntity exam) {
-        this.exam = exam;
+    public QuestionEntity withAnswer(AnswerEntity answer) {
+        setAnswer(answer);
+        return this;
     }
 
-    public String toString() {
-        return "QuestionEntity(id=" + this.getId() + ", header=" + this.getHeader() + ", body=" + this.getBody() + ", choices=" + this.getChoices() + ", answer=" + this.getAnswer() + ", exam=" + this.getExam() + ")";
+    @OneToMany(mappedBy = "question")
+    private final Set<ExamEntity> exams = new LinkedHashSet<>();
+
+    public void addExam(ExamEntity exam) {
+        this.exams.add(exam);
     }
 
-    protected boolean canEqual(final Object other) {
-        return other instanceof QuestionEntity;
+    public QuestionEntity withExam(ExamEntity exam) {
+        addExam(exam);
+        return this;
+    }
+
+    public void removeExam(ExamEntity exam) {
+        this.exams.remove(exam);
+    }
+
+    public void removeExam(Long examId) {
+        this.exams.removeIf(exam -> Objects.equals(exam.getId(), examId));
+    }
+
+    public QuestionEntity withoutExam(ExamEntity exam) {
+        removeExam(exam);
+        return this;
+    }
+
+    public QuestionEntity withoutExam(Long examId) {
+        removeExam(examId);
+        return this;
+    }
+
+    @Override
+    public boolean isNew() {
+        return Objects.isNull(this.id);
     }
 
     @Override
@@ -125,5 +154,18 @@ public class QuestionEntity implements java.io.Serializable, Persistable<Long> {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("QuestionEntity{");
+        sb.append("id=").append(id);
+        sb.append(", header='").append(header).append('\'');
+        sb.append(", body='").append(body).append('\'');
+        sb.append(", choices=").append(choices);
+        sb.append(", answer=").append(answer);
+        sb.append(", exams=").append(exams);
+        sb.append('}');
+        return sb.toString();
     }
 }

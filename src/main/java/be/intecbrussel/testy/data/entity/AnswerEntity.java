@@ -4,31 +4,13 @@ import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 import java.util.Objects;
 
 // JPA
 @Entity(name = "answer")
 
 public class AnswerEntity implements java.io.Serializable, Persistable<Long> {
-
-    @Id
-    @GeneratedValue
-    private Long id;
-
-    @NotNull
-    private
-    String header;
-
-    @NotNull
-    @Lob
-    private
-    String body;
-
-    private byte[] document;
-
-    @OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
-    private
-    QuestionEntity question;
 
     public AnswerEntity() {
     }
@@ -37,57 +19,91 @@ public class AnswerEntity implements java.io.Serializable, Persistable<Long> {
         this.id = id;
     }
 
-    public Long getId() {
-        return this.id;
-    }
+    @Id
+    @GeneratedValue
+    private Long id;
 
     @Override
-    public boolean isNew() {
-        return Objects.isNull(this.id);
-    }
-
-    public @NotNull String getHeader() {
-        return this.header;
-    }
-
-    public @NotNull String getBody() {
-        return this.body;
-    }
-
-    public byte[] getDocument() {
-        return this.document;
-    }
-
-    public QuestionEntity getQuestion() {
-        return this.question;
+    public Long getId() {
+        return this.id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setHeader(@NotNull String header) {
+    public AnswerEntity withId(Long id) {
+        setId(id);
+        return this;
+    }
+
+    @NotNull
+    private String header;
+
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
         this.header = header;
     }
 
-    public void setBody(@NotNull String body) {
+    public AnswerEntity withHeader(String header) {
+        setHeader(header);
+        return this;
+    }
+
+    @NotNull
+    @Lob
+    private String body;
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
         this.body = body;
     }
 
-    public void setDocument(byte[] document) {
+    public AnswerEntity withBody(String body) {
+        setBody(body);
+        return this;
+    }
+
+    private Byte[] document;
+
+    public Byte[] getDocument() {
+        return document;
+    }
+
+    public void setDocument(Byte[] document) {
         this.document = document;
+    }
+
+    public AnswerEntity withDocument(Byte[] document) {
+        setDocument(document);
+        return this;
+    }
+
+    @OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    private QuestionEntity question;
+
+    public QuestionEntity getQuestion() {
+        return question;
     }
 
     public void setQuestion(QuestionEntity question) {
         this.question = question;
     }
 
-    public String toString() {
-        return "AnswerEntity(id=" + this.getId() + ", header=" + this.getHeader() + ", body=" + this.getBody() + ", document=" + java.util.Arrays.toString(this.getDocument()) + ", question=" + this.getQuestion() + ")";
+    public AnswerEntity withQuestion(QuestionEntity question) {
+        setQuestion(question);
+        return this;
     }
 
-    protected boolean canEqual(final Object other) {
-        return other instanceof AnswerEntity;
+    @Override
+    public boolean isNew() {
+        return Objects.isNull(this.id);
     }
 
     @Override
@@ -101,5 +117,17 @@ public class AnswerEntity implements java.io.Serializable, Persistable<Long> {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("AnswerEntity{");
+        sb.append("id=").append(id);
+        sb.append(", header='").append(header).append('\'');
+        sb.append(", body='").append(body).append('\'');
+        sb.append(", document=").append(document == null ? "null" : Arrays.asList(document).toString());
+        sb.append(", questionId=").append(question.getId());
+        sb.append('}');
+        return sb.toString();
     }
 }

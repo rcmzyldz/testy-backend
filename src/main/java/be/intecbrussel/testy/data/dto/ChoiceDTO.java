@@ -1,107 +1,144 @@
 package be.intecbrussel.testy.data.dto;
 
+import org.springframework.data.domain.Persistable;
 
-import java.io.Serializable;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import java.util.Objects;
 
-// LOMBOK
-
-public class ChoiceDTO implements Serializable {
-
-    // JACKSON
-    private Long id;
-
-    private double weight;
-
-    private String header;
-
-    private String body;
-
-    private String image;
-
-    private String explanation;
-
-    public ChoiceDTO(Long id, double weight, String header, String body, String image, String explanation) {
-        this.id = id;
-        this.weight = weight;
-        this.header = header;
-        this.body = body;
-        this.image = image;
-        this.explanation = explanation;
-    }
+public class ChoiceDTO implements java.io.Serializable {
 
     public ChoiceDTO() {
     }
 
+    public ChoiceDTO(Long id) {
+        this.id = id;
+    }
+
+    private Long id;
+
     public Long getId() {
         return this.id;
-    }
-
-    public double getWeight() {
-        return this.weight;
-    }
-
-    public String getHeader() {
-        return this.header;
-    }
-
-    public String getBody() {
-        return this.body;
-    }
-
-    public String getImage() {
-        return this.image;
-    }
-
-    public String getExplanation() {
-        return this.explanation;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setWeight(double weight) {
+    public ChoiceDTO withId(Long id) {
+        setId(id);
+        return this;
+    }
+
+    private Double weight;
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
         this.weight = weight;
+    }
+
+    public ChoiceDTO with(Double weight){
+        setWeight(weight);
+        return this;
+    }
+
+    private String header;
+
+    public String getHeader() {
+        return header;
     }
 
     public void setHeader(String header) {
         this.header = header;
     }
 
+    public ChoiceDTO withHeader(String header) {
+        setHeader(header);
+        return this;
+    }
+
+    private String body;
+
+    public String getBody() {
+        return body;
+    }
+
     public void setBody(String body) {
         this.body = body;
     }
 
-    public void setImage(String image) {
+    public ChoiceDTO withBody(String body) {
+        setBody(body);
+        return this;
+    }
+
+    private Byte[] image;
+
+    public Byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(Byte[] image) {
         this.image = image;
+    }
+
+    public ChoiceDTO withImage(Byte[] image) {
+        setImage(image);
+        return this;
+    }
+
+    private Byte[] document;
+
+    public Byte[] getDocument() {
+        return document;
+    }
+
+    public void setDocument(Byte[] document) {
+        this.document = document;
+    }
+
+    public ChoiceDTO withDocument(Byte[] document) {
+        setDocument(document);
+        return this;
+    }
+
+    private String explanation;
+
+    public String getExplanation() {
+        return explanation;
     }
 
     public void setExplanation(String explanation) {
         this.explanation = explanation;
     }
 
-    public String toString() {
-        return "ChoiceDTO(id=" + this.getId() + ", weight=" + this.getWeight() + ", header=" + this.getHeader() + ", body=" + this.getBody() + ", image=" + this.getImage() + ", explanation=" + this.getExplanation() + ")";
+    public ChoiceDTO withExplanation(String explanation) {
+        setExplanation(explanation);
+        return this;
     }
 
-    public boolean equals(final Object o) {
-        if (o == this) return true;
-        if (!(o instanceof ChoiceDTO)) return false;
-        final ChoiceDTO other = (ChoiceDTO) o;
-        if (!other.canEqual((Object) this)) return false;
-        if (this.getId() != other.getId()) return false;
-        return true;
+    private QuestionDTO question;
+
+    public QuestionDTO getQuestion() {
+        return question;
     }
 
-    protected boolean canEqual(final Object other) {
-        return other instanceof ChoiceDTO;
+    public void setQuestion(QuestionDTO question) {
+        this.question = question;
     }
 
-    public int hashCode() {
-        final int PRIME = 59;
-        int result = 1;
-        final Long $id = this.getId();
-        result = result * PRIME + (int) ($id >>> 32 ^ $id);
-        return result;
+    public ChoiceDTO withQuestion(QuestionDTO question) {
+        setQuestion(question);
+        return this;
     }
+
+    public boolean isNew() {
+        return Objects.isNull(this.id);
+    }
+
+
 }

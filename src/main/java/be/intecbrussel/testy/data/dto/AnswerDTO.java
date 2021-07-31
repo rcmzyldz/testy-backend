@@ -1,84 +1,94 @@
 package be.intecbrussel.testy.data.dto;
 
+import java.util.Objects;
 
-import java.io.Serializable;
-
-// LOMBOK
-
-public class AnswerDTO implements Serializable {
-
-    private Long id;
-
-    private String header;
-
-    private String body;
-
-    private byte[] document;
-
-    public AnswerDTO(Long id, String header, String body, byte[] document) {
-        this.id = id;
-        this.header = header;
-        this.body = body;
-        this.document = document;
-    }
+public class AnswerDTO implements java.io.Serializable{
 
     public AnswerDTO() {
     }
 
+    public AnswerDTO(Long id) {
+        this.id = id;
+    }
+
+    private Long id;
+
     public Long getId() {
         return this.id;
-    }
-
-    public String getHeader() {
-        return this.header;
-    }
-
-    public String getBody() {
-        return this.body;
-    }
-
-    public byte[] getDocument() {
-        return this.document;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public AnswerDTO withId(Long id) {
+        setId(id);
+        return this;
+    }
+
+    private String header;
+
+    public String getHeader() {
+        return header;
+    }
+
     public void setHeader(String header) {
         this.header = header;
+    }
+
+    public AnswerDTO withHeader(String header) {
+        setHeader(header);
+        return this;
+    }
+
+    private String body;
+
+    public String getBody() {
+        return body;
     }
 
     public void setBody(String body) {
         this.body = body;
     }
 
-    public void setDocument(byte[] document) {
+    public AnswerDTO withBody(String body) {
+        setBody(body);
+        return this;
+    }
+
+    private Byte[] document;
+
+    public Byte[] getDocument() {
+        return document;
+    }
+
+    public void setDocument(Byte[] document) {
         this.document = document;
     }
 
-    public String toString() {
-        return "AnswerDTO(id=" + this.getId() + ", header=" + this.getHeader() + ", body=" + this.getBody() + ", document=" + java.util.Arrays.toString(this.getDocument()) + ")";
+    public AnswerDTO withDocument(Byte[] document) {
+        setDocument(document);
+        return this;
     }
 
-    public boolean equals(final Object o) {
-        if (o == this) return true;
-        if (!(o instanceof AnswerDTO)) return false;
-        final AnswerDTO other = (AnswerDTO) o;
-        if (!other.canEqual((Object) this)) return false;
-        if (this.getId() != other.getId()) return false;
-        return true;
+    private QuestionDTO question;
+
+    public QuestionDTO getQuestion() {
+        return question;
     }
 
-    protected boolean canEqual(final Object other) {
-        return other instanceof AnswerDTO;
+    public void setQuestion(QuestionDTO question) {
+        this.question = question;
     }
 
-    public int hashCode() {
-        final int PRIME = 59;
-        int result = 1;
-        final Long $id = this.getId();
-        result = result * PRIME + (int) ($id >>> 32 ^ $id);
-        return result;
+    public AnswerDTO withQuestion(QuestionDTO question) {
+        setQuestion(question);
+        return this;
     }
+
+    public boolean isNew() {
+        return Objects.isNull(this.id);
+    }
+
+
 }

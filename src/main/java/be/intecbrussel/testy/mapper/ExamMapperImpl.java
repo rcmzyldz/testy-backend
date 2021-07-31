@@ -43,11 +43,6 @@ public class ExamMapperImpl implements ExamMapper {
         if ( source.getEnded() != null ) {
             examDTO.setEnded( source.getEnded() );
         }
-        if ( source.getQuestions() != null ) {
-            for ( QuestionEntity question : source.getQuestions() ) {
-                examDTO.addQuestion( questionEntityToQuestionDTO( question ) );
-            }
-        }
 
         return examDTO;
     }
@@ -76,11 +71,6 @@ public class ExamMapperImpl implements ExamMapper {
         if ( source.getEnded() != null ) {
             examEntity.setEnded( source.getEnded() );
         }
-        if ( source.getQuestions() != null ) {
-            for ( QuestionDTO question : source.getQuestions() ) {
-                examEntity.addQuestion( questionDTOToQuestionEntity( question ) );
-            }
-        }
 
         return examEntity;
     }
@@ -108,9 +98,7 @@ public class ExamMapperImpl implements ExamMapper {
             destination.setEnded( source.getEnded() );
         }
         if ( source.getQuestions() != null ) {
-            for ( QuestionDTO question : source.getQuestions() ) {
-                destination.addQuestion( questionDTOToQuestionEntity( question ) );
-            }
+
         }
 
         return destination;

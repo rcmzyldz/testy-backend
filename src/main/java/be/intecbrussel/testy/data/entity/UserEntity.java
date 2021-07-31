@@ -19,78 +19,265 @@ import java.util.UUID;
 
 public class UserEntity implements java.io.Serializable, Persistable<Long> {
 
+    public UserEntity() {
+    }
+
+    public UserEntity(Long id) {
+        this.id = id;
+    }
+
     @Id
     @GeneratedValue
-    private
-    Long id;
+    private Long id;
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public UserEntity withId(Long id) {
+        setId(id);
+        return this;
+    }
 
     @NotEmpty
     private
     String firstName;
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public UserEntity withFirstName(String firstName) {
+        setFirstName(firstName);
+        return this;
+    }
+
     @NotEmpty
-    private
-    String lastName;
+    private String lastName;
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public UserEntity withLastName(String lastName) {
+        setLastName(lastName);
+        return this;
+    }
 
     @NotEmpty
     @Email
     @Column(unique = true)
-    private
-    String email;
+    private String email;
 
-    @NotEmpty
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public UserEntity withEmail(String email) {
+        setEmail(email);
+        return this;
+    }
+
     // @Phone // TODO: activate on production..
-    @Column(unique = true)
-    private
-    String phone;
-
     @NotEmpty
-    private
+    @Column(unique = true)
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public UserEntity withPhone(String phone) {
+        setPhone(phone);
+        return this;
+    }
+
     // @ValidPassword // TODO: activate on production..
-    String password;
-    
+    @NotEmpty
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public UserEntity withPassword(String password) {
+        setPassword(password);
+        return this;
+    }
+
     // @ValidRole
     @NotEmpty
-    private
-    String roles = "ROLE_ANONYMOUS";
+    private String roles = "ROLE_ANONYMOUS";
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+    public UserEntity withRoles(String roles) {
+        setRoles(roles);
+        return this;
+    }
 
     @NotNull
-    private
-    String session;
+    private String session;
 
-    private String activation = UUID.randomUUID().toString();
+    public String getSession() {
+        return session;
+    }
 
-    private boolean activated = false;
+    public void setSession(String session) {
+        this.session = session;
+    }
 
-    private boolean authenticated = false;
+    public UserEntity withSession(String session) {
+        setSession(session);
+        return this;
+    }
+
+    private String activation;
+
+    public String getActivation() {
+        return activation;
+    }
+
+    public void setActivation(String activation) {
+        if (Objects.isNull(activation)) {
+            activation = UUID.randomUUID().toString();
+        }
+        this.activation = activation;
+    }
+
+    public UserEntity withActivation(String activation) {
+        setActivation(activation);
+        return this;
+    }
+
+    private boolean activated;
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
+    public UserEntity withActivated(boolean activated) {
+        setActivated(activated);
+        return this;
+    }
+
+    private boolean authenticated;
+
+    public boolean isAuthenticated() {
+        return authenticated;
+    }
+
+    public void setAuthenticated(boolean authenticated) {
+        this.authenticated = authenticated;
+    }
+
+    public UserEntity withAuthenticated(boolean authenticated) {
+        setAuthenticated(authenticated);
+        return this;
+    }
 
     @OneToMany(mappedBy = "student")
     private final Set<ExamEntity> exams = new HashSet<>();
 
-    private Double score;
-
-    public UserEntity() {
-    }
-
-    public void addExam(ExamEntity exam){
+    public void addExam(ExamEntity exam) {
         this.exams.add(exam);
     }
 
-    public void removeExam(ExamEntity exam){
+    public UserEntity withExam(ExamEntity exam) {
+        addExam(exam);
+        return this;
+    }
+
+    public void removeExam(ExamEntity exam) {
         this.exams.remove(exam);
     }
 
-    public void removeExam(Long examId){
-        this.exams.removeIf(exam -> exam.getId() == examId);
+    public UserEntity withoutExam(ExamEntity exam) {
+        removeExam(exam);
+        return this;
+    }
+
+    public void removeExam(Long examId) {
+        this.exams.removeIf(exam -> Objects.equals(exam.getId(), examId));
+    }
+
+    public UserEntity withoutExam(Long examId) {
+        removeExam(examId);
+        return this;
+    }
+
+    public Set<ExamEntity> getExams() {
+        return exams;
+    }
+
+    private Double score;
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
+    }
+
+    public UserEntity withScore(Double score) {
+        setScore(score);
+        return this;
     }
 
     @URL
     @NotEmpty
-    private
-    String profile = "https://www.testy-exams.com/user/anonymous";
+    private String profile;
 
-    public Long getId() {
-        return this.id;
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        if (Objects.isNull(profile)) {
+            profile = "https://www.testy-exams.com/user/anonymous";
+        }
+        this.profile = profile;
+    }
+
+    public UserEntity withProfile(String profile) {
+        setProfile(profile);
+        return this;
     }
 
     @Override
@@ -98,109 +285,6 @@ public class UserEntity implements java.io.Serializable, Persistable<Long> {
         return Objects.isNull(this.id);
     }
 
-    public @NotEmpty String getFirstName() {
-        return this.firstName;
-    }
-
-    public @NotEmpty String getLastName() {
-        return this.lastName;
-    }
-
-    public @NotEmpty @Email String getEmail() {
-        return this.email;
-    }
-
-    public @NotEmpty String getPhone() {
-        return this.phone;
-    }
-
-    public @NotEmpty String getPassword() {
-        return this.password;
-    }
-
-    public @NotEmpty String getRoles() {
-        return this.roles;
-    }
-
-    public @NotNull String getSession() {
-        return this.session;
-    }
-
-    public String getActivation() {
-        return this.activation;
-    }
-
-    public boolean isActivated() {
-        return this.activated;
-    }
-
-    public boolean isAuthenticated() {
-        return this.authenticated;
-    }
-
-    public Set<ExamEntity> getExams() {
-        return this.exams;
-    }
-
-    public @URL @NotEmpty String getProfile() {
-        return this.profile;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setFirstName(@NotEmpty String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(@NotEmpty String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setEmail(@NotEmpty @Email String email) {
-        this.email = email;
-    }
-
-    public void setPhone(@NotEmpty String phone) {
-        this.phone = phone;
-    }
-
-    public void setPassword(@NotEmpty String password) {
-        this.password = password;
-    }
-
-    public void setRoles(@NotEmpty String roles) {
-        this.roles = roles;
-    }
-
-    public void setSession(@NotNull String session) {
-        this.session = session;
-    }
-
-    public void setActivation(String activation) {
-        this.activation = activation;
-    }
-
-    public void setActivated(boolean activated) {
-        this.activated = activated;
-    }
-
-    public void setAuthenticated(boolean authenticated) {
-        this.authenticated = authenticated;
-    }
-
-    public void setProfile(@URL @NotEmpty String profile) {
-        this.profile = profile;
-    }
-
-    public String toString() {
-        return "UserEntity(id=" + this.getId() + ", firstName=" + this.getFirstName() + ", lastName=" + this.getLastName() + ", email=" + this.getEmail() + ", phone=" + this.getPhone() + ", password=" + this.getPassword() + ", roles=" + this.getRoles() + ", session=" + this.getSession() + ", activation=" + this.getActivation() + ", activated=" + this.isActivated() + ", authenticated=" + this.isAuthenticated() + ", exams=" + this.getExams() + ", profile=" + this.getProfile() + ")";
-    }
-
-    protected boolean canEqual(final Object other) {
-        return other instanceof UserEntity;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -213,5 +297,26 @@ public class UserEntity implements java.io.Serializable, Persistable<Long> {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("UserEntity{");
+        sb.append("id=").append(id);
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", phone='").append(phone).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", roles='").append(roles).append('\'');
+        sb.append(", session='").append(session).append('\'');
+        sb.append(", activation='").append(activation).append('\'');
+        sb.append(", activated=").append(activated);
+        sb.append(", authenticated=").append(authenticated);
+        sb.append(", exams=").append(exams);
+        sb.append(", score=").append(score);
+        sb.append(", profile='").append(profile).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

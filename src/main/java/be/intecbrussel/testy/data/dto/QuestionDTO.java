@@ -1,31 +1,66 @@
 package be.intecbrussel.testy.data.dto;
 
-
-import java.io.Serializable;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
-// LOMBOK
 
-public class QuestionDTO implements Serializable {
-
-    // JACKSON
-    private Long id;
-
-    private String header;
-
-    private String body;
-
-    private final Set<ChoiceDTO> choices = new HashSet<>();
-
-    public QuestionDTO(Long id, String header, String body) {
-        this.id = id;
-        this.header = header;
-        this.body = body;
-    }
+public class QuestionDTO implements java.io.Serializable {
 
     public QuestionDTO() {
     }
+
+    public QuestionDTO(Long id) {
+        this.id = id;
+    }
+
+    private Long id;
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public QuestionDTO withId(Long id) {
+        setId(id);
+        return this;
+    }
+
+    private String header;
+
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
+    }
+
+    public QuestionDTO withHeader(String header) {
+        setHeader(header);
+        return this;
+    }
+
+    private String body;
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public QuestionDTO withBody(String body) {
+        setBody(body);
+        return this;
+    }
+
+    private final Set<ChoiceDTO> choices = new HashSet<>();
 
     public void addChoice(ChoiceDTO choice) {
         this.choices.add(choice);
@@ -35,60 +70,60 @@ public class QuestionDTO implements Serializable {
         this.choices.remove(choice);
     }
 
-    public void removeChoice(Long questionId) {
-        this.choices.removeIf(choice -> choice.getId() == questionId);
-    }
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public String getHeader() {
-        return this.header;
-    }
-
-    public String getBody() {
-        return this.body;
+    public void removeChoice(Long choiceId) {
+        this.choices.removeIf(choice -> Objects.requireNonNull(choice.getId()).equals(choiceId));
     }
 
     public Set<ChoiceDTO> getChoices() {
-        return this.choices;
+        return choices;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    private AnswerDTO answer;
+
+    public AnswerDTO getAnswer() {
+        return answer;
     }
 
-    public void setHeader(String header) {
-        this.header = header;
+    public void setAnswer(AnswerDTO answer) {
+        this.answer = answer;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public QuestionDTO withAnswer(AnswerDTO answer) {
+        setAnswer(answer);
+        return this;
     }
 
-    public String toString() {
-        return "QuestionDTO(id=" + this.getId() + ", header=" + this.getHeader() + ", body=" + this.getBody() + ", choices=" + this.getChoices() + ")";
+    private final Set<ExamDTO> exams = new LinkedHashSet<>();
+
+    public void addExam(ExamDTO exam) {
+        this.exams.add(exam);
     }
 
-    public boolean equals(final Object o) {
-        if (o == this) return true;
-        if (!(o instanceof QuestionDTO)) return false;
-        final QuestionDTO other = (QuestionDTO) o;
-        if (!other.canEqual((Object) this)) return false;
-        if (this.getId() != other.getId()) return false;
-        return true;
+    public QuestionDTO withExam(ExamDTO exam) {
+        addExam(exam);
+        return this;
     }
 
-    protected boolean canEqual(final Object other) {
-        return other instanceof QuestionDTO;
+    public void removeExam(ExamDTO exam) {
+        this.exams.remove(exam);
     }
 
-    public int hashCode() {
-        final int PRIME = 59;
-        int result = 1;
-        final Long $id = this.getId();
-        result = result * PRIME + (int) ($id >>> 32 ^ $id);
-        return result;
+    public void removeExam(Long examId) {
+        this.exams.removeIf(exam -> Objects.equals(exam.getId(), examId));
     }
+
+    public QuestionDTO withoutExam(ExamDTO exam) {
+        removeExam(exam);
+        return this;
+    }
+
+    public QuestionDTO withoutExam(Long examId) {
+        removeExam(examId);
+        return this;
+    }
+
+    public boolean isNew() {
+        return Objects.isNull(this.id);
+    }
+
 }
