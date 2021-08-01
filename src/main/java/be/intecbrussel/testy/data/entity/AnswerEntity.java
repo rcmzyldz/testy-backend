@@ -85,7 +85,7 @@ public class AnswerEntity implements java.io.Serializable, Persistable<Long>, DT
         return this;
     }
 
-    @OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @OneToOne
     private QuestionEntity question;
 
     public QuestionEntity getQuestion() {

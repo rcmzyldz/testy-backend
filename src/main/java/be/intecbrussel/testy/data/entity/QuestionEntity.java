@@ -90,7 +90,10 @@ public class QuestionEntity implements java.io.Serializable, Persistable<Long>, 
         return choices;
     }
 
-    @OneToOne(mappedBy = "question")
+    @OneToOne(
+            mappedBy = "question",
+            orphanRemoval = true,
+            cascade = CascadeType.ALL)
     private AnswerEntity answer;
 
     public AnswerEntity getAnswer() {

@@ -84,7 +84,7 @@ public class ExamEntity implements java.io.Serializable, Persistable<Long>, DTOM
         return this;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "student_id")
     private UserEntity student;
 
@@ -101,7 +101,7 @@ public class ExamEntity implements java.io.Serializable, Persistable<Long>, DTOM
         return this;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "question_id")
     private QuestionEntity question;
 
