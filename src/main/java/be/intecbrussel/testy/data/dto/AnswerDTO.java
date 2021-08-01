@@ -121,12 +121,13 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
 
     @Override
     public AnswerEntity toEntity() {
-        final var entity = new AnswerEntity()
-                .withId(Objects.requireNonNull(this.getId()))
-                .withHeader(Objects.requireNonNull(this.getHeader()))
-                .withBody(Objects.requireNonNull(this.getBody()))
-                .withDocument(Objects.requireNonNull(this.getDocument()))
-                .withQuestion(Objects.requireNonNull(this.getQuestion().toEntity()));
+        final var entity = new AnswerEntity();
+
+        entity.setId(this.getId());
+        entity.setHeader(this.getHeader());
+        entity.setBody(this.getBody());
+        entity.setDocument(this.getDocument());
+        entity.setQuestion(this.getQuestion().toEntity());
 
         return entity;
     }

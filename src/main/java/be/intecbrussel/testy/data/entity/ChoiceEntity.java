@@ -50,7 +50,7 @@ public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, DT
         this.weight = weight;
     }
 
-    public ChoiceEntity withWeight(Double weight){
+    public ChoiceEntity withWeight(Double weight) {
         setWeight(weight);
         return this;
     }
@@ -184,15 +184,23 @@ public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, DT
 
     @Override
     public ChoiceDTO toDTO() {
-        final var dto = new ChoiceDTO()
-                .withId(Objects.requireNonNull(this.getId()))
-                .withWeight(Objects.requireNonNull(this.getWeight()))
-                .withHeader(Objects.requireNonNull(this.getHeader()))
-                .withBody(Objects.requireNonNull(this.getBody()))
-                .withImage(Objects.requireNonNull(this.getImage()))
-                .withDocument(Objects.requireNonNull(this.getDocument()))
-                .withExplanation(Objects.requireNonNull(this.getExplanation()))
-                .withQuestion(Objects.requireNonNull(this.getQuestion().toDTO()));
+        final var dto = new ChoiceDTO();
+        if (this.id != null)
+            dto.setId(this.getId());
+        if (this.weight != null)
+            dto.setWeight(this.getWeight());
+        if (this.header != null)
+            dto.setHeader(this.getHeader());
+        if (this.body != null)
+            dto.setBody(this.getBody());
+        if (this.image != null)
+            dto.setImage(this.getImage());
+        if (this.document != null)
+            dto.setDocument(this.getDocument());
+        if (this.explanation != null)
+            dto.setExplanation(this.getExplanation());
+        if (this.question != null)
+            dto.setQuestion(this.getQuestion().toDTO());
 
         return dto;
     }

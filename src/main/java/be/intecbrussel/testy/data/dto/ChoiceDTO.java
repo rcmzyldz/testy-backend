@@ -40,7 +40,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         this.weight = weight;
     }
 
-    public ChoiceDTO withWeight(Double weight){
+    public ChoiceDTO withWeight(Double weight) {
         setWeight(weight);
         return this;
     }
@@ -171,14 +171,22 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
     @Override
     public ChoiceEntity toEntity() {
         final var entity = new ChoiceEntity();
-        entity.setId(this.getId());
-        entity.setWeight(this.getWeight());
-        entity.setHeader(this.getHeader());
-        entity.setBody(this.getBody());
-        entity.setImage(this.getImage());
-        entity.setDocument(this.getDocument());
-        entity.setExplanation(this.getExplanation());
-        entity.setQuestion(this.getQuestion().toEntity());
+        if (this.id != null)
+            entity.setId(this.getId());
+        if (this.weight != null)
+            entity.setWeight(this.getWeight());
+        if (this.header != null)
+            entity.setHeader(this.getHeader());
+        if (this.body != null)
+            entity.setBody(this.getBody());
+        if (this.image != null)
+            entity.setImage(this.getImage());
+        if (this.document != null)
+            entity.setDocument(this.getDocument());
+        if (this.explanation != null)
+            entity.setExplanation(this.getExplanation());
+        if (this.question != null)
+            entity.setQuestion(this.getQuestion().toEntity());
 
         return entity;
     }
