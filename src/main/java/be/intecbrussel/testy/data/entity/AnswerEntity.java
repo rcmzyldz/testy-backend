@@ -133,12 +133,23 @@ public class AnswerEntity implements java.io.Serializable, Persistable<Long>, DT
 
     @Override
     public AnswerDTO toDTO() {
+
         final var dto = new AnswerDTO();
-        dto.setId(this.getId());
-        dto.setHeader(this.getHeader());
-        dto.setBody(this.getBody());
-        dto.setDocument(this.getDocument());
-        dto.setQuestion(this.getQuestion().toDTO());
+
+        if (this.id != null)
+            dto.setId(this.getId());
+
+        if (this.header != null)
+            dto.setHeader(this.getHeader());
+
+        if (this.body != null)
+            dto.setBody(this.getBody());
+
+        if (this.document != null)
+            dto.setDocument(this.getDocument());
+
+        if (this.question != null)
+            dto.setQuestion(this.getQuestion().toDTO());
 
         return dto;
     }

@@ -112,7 +112,7 @@ public class ExamService {
         return oEntity.get().toDTO();
     }
 
-    public void deleteById(long examId) throws NullPointerException, IllegalArgumentException, ResourceNotFoundException {
+    public void deleteById(Long examId) throws NullPointerException, IllegalArgumentException, ResourceNotFoundException {
 
         if (examId < 1) {
             throw new NullPointerException("Exam ID must be greater than zero.");
