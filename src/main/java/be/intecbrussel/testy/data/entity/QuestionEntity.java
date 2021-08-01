@@ -2,7 +2,6 @@ package be.intecbrussel.testy.data.entity;
 
 
 import be.intecbrussel.testy.data.DTOMapper;
-import be.intecbrussel.testy.data.dto.ChoiceDTO;
 import be.intecbrussel.testy.data.dto.QuestionDTO;
 import org.springframework.data.domain.Persistable;
 
@@ -177,15 +176,26 @@ public class QuestionEntity implements java.io.Serializable, Persistable<Long>, 
 
     @Override
     public QuestionDTO toDTO() {
-        final var dto = new QuestionDTO();
-        dto.setId(this.getId());
-        dto.setHeader(this.getHeader());
-        dto.setBody(this.getBody());
-        dto.setAnswer(this.getAnswer().toDTO());
 
-        for (ChoiceEntity choice : getChoices()) {
-            dto.addChoice(choice.toDTO());
-        }
+        final var dto = new QuestionDTO();
+
+        if (this.id != null)
+            dto.setId(this.getId());
+
+        if (this.header != null)
+            dto.setHeader(this.getHeader());
+
+        if (this.body != null)
+            dto.setBody(this.getBody());
+
+        if (this.answer != null)
+            dto.setAnswer(this.getAnswer().toDTO());
+
+        if (!this.choices.isEmpty())
+            for (ChoiceEntity choice : getChoices()) {
+                if (choice != null)
+                    dto.addChoice(choice.toDTO());
+            }
 
         return dto;
     }

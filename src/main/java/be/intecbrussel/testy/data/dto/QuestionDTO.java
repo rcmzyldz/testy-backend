@@ -130,14 +130,24 @@ public class QuestionDTO implements java.io.Serializable, EntityMapper<QuestionE
     public QuestionEntity toEntity() {
 
         final var entity = new QuestionEntity();
-        entity.setId(this.getId());
-        entity.setHeader(this.getHeader());
-        entity.setBody(this.getBody());
-        entity.setAnswer(this.getAnswer().toEntity());
 
-        for (ChoiceDTO choice : getChoices()) {
-            entity.addChoice(choice.toEntity());
-        }
+        if (this.id != null)
+            entity.setId(this.getId());
+
+        if (this.header != null)
+            entity.setHeader(this.getHeader());
+
+        if (this.body != null)
+            entity.setBody(this.getBody());
+
+        if (this.answer != null)
+            entity.setAnswer(this.getAnswer().toEntity());
+
+        if (!this.choices.isEmpty())
+            for (ChoiceDTO choice : getChoices()) {
+                if (choice != null)
+                    entity.addChoice(choice.toEntity());
+            }
 
         return entity;
     }
