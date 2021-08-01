@@ -90,8 +90,7 @@ public class QuestionEntity implements java.io.Serializable, Persistable<Long>, 
         return choices;
     }
 
-    @OneToOne
-    @JoinColumn
+    @OneToOne(mappedBy = "question")
     private AnswerEntity answer;
 
     public AnswerEntity getAnswer() {
@@ -99,6 +98,7 @@ public class QuestionEntity implements java.io.Serializable, Persistable<Long>, 
     }
 
     public void setAnswer(AnswerEntity answer) {
+        answer.setQuestion(this);
         this.answer = answer;
     }
 

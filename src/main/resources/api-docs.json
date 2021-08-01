@@ -27,6 +27,10 @@
       "description": "Exam Controller"
     },
     {
+      "name": "question-controller",
+      "description": "Question Controller"
+    },
+    {
       "name": "web-mvc-links-handler",
       "description": "Web Mvc Links Handler"
     }
@@ -488,6 +492,230 @@
         }
       }
     },
+    "/api/v1/questions": {
+      "get": {
+        "tags": [
+          "question-controller"
+        ],
+        "summary": "findAll",
+        "operationId": "findAllUsingGET_1",
+        "parameters": [
+          {
+            "name": "pageNo",
+            "in": "query",
+            "description": "pageNo",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "pageSize",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "302": {
+            "description": "Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuestionDTORes"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "question-controller"
+        ],
+        "summary": "create",
+        "operationId": "createUsingPOST_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionDTOReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/v1/questions/{id}": {
+      "get": {
+        "tags": [
+          "question-controller"
+        ],
+        "summary": "findById",
+        "operationId": "findByIdUsingGET_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "302": {
+            "description": "Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionDTORes"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "question-controller"
+        ],
+        "summary": "update",
+        "operationId": "updateUsingPUT_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionDTOReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "question-controller"
+        ],
+        "summary": "delete",
+        "operationId": "deleteUsingDELETE_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
     "/actuator": {
       "get": {
         "tags": [
@@ -548,8 +776,7 @@
             "type": "string"
           },
           "document": {
-            "type": "string",
-            "format": "byte"
+            "type": "string"
           },
           "header": {
             "type": "string"
@@ -571,8 +798,7 @@
             "type": "string"
           },
           "document": {
-            "type": "string",
-            "format": "byte"
+            "type": "string"
           },
           "header": {
             "type": "string"
@@ -866,13 +1092,6 @@
               "$ref": "#/components/schemas/ChoiceDTOReq"
             }
           },
-          "exams": {
-            "uniqueItems": true,
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ExamDTOReq"
-            }
-          },
           "header": {
             "type": "string"
           },
@@ -897,13 +1116,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ChoiceDTORes"
-            }
-          },
-          "exams": {
-            "uniqueItems": true,
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ExamDTORes"
             }
           },
           "header": {
@@ -933,13 +1145,6 @@
           },
           "email": {
             "type": "string"
-          },
-          "exams": {
-            "uniqueItems": true,
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ExamDTOReq"
-            }
           },
           "firstName": {
             "type": "string"
@@ -987,13 +1192,6 @@
           },
           "email": {
             "type": "string"
-          },
-          "exams": {
-            "uniqueItems": true,
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ExamDTORes"
-            }
           },
           "firstName": {
             "type": "string"

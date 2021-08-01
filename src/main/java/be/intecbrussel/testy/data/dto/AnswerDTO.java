@@ -60,17 +60,17 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
         return this;
     }
 
-    private Byte[] document;
+    private String document;
 
-    public Byte[] getDocument() {
+    public String getDocument() {
         return document;
     }
 
-    public void setDocument(Byte[] document) {
+    public void setDocument(String document) {
         this.document = document;
     }
 
-    public AnswerDTO withDocument(Byte[] document) {
+    public AnswerDTO withDocument(String document) {
         setDocument(document);
         return this;
     }

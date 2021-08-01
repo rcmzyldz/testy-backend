@@ -70,17 +70,17 @@ public class AnswerEntity implements java.io.Serializable, Persistable<Long>, DT
         return this;
     }
 
-    private Byte[] document;
+    private String document;
 
-    public Byte[] getDocument() {
+    public String getDocument() {
         return document;
     }
 
-    public void setDocument(Byte[] document) {
+    public void setDocument(String document) {
         this.document = document;
     }
 
-    public AnswerEntity withDocument(Byte[] document) {
+    public AnswerEntity withDocument(String document) {
         setDocument(document);
         return this;
     }
