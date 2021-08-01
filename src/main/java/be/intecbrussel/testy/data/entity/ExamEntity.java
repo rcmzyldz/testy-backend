@@ -9,10 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.Objects;
 
-
-// JPA
-@Entity(name = "exam")
-
+@Entity
 public class ExamEntity implements java.io.Serializable, Persistable<Long>, DTOMapper<ExamDTO> {
 
     public ExamEntity() {
@@ -201,16 +198,16 @@ public class ExamEntity implements java.io.Serializable, Persistable<Long>, DTOM
 
     @Override
     public ExamDTO toDTO() {
-        final var dto = new ExamDTO()
-                .withId(Objects.requireNonNull(this.getId()))
-                .withCode(Objects.requireNonNull(this.getCode()))
-                .withHeader(Objects.requireNonNull(this.getHeader()))
-                .withBody(Objects.requireNonNull(this.getBody()))
-                .withStudent(Objects.requireNonNull(this.getStudent().toDTO()))
-                .withQuestion(Objects.requireNonNull(this.getQuestion().toDTO()))
-                .withStarted(Objects.requireNonNull(this.getStarted()))
-                .withEnded(Objects.requireNonNull(this.getEnded()))
-                .withScore(Objects.requireNonNull(this.getScore()));
+        final var dto = new ExamDTO();
+        dto.setId(this.getId());
+        dto.setCode(this.getCode());
+        dto.setHeader(this.getHeader());
+        dto.setBody(this.getBody());
+        dto.setStudent(this.getStudent().toDTO());
+        dto.setQuestion(this.getQuestion().toDTO());
+        dto.setStarted(this.getStarted());
+        dto.setEnded(this.getEnded());
+        dto.setScore(this.getScore());
 
         return dto;
     }

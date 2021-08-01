@@ -170,15 +170,15 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
 
     @Override
     public ChoiceEntity toEntity() {
-        final var entity = new ChoiceEntity()
-                .withId(Objects.requireNonNull(this.getId()))
-                .withWeight(Objects.requireNonNull(this.getWeight()))
-                .withHeader(Objects.requireNonNull(this.getHeader()))
-                .withBody(Objects.requireNonNull(this.getBody()))
-                .withImage(Objects.requireNonNull(this.getImage()))
-                .withDocument(Objects.requireNonNull(this.getDocument()))
-                .withExplanation(Objects.requireNonNull(this.getExplanation()))
-                .withQuestion(Objects.requireNonNull(this.getQuestion().toEntity()));
+        final var entity = new ChoiceEntity();
+        entity.setId(this.getId());
+        entity.setWeight(this.getWeight());
+        entity.setHeader(this.getHeader());
+        entity.setBody(this.getBody());
+        entity.setImage(this.getImage());
+        entity.setDocument(this.getDocument());
+        entity.setExplanation(this.getExplanation());
+        entity.setQuestion(this.getQuestion().toEntity());
 
         return entity;
     }

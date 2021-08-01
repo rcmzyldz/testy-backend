@@ -34,15 +34,15 @@ public interface UserRepository extends JpaRepository<UserEntity, Long>, JpaSpec
                         @NotEmpty final String lastName);
 
         @Modifying
-        @Query(value = "update user u SET u.activated = :activated WHERE u.id = :id")
+        @Query(value = "update UserEntity u SET u.activated = :activated WHERE u.id = :id")
         int updateActivatedById(@Param(value = "id") long id, @Param("activated") boolean activated);
 
         @Modifying
-        @Query(value = "update user u SET u.authenticated = :authenticated WHERE u.id = :id")
+        @Query(value = "update UserEntity u SET u.authenticated = :authenticated WHERE u.id = :id")
         int updateAuthenticatedById(@Param(value = "id") long id, @Param("authenticated") boolean activated);
 
         @Modifying(clearAutomatically = true)
-        @Query(value = "update user u SET u.session = :session WHERE u.email = :email")
+        @Query(value = "update UserEntity u SET u.session = :session WHERE u.email = :email")
         int updateSessionByEmail(@Param(value = "email") String email, @Param("session") String session);
 
 }

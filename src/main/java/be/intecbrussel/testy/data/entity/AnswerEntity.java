@@ -9,9 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.Objects;
 
-// JPA
-@Entity(name = "answer")
-
+@Entity
 public class AnswerEntity implements java.io.Serializable, Persistable<Long>, DTOMapper<AnswerDTO> {
 
     public AnswerEntity() {

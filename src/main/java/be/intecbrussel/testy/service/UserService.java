@@ -3,8 +3,7 @@ package be.intecbrussel.testy.service;
 import be.intecbrussel.testy.data.dto.UserDTO;
 import be.intecbrussel.testy.data.entity.UserEntity;
 import be.intecbrussel.testy.data.http.HttpExceptionMessage;
-import be.intecbrussel.testy.exception.UserException;
-import be.intecbrussel.testy.mapper.UserMapper;
+import be.intecbrussel.testy.service.exception.ResourceNotFoundException;
 import be.intecbrussel.testy.repository.UserRepository;
 import org.slf4j.Logger;
 import org.springframework.data.domain.PageRequest;
@@ -15,84 +14,76 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
-// SPRING
 @Service
-
-// LOMBOK
-
 public class UserService {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.userMapper = userMapper;
     }
 
-
     @Transactional
-    public void create(UserDTO request) throws UserException {
+    public void create(UserDTO request) throws ResourceNotFoundException {
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new UserException(HttpExceptionMessage.USER_EMAIL_ALREADY_EXIST.name());
+            throw new ResourceNotFoundException(HttpExceptionMessage.USER_EMAIL_ALREADY_EXIST.name());
         }
 
-        final var entity = userMapper.toEntity(request);
-        final var savedUser = userRepository.save(entity);
+        final var savedUser = userRepository.save(request.toEntity());
         log.info("User is created: " + savedUser);
     }
 
     @Transactional
-    public void update(long id, UserDTO request) throws UserException {
+    public void update(Long id, UserDTO request) throws ResourceNotFoundException {
         final var foundEntity = userRepository.findById(id);
         if (foundEntity.isEmpty()) {
-            throw new UserException(HttpExceptionMessage.MANAGER_IS_NOT_FOUND.name());
+            throw new ResourceNotFoundException("User not found..!");
         }
 
-        final var updatedEntity = userMapper.toEntity(request, foundEntity.get());
-        final var savedUser = userRepository.save(updatedEntity);
+        request.setId(id);
+        final var savedUser = userRepository.save(request.toEntity());
         log.info("User is created: " + savedUser);
     }
 
-    public Set<UserDTO> selectAll(int pageSize, int pageNo) throws UserException {
+    public Set<UserDTO> selectAll(int pageSize, int pageNo) throws ResourceNotFoundException {
         final var entities = userRepository.findAll(PageRequest.of(pageNo, pageSize));
         final var responses = new LinkedHashSet<UserDTO>();
         for (UserEntity entity : entities) {
-            responses.add(userMapper.toDTO(entity));
+            responses.add(entity.toDTO());
         }
         return responses;
     }
 
-    public UserDTO selectByUsername(final String username) throws UserException {
+    public UserDTO selectByUsername(final String username) throws ResourceNotFoundException {
         final var entity = userRepository.findByEmail(username);
         if (entity.isEmpty()) {
-            throw new UserException(HttpExceptionMessage.MANAGER_IS_NOT_FOUND.name());
+            throw new ResourceNotFoundException(HttpExceptionMessage.MANAGER_IS_NOT_FOUND.name());
         }
 
-        return userMapper.toDTO(entity.get());
+        return entity.get().toDTO();
     }
 
     @Transactional
-    public boolean patchSession(final String email, final String session) throws UserException {
+    public boolean patchSession(final String email, final String session) throws ResourceNotFoundException {
 
         if (Objects.isNull(email) || Objects.isNull(session)) {
-            throw new UserException("User email and|or session is (are) required.");
+            throw new ResourceNotFoundException("User email and|or session is (are) required.");
         }
 
         final var oUser = userRepository.findByEmail(email);
 
         if (oUser.isEmpty()) {
-            throw new UserException("User does NOT exist!");
+            throw new ResourceNotFoundException("User does NOT exist!");
         }
 
         final var foundUser = oUser.get();
         if (!foundUser.isActivated()) {
-            throw new UserException("User is not activated!");
+            throw new ResourceNotFoundException("User is not activated!");
         }
 
         if (!foundUser.isAuthenticated()) {
-            throw new UserException("User is not authenticated!");
+            throw new ResourceNotFoundException("User is not authenticated!");
         }
 
         int noOfRowsEffected = 0;
@@ -104,10 +95,10 @@ public class UserService {
     }
 
     @Transactional
-    public boolean activate(final String email, final String activation) throws UserException {
+    public boolean activate(final String email, final String activation) throws ResourceNotFoundException {
 
         if (Objects.isNull(email) || Objects.isNull(activation)) {
-            throw new UserException("User email and|or activation request is (are) required.");
+            throw new ResourceNotFoundException("User email and|or activation request is (are) required.");
         }
 
         final var oStudent = userRepository.findByEmailAndActivation(email, activation);
@@ -115,15 +106,15 @@ public class UserService {
             return false;
         }
 
-        userRepository.updateActivatedById(oStudent.get().getId(), true);
+        userRepository.updateActivatedById(Objects.requireNonNull(oStudent.get().getId()), true);
         return true;
     }
 
     @Transactional
-    public boolean deActivate(long id) throws UserException {
+    public boolean deActivate(Long id) throws ResourceNotFoundException {
 
         if (Objects.isNull(id) || id < 1) {
-            throw new UserException("User activation request is required.");
+            throw new ResourceNotFoundException("User activation request is required.");
         }
 
         final var userExists = userRepository.existsById(id);
@@ -136,10 +127,10 @@ public class UserService {
     }
 
     @Transactional
-    public boolean authenticate(final String email, final String password) throws UserException {
+    public boolean authenticate(final String email, final String password) throws ResourceNotFoundException {
 
         if (Objects.isNull(email) || Objects.isNull(password)) {
-            throw new UserException("User activation request is required.");
+            throw new ResourceNotFoundException("User activation request is required.");
         }
 
         final var oStudent = userRepository.findByEmailAndPassword(email, password);
@@ -147,15 +138,15 @@ public class UserService {
             return false;
         }
 
-        userRepository.updateAuthenticatedById(oStudent.get().getId(), true);
+        userRepository.updateAuthenticatedById(Objects.requireNonNull(oStudent.get().getId()), true);
         return true;
     }
 
     @Transactional
-    public boolean deAuthenticate(long id) throws UserException {
+    public boolean deAuthenticate(Long id) throws ResourceNotFoundException {
 
         if (Objects.isNull(id) || id < 1) {
-            throw new UserException("User activation request is required.");
+            throw new ResourceNotFoundException("User activation request is required.");
         }
 
         final var userExists = userRepository.existsById(id);

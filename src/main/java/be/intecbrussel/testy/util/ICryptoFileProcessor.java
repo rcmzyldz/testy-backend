@@ -1,6 +1,6 @@
 package be.intecbrussel.testy.util;
 
-import be.intecbrussel.testy.exception.CryptoException;
+import be.intecbrussel.testy.service.exception.CryptoException;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;

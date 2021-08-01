@@ -9,12 +9,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-// SPRING
 @RestController
 @RequestMapping("/api/v1/exams")
-
-// LOMBOK
-
 public class ExamController {
 
     private final ExamService examService;
@@ -26,7 +22,7 @@ public class ExamController {
     @GetMapping
     @ResponseStatus(HttpStatus.FOUND)
     public List<ExamDTO> findAll(@RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNo,
-                                 @RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageSize) {
+                                 @RequestParam(value = "pageSize", defaultValue = "25", required = false) int pageSize) {
 
         return examService.findAll(pageNo, pageSize);
     }
@@ -34,7 +30,7 @@ public class ExamController {
     @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.FOUND)
     public ExamDTO findById(@PathVariable("id") Long id) {
-        return RestPreconditions.checkFound(examService.findById(id));
+        return examService.findById(id);
     }
 
     @PostMapping

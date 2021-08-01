@@ -1,4 +1,4 @@
-package be.intecbrussel.testy.exception;
+package be.intecbrussel.testy.service.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

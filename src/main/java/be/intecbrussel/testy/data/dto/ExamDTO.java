@@ -6,6 +6,8 @@ import be.intecbrussel.testy.data.entity.ExamEntity;
 import java.time.Instant;
 import java.util.Objects;
 
+import static java.util.Objects.*;
+
 
 public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
 
@@ -152,7 +154,7 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
     }
 
     public boolean isNew() {
-        return Objects.isNull(this.id);
+        return isNull(this.id);
     }
 
     @Override
@@ -165,7 +167,7 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCode(), getStudent(), getQuestion());
+        return hash(getCode(), getStudent(), getQuestion());
     }
 
     @Override
@@ -186,16 +188,34 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
 
     @Override
     public ExamEntity toEntity() {
-        final var entity = new ExamEntity()
-                .withId(Objects.requireNonNull(this.getId()))
-                .withCode(Objects.requireNonNull(this.getCode()))
-                .withHeader(Objects.requireNonNull(this.getHeader()))
-                .withBody(Objects.requireNonNull(this.getBody()))
-                .withStudent(Objects.requireNonNull(this.getStudent().toEntity()))
-                .withQuestion(Objects.requireNonNull(this.getQuestion().toEntity()))
-                .withStarted(Objects.requireNonNull(this.getStarted()))
-                .withEnded(Objects.requireNonNull(this.getEnded()))
-                .withScore(Objects.requireNonNull(this.getScore()));
+        final var entity = new ExamEntity();
+
+        if (this.id != null)
+            entity.setId(this.getId());
+
+        if (this.code != null)
+            entity.setCode(this.getCode());
+
+        if (this.header != null)
+            entity.setHeader(this.getHeader());
+
+        if (this.body != null)
+            entity.setBody(this.getBody());
+
+        if (this.student != null)
+            entity.setStudent(this.getStudent().toEntity());
+
+        if (this.question != null)
+            entity.setQuestion(this.getQuestion().toEntity());
+
+        if (this.started != null)
+            entity.setStarted(this.getStarted());
+
+        if (this.ended != null)
+            entity.setEnded(this.getEnded());
+
+        if (this.score != null)
+            entity.setScore(this.getScore());
 
         return entity;
     }

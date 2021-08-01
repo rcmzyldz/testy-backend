@@ -1,12 +1,9 @@
 package be.intecbrussel.testy.data.dto;
 
 import be.intecbrussel.testy.data.EntityMapper;
-import be.intecbrussel.testy.data.entity.ChoiceEntity;
-import be.intecbrussel.testy.data.entity.ExamEntity;
 import be.intecbrussel.testy.data.entity.QuestionEntity;
 
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -68,10 +65,12 @@ public class QuestionDTO implements java.io.Serializable, EntityMapper<QuestionE
     private final Set<ChoiceDTO> choices = new HashSet<>();
 
     public void addChoice(ChoiceDTO choice) {
+        choice.setQuestion(this);
         this.choices.add(choice);
     }
 
     public void removeChoice(ChoiceDTO choice) {
+        choice.setQuestion(null);
         this.choices.remove(choice);
     }
 
@@ -95,39 +94,6 @@ public class QuestionDTO implements java.io.Serializable, EntityMapper<QuestionE
 
     public QuestionDTO withAnswer(AnswerDTO answer) {
         setAnswer(answer);
-        return this;
-    }
-
-    private final Set<ExamDTO> exams = new LinkedHashSet<>();
-
-    public Set<ExamDTO> getExams() {
-        return exams;
-    }
-
-    public void addExam(ExamDTO exam) {
-        this.exams.add(exam);
-    }
-
-    public QuestionDTO withExam(ExamDTO exam) {
-        addExam(exam);
-        return this;
-    }
-
-    public void removeExam(ExamDTO exam) {
-        this.exams.remove(exam);
-    }
-
-    public void removeExam(Long examId) {
-        this.exams.removeIf(exam -> Objects.equals(exam.getId(), examId));
-    }
-
-    public QuestionDTO withoutExam(ExamDTO exam) {
-        removeExam(exam);
-        return this;
-    }
-
-    public QuestionDTO withoutExam(Long examId) {
-        removeExam(examId);
         return this;
     }
 
@@ -156,7 +122,6 @@ public class QuestionDTO implements java.io.Serializable, EntityMapper<QuestionE
         sb.append(", body='").append(body).append('\'');
         sb.append(", choices=").append(choices);
         sb.append(", answerId=").append(answer.getId());
-        sb.append(", exams=").append(exams);
         sb.append('}');
         return sb.toString();
     }
@@ -164,18 +129,14 @@ public class QuestionDTO implements java.io.Serializable, EntityMapper<QuestionE
     @Override
     public QuestionEntity toEntity() {
 
-        final var entity = new QuestionEntity()
-                .withId(Objects.requireNonNull(this.getId()))
-                .withHeader(Objects.requireNonNull(this.getHeader()))
-                .withBody(Objects.requireNonNull(this.getBody()))
-                .withAnswer(Objects.requireNonNull(this.getAnswer().toEntity()));
+        final var entity = new QuestionEntity();
+        entity.setId(this.getId());
+        entity.setHeader(this.getHeader());
+        entity.setBody(this.getBody());
+        entity.setAnswer(this.getAnswer().toEntity());
 
         for (ChoiceDTO choice : getChoices()) {
             entity.addChoice(choice.toEntity());
-        }
-
-        for (ExamDTO exam : getExams()) {
-            entity.addExam(exam.toEntity());
         }
 
         return entity;

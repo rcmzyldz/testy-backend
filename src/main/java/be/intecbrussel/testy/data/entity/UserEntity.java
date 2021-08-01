@@ -9,13 +9,12 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
 
-// LOMBOK
-
-// JPA
-@Entity(name = "user")
-
+@Entity
 public class UserEntity implements java.io.Serializable, Persistable<Long>, DTOMapper<UserDTO> {
 
     public UserEntity() {
@@ -44,8 +43,7 @@ public class UserEntity implements java.io.Serializable, Persistable<Long>, DTOM
     }
 
     @NotEmpty
-    private
-    String firstName;
+    private String firstName;
 
     public String getFirstName() {
         return firstName;
@@ -217,6 +215,7 @@ public class UserEntity implements java.io.Serializable, Persistable<Long>, DTOM
     private final Set<ExamEntity> exams = new HashSet<>();
 
     public void addExam(ExamEntity exam) {
+        exam.setStudent(this);
         this.exams.add(exam);
     }
 
@@ -226,6 +225,7 @@ public class UserEntity implements java.io.Serializable, Persistable<Long>, DTOM
     }
 
     public void removeExam(ExamEntity exam) {
+        exam.setQuestion(null);
         this.exams.remove(exam);
     }
 
@@ -324,24 +324,46 @@ public class UserEntity implements java.io.Serializable, Persistable<Long>, DTOM
     @Override
     public UserDTO toDTO() {
 
-        final var dto = new UserDTO()
-                .withId(Objects.requireNonNull(this.getId()))
-                .withFirstName(Objects.requireNonNull(this.getFirstName()))
-                .withLastName(Objects.requireNonNull(this.getLastName()))
-                .withEmail(Objects.requireNonNull(this.getEmail()))
-                .withPhone(Objects.requireNonNull(this.getPhone()))
-                .withPassword(Objects.requireNonNull(this.getPassword()))
-                .withRoles(Objects.requireNonNull(this.getRoles()))
-                .withSession(Objects.requireNonNull(this.getSession()))
-                .withActivation(Objects.requireNonNull(this.getActivation()))
-                .withActivated(Objects.requireNonNull(this.isActivated()))
-                .withAuthenticated(Objects.requireNonNull(this.isAuthenticated()))
-                .withScore(Objects.requireNonNull(this.getScore()))
-                .withProfile(Objects.requireNonNull(this.getProfile()));
+        final var dto = new UserDTO();
 
-        for (ExamEntity exam : getExams()) {
-            dto.addExam(exam.toDTO());
-        }
+        if (this.id != null)
+            dto.setId(this.getId());
+
+        if (this.firstName != null)
+            dto.setFirstName(this.getFirstName());
+
+        if (this.lastName != null)
+            dto.setLastName(this.getLastName());
+
+        if (this.email != null)
+            dto.setEmail(this.getEmail());
+
+        if (this.phone != null)
+            dto.setPhone(this.getPhone());
+
+        if (this.password != null)
+            dto.setPassword(this.getPassword());
+
+        if (this.roles != null)
+            dto.setRoles(this.getRoles());
+
+        if (this.session != null)
+            dto.setSession(this.getSession());
+
+        if (this.activation != null)
+            dto.setActivation(this.getActivation());
+
+        if (this.activated != null)
+            dto.setActivated(this.isActivated());
+
+        if (this.authenticated != null)
+            dto.setAuthenticated(this.isAuthenticated());
+
+        if (this.score != null)
+            dto.setScore(this.getScore());
+
+        if (this.profile != null)
+            dto.setProfile(this.getProfile());
 
         return dto;
     }

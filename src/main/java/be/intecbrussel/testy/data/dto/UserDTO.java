@@ -3,9 +3,7 @@ package be.intecbrussel.testy.data.dto;
 import be.intecbrussel.testy.data.EntityMapper;
 import be.intecbrussel.testy.data.entity.UserEntity;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
@@ -185,39 +183,6 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         return this;
     }
 
-    private final Set<ExamDTO> exams = new HashSet<>();
-
-    public void addExam(ExamDTO exam) {
-        this.exams.add(exam);
-    }
-
-    public UserDTO withExam(ExamDTO exam) {
-        addExam(exam);
-        return this;
-    }
-
-    public void removeExam(ExamDTO exam) {
-        this.exams.remove(exam);
-    }
-
-    public UserDTO withoutExam(ExamDTO exam) {
-        removeExam(exam);
-        return this;
-    }
-
-    public void removeExam(Long examId) {
-        this.exams.removeIf(exam -> Objects.equals(exam.getId(), examId));
-    }
-
-    public UserDTO withoutExam(Long examId) {
-        removeExam(examId);
-        return this;
-    }
-
-    public Set<ExamDTO> getExams() {
-        return exams;
-    }
-
     private Double score;
 
     public Double getScore() {
@@ -282,7 +247,6 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         sb.append(", activation='").append(activation).append('\'');
         sb.append(", activated=").append(activated);
         sb.append(", authenticated=").append(authenticated);
-        sb.append(", exams=").append(exams);
         sb.append(", score=").append(score);
         sb.append(", profile='").append(profile).append('\'');
         sb.append('}');
@@ -291,24 +255,47 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
 
     @Override
     public UserEntity toEntity() {
-        final var entity = new UserEntity()
-                .withId(Objects.requireNonNull(this.getId()))
-                .withFirstName(Objects.requireNonNull(this.getFirstName()))
-                .withLastName(Objects.requireNonNull(this.getLastName()))
-                .withEmail(Objects.requireNonNull(this.getEmail()))
-                .withPhone(Objects.requireNonNull(this.getPhone()))
-                .withPassword(Objects.requireNonNull(this.getPassword()))
-                .withRoles(Objects.requireNonNull(this.getRoles()))
-                .withSession(Objects.requireNonNull(this.getSession()))
-                .withActivation(Objects.requireNonNull(this.getActivation()))
-                .withActivated(Objects.requireNonNull(this.isActivated()))
-                .withAuthenticated(Objects.requireNonNull(this.isAuthenticated()))
-                .withScore(Objects.requireNonNull(this.getScore()))
-                .withProfile(Objects.requireNonNull(this.getProfile()));
 
-        for (ExamDTO exam : getExams()) {
-            entity.addExam(exam.toEntity());
-        }
+        final var entity = new UserEntity();
+
+        if (this.id != null)
+            entity.setId(this.getId());
+
+        if (this.firstName != null)
+            entity.setFirstName(this.getFirstName());
+
+        if (this.lastName != null)
+            entity.setLastName(this.getLastName());
+
+        if (this.email != null)
+            entity.setEmail(this.getEmail());
+
+        if (this.phone != null)
+            entity.setPhone(this.getPhone());
+
+        if (this.password != null)
+            entity.setPassword(this.getPassword());
+
+        if (this.roles != null)
+            entity.setRoles(this.getRoles());
+
+        if (this.session != null)
+            entity.setSession(this.getSession());
+
+        if (this.activation != null)
+            entity.setActivation(this.getActivation());
+
+        if (this.activated != null)
+            entity.setActivated(this.isActivated());
+
+        if (this.authenticated != null)
+            entity.setAuthenticated(this.isAuthenticated());
+
+        if (this.score != null)
+            entity.setScore(this.getScore());
+
+        if (this.profile != null)
+            entity.setProfile(this.getProfile());
 
         return entity;
     }

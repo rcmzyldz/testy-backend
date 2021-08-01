@@ -11,9 +11,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 
-// JPA
-@Entity(name = "choice")
-
+@Entity
 public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, DTOMapper<ChoiceDTO> {
 
     public ChoiceEntity() {

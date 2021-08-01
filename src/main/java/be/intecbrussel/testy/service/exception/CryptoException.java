@@ -1,4 +1,4 @@
-package be.intecbrussel.testy.exception;
+package be.intecbrussel.testy.service.exception;
 
 public class CryptoException extends Exception {
 

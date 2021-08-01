@@ -2,6 +2,7 @@ package be.intecbrussel.testy.data.entity;
 
 
 import be.intecbrussel.testy.data.DTOMapper;
+import be.intecbrussel.testy.data.dto.ChoiceDTO;
 import be.intecbrussel.testy.data.dto.QuestionDTO;
 import org.springframework.data.domain.Persistable;
 
@@ -11,11 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
-// LOMBOK
-
-// JPA
-@Entity(name = "question")
-
+@Entity
 public class QuestionEntity implements java.io.Serializable, Persistable<Long>, DTOMapper<QuestionDTO> {
 
     public QuestionEntity() {
@@ -78,6 +75,7 @@ public class QuestionEntity implements java.io.Serializable, Persistable<Long>, 
     private final Set<ChoiceEntity> choices = new HashSet<>();
 
     public void addChoice(ChoiceEntity choice) {
+        choice.setQuestion(this);
         this.choices.add(choice);
     }
 
@@ -118,6 +116,7 @@ public class QuestionEntity implements java.io.Serializable, Persistable<Long>, 
     }
 
     public void addExam(ExamEntity exam) {
+        exam.setQuestion(this);
         this.exams.add(exam);
     }
 
@@ -127,6 +126,7 @@ public class QuestionEntity implements java.io.Serializable, Persistable<Long>, 
     }
 
     public void removeExam(ExamEntity exam) {
+        exam.setQuestion(null);
         this.exams.remove(exam);
     }
 
@@ -177,18 +177,14 @@ public class QuestionEntity implements java.io.Serializable, Persistable<Long>, 
 
     @Override
     public QuestionDTO toDTO() {
-        final var dto = new QuestionDTO()
-                .withId(Objects.requireNonNull(this.getId()))
-                .withHeader(Objects.requireNonNull(this.getHeader()))
-                .withBody(Objects.requireNonNull(this.getBody()))
-                .withAnswer(Objects.requireNonNull(this.getAnswer().toDTO()));
+        final var dto = new QuestionDTO();
+        dto.setId(this.getId());
+        dto.setHeader(this.getHeader());
+        dto.setBody(this.getBody());
+        dto.setAnswer(this.getAnswer().toDTO());
 
         for (ChoiceEntity choice : getChoices()) {
             dto.addChoice(choice.toDTO());
-        }
-
-        for (ExamEntity exam : getExams()) {
-            dto.addExam(exam.toDTO());
         }
 
         return dto;
