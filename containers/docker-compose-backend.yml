@@ -1,4 +1,6 @@
-version: "3.1"
+# docker-compose.yml for REST API
+
+version: '3.9'
 
 services:
 
@@ -10,3 +12,5 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://db_server:3306/database?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSOWRD: testy
+    ports:
+      - 8001:8080
