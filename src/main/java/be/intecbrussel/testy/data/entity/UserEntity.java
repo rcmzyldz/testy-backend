@@ -2,7 +2,6 @@ package be.intecbrussel.testy.data.entity;
 
 import be.intecbrussel.testy.data.DTOMapper;
 import be.intecbrussel.testy.data.dto.UserDTO;
-import org.hibernate.validator.constraints.URL;
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
@@ -262,7 +261,6 @@ public class UserEntity implements java.io.Serializable, Persistable<Long>, DTOM
         return this;
     }
 
-    @URL
     @NotEmpty
     private String profile;
 
