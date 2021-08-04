@@ -1,6 +1,7 @@
 package be.intecbrussel.testy.data.dto;
 
 import be.intecbrussel.testy.data.EntityMapper;
+import be.intecbrussel.testy.data.entity.ChoiceEntity;
 import be.intecbrussel.testy.data.entity.QuestionEntity;
 
 import java.util.HashSet;
@@ -62,23 +63,17 @@ public class QuestionDTO implements java.io.Serializable, EntityMapper<QuestionE
         return this;
     }
 
-    private final Set<ChoiceDTO> choices = new HashSet<>();
+    private final Set<Long> choices = new HashSet<>();
 
-    public void addChoice(ChoiceDTO choice) {
-        choice.setQuestion(this);
-        this.choices.add(choice);
-    }
-
-    public void removeChoice(ChoiceDTO choice) {
-        choice.setQuestion(null);
-        this.choices.remove(choice);
+    public void addChoice(Long choiceId) {
+        this.choices.add(choiceId);
     }
 
     public void removeChoice(Long choiceId) {
-        this.choices.removeIf(choice -> Objects.requireNonNull(choice.getId()).equals(choiceId));
+        this.choices.remove(choiceId);
     }
 
-    public Set<ChoiceDTO> getChoices() {
+    public Set<Long> getChoices() {
         return choices;
     }
 
@@ -144,9 +139,9 @@ public class QuestionDTO implements java.io.Serializable, EntityMapper<QuestionE
             entity.setAnswer(this.getAnswer().toEntity());
 
         if (!this.choices.isEmpty())
-            for (ChoiceDTO choice : getChoices()) {
-                if (choice != null)
-                    entity.addChoice(choice.toEntity());
+            for (Long choiceId : getChoices()) {
+                if (choiceId != null)
+                    entity.addChoice(new ChoiceEntity(choiceId));
             }
 
         return entity;

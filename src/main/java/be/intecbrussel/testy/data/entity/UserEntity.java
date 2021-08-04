@@ -302,7 +302,7 @@ public class UserEntity implements java.io.Serializable, Persistable<Long>, DTOM
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("UserEntity{");
+        final var sb = new StringBuffer("UserEntity{");
         sb.append("id=").append(id);
         sb.append(", firstName='").append(firstName).append('\'');
         sb.append(", lastName='").append(lastName).append('\'');

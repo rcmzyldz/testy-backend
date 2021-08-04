@@ -183,7 +183,7 @@ public class ExamEntity implements java.io.Serializable, Persistable<Long>, DTOM
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("ExamEntity{");
+        final var sb = new StringBuffer("ExamEntity{");
         sb.append("id=").append(id);
         sb.append(", code='").append(code).append('\'');
         sb.append(", header='").append(header).append('\'');

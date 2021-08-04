@@ -166,7 +166,7 @@ public class QuestionEntity implements java.io.Serializable, Persistable<Long>, 
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("QuestionEntity{");
+        final var sb = new StringBuffer("QuestionEntity{");
         sb.append("id=").append(id);
         sb.append(", header='").append(header).append('\'');
         sb.append(", body='").append(body).append('\'');
@@ -197,7 +197,7 @@ public class QuestionEntity implements java.io.Serializable, Persistable<Long>, 
         if (!this.choices.isEmpty())
             for (ChoiceEntity choice : getChoices()) {
                 if (choice != null)
-                    dto.addChoice(choice.toDTO());
+                    dto.addChoice(choice.toDTO().getId());
             }
 
         return dto;

@@ -2,6 +2,7 @@ package be.intecbrussel.testy.data.dto;
 
 import be.intecbrussel.testy.data.EntityMapper;
 import be.intecbrussel.testy.data.entity.AnswerEntity;
+import be.intecbrussel.testy.data.entity.QuestionEntity;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -75,18 +76,18 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
         return this;
     }
 
-    private QuestionDTO question;
+    private Long questionId;
 
-    public QuestionDTO getQuestion() {
-        return question;
+    public Long getQuestionId() {
+        return questionId;
     }
 
-    public void setQuestion(QuestionDTO question) {
-        this.question = question;
+    public void setQuestionId(Long question) {
+        this.questionId = questionId;
     }
 
-    public AnswerDTO withQuestion(QuestionDTO question) {
-        setQuestion(question);
+    public AnswerDTO withQuestionId(Long question) {
+        setQuestionId(question);
         return this;
     }
 
@@ -99,12 +100,12 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
         if (this == o) return true;
         if (!(o instanceof AnswerDTO)) return false;
         AnswerDTO answerDTO = (AnswerDTO) o;
-        return Objects.equals(getHeader(), answerDTO.getHeader()) && Objects.equals(getBody(), answerDTO.getBody()) && Objects.equals(getQuestion().getId(), answerDTO.getQuestion().getId());
+        return Objects.equals(getHeader(), answerDTO.getHeader()) && Objects.equals(getBody(), answerDTO.getBody()) && Objects.equals(getQuestionId(), answerDTO.getQuestionId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getHeader(), getBody(), getQuestion());
+        return Objects.hash(getHeader(), getBody(), getQuestionId());
     }
 
     @Override
@@ -114,7 +115,7 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
         sb.append(", header='").append(header).append('\'');
         sb.append(", body='").append(body).append('\'');
         sb.append(", document=").append(document == null ? "null" : Arrays.asList(document).toString());
-        sb.append(", questionId=").append(question.getId());
+        sb.append(", questionId=").append(questionId);
         sb.append('}');
         return sb.toString();
     }
@@ -135,8 +136,8 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
         if (this.document != null)
             entity.setDocument(this.getDocument());
 
-        if (this.question != null)
-            entity.setQuestion(this.getQuestion().toEntity());
+        if (this.questionId != null)
+            entity.setQuestion(new QuestionEntity(this.getQuestionId()));
 
         return entity;
     }

@@ -4,7 +4,7 @@ server:
 spring:
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL8Dialect
     properties:
       hibernate:
@@ -18,16 +18,16 @@ spring:
         enabled: true
   
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/testydb?createDatabaseIfNotExist=true&autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
-    username: ${MYSQL_HOST_USERNAME:testy}
-    password: ${MYSQL_HOST_PASSWORD:testy}
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:testy}
     driver-class-name: com.mysql.cj.jdbc.Driver
     initialization-mode: always
 
   security:
     user:
-      name: ${SPRING_SECURITY_USERNAME}
-      password: ${SPRING_SECURITY_PASSWORD}
+      name: ${SPRING_SECURITY_USERNAME:testy}
+      password: ${SPRING_SECURITY_PASSWORD:testy}
       roles: ${SPRING_SECURITY_ROLES}
 
   application:

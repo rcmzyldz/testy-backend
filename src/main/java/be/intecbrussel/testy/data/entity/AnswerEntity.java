@@ -121,7 +121,7 @@ public class AnswerEntity implements java.io.Serializable, Persistable<Long>, DT
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("AnswerEntity{");
+        final var sb = new StringBuffer("AnswerEntity{");
         sb.append("id=").append(id);
         sb.append(", header='").append(header).append('\'');
         sb.append(", body='").append(body).append('\'');
@@ -149,7 +149,7 @@ public class AnswerEntity implements java.io.Serializable, Persistable<Long>, DT
             dto.setDocument(this.getDocument());
 
         if (this.question != null)
-            dto.setQuestion(this.getQuestion().toDTO());
+            dto.setQuestionId(this.getQuestion().toDTO().getId());
 
         return dto;
     }

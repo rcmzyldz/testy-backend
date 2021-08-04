@@ -2,6 +2,7 @@ package be.intecbrussel.testy.data.dto;
 
 import be.intecbrussel.testy.data.EntityMapper;
 import be.intecbrussel.testy.data.entity.ChoiceEntity;
+import be.intecbrussel.testy.data.entity.QuestionEntity;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -120,18 +121,18 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         return this;
     }
 
-    private QuestionDTO question;
+    private Long questionId;
 
-    public QuestionDTO getQuestion() {
-        return question;
+    public Long getQuestionId() {
+        return questionId;
     }
 
-    public void setQuestion(QuestionDTO question) {
-        this.question = question;
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
     }
 
-    public ChoiceDTO withQuestion(QuestionDTO question) {
-        setQuestion(question);
+    public ChoiceDTO withQuestion(Long question) {
+        setQuestionId(question);
         return this;
     }
 
@@ -145,12 +146,12 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         if (this == o) return true;
         if (!(o instanceof ChoiceDTO)) return false;
         ChoiceDTO choiceDTO = (ChoiceDTO) o;
-        return Objects.equals(getHeader(), choiceDTO.getHeader()) && Objects.equals(getQuestion(), choiceDTO.getQuestion());
+        return Objects.equals(getHeader(), choiceDTO.getHeader()) && Objects.equals(getQuestionId(), choiceDTO.getQuestionId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getHeader(), getQuestion());
+        return Objects.hash(getHeader(), getQuestionId());
     }
 
     @Override
@@ -163,7 +164,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         sb.append(", image=").append(image == null ? "null" : Arrays.asList(image).toString());
         sb.append(", document=").append(document == null ? "null" : Arrays.asList(document).toString());
         sb.append(", explanation='").append(explanation).append('\'');
-        sb.append(", questionId=").append(question.getId());
+        sb.append(", questionId=").append(getQuestionId());
         sb.append('}');
         return sb.toString();
     }
@@ -185,8 +186,8 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
             entity.setDocument(this.getDocument());
         if (this.explanation != null)
             entity.setExplanation(this.getExplanation());
-        if (this.question != null)
-            entity.setQuestion(this.getQuestion().toEntity());
+        if (this.questionId != null)
+            entity.setQuestion(new QuestionEntity(this.getQuestionId()));
 
         return entity;
     }

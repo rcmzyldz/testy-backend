@@ -2,13 +2,14 @@ package be.intecbrussel.testy.data.dto;
 
 import be.intecbrussel.testy.data.EntityMapper;
 import be.intecbrussel.testy.data.entity.ExamEntity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.time.Instant;
 import java.util.Objects;
 
 import static java.util.Objects.*;
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
 
     public ExamDTO() {

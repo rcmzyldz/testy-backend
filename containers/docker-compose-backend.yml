@@ -1,0 +1,12 @@
+version: "3.1"
+
+services:
+
+  backend:
+    image: yilmazchef/testy-backend:latest
+    links:
+      - db_server:db_server
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db_server:3306/database?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSOWRD: testy
