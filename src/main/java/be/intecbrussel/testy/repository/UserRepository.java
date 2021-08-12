@@ -1,6 +1,6 @@
 package be.intecbrussel.testy.repository;
 
-import be.intecbrussel.testy.data.entity.UserEntity;
+import be.intecbrussel.testy.model.entity.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,7 +1,7 @@
-package be.intecbrussel.testy.data.entity;
+package be.intecbrussel.testy.model.entity;
 
-import be.intecbrussel.testy.data.DTOMapper;
-import be.intecbrussel.testy.data.dto.ExamDTO;
+import be.intecbrussel.testy.model.DTOMapper;
+import be.intecbrussel.testy.model.dto.ExamDTO;
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;

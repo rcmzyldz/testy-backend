@@ -1,4 +1,4 @@
-package be.intecbrussel.testy.data;
+package be.intecbrussel.testy.model;
 
 public interface EntityMapper<D> {
 

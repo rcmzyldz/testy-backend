@@ -1,21 +1,22 @@
-package be.intecbrussel.testy.data.dto;
+package be.intecbrussel.testy.model.dto.create;
 
-import be.intecbrussel.testy.data.EntityMapper;
-import be.intecbrussel.testy.data.entity.ExamEntity;
+import be.intecbrussel.testy.model.EntityMapper;
+import be.intecbrussel.testy.model.entity.ExamEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.time.Instant;
 import java.util.Objects;
 
-import static java.util.Objects.*;
+import static java.util.Objects.hash;
+import static java.util.Objects.isNull;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
+public class CreateExamRequest implements java.io.Serializable, EntityMapper<ExamEntity> {
 
-    public ExamDTO() {
+    public CreateExamRequest() {
     }
 
-    public ExamDTO(Long id) {
+    public CreateExamRequest(Long id) {
         this.id = id;
     }
 
@@ -29,7 +30,7 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
         this.id = id;
     }
 
-    public ExamDTO withId(Long id) {
+    public CreateExamRequest withId(Long id) {
         setId(id);
         return this;
     }
@@ -44,7 +45,7 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
         this.code = code;
     }
 
-    public ExamDTO withCode(String code) {
+    public CreateExamRequest withCode(String code) {
         setCode(code);
         return this;
     }
@@ -59,7 +60,7 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
         this.header = header;
     }
 
-    public ExamDTO withHeader(String header) {
+    public CreateExamRequest withHeader(String header) {
         setHeader(header);
         return this;
     }
@@ -74,37 +75,22 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
         this.body = body;
     }
 
-    public ExamDTO withBody(String body) {
+    public CreateExamRequest withBody(String body) {
         setBody(body);
         return this;
     }
 
-    private UserDTO student;
+    private CreateQuestionRequest question;
 
-    public UserDTO getStudent() {
-        return student;
-    }
-
-    public void setStudent(UserDTO student) {
-        this.student = student;
-    }
-
-    public ExamDTO withStudent(UserDTO student) {
-        setStudent(student);
-        return this;
-    }
-
-    private QuestionDTO question;
-
-    public QuestionDTO getQuestion() {
+    public CreateQuestionRequest getQuestion() {
         return question;
     }
 
-    public void setQuestion(QuestionDTO question) {
+    public void setQuestion(CreateQuestionRequest question) {
         this.question = question;
     }
 
-    public ExamDTO withQuestion(QuestionDTO question) {
+    public CreateExamRequest withQuestion(CreateQuestionRequest question) {
         setQuestion(question);
         return this;
     }
@@ -119,7 +105,7 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
         this.started = started;
     }
 
-    public ExamDTO withStarted(Instant started) {
+    public CreateExamRequest withStarted(Instant started) {
         setStarted(started);
         return this;
     }
@@ -134,7 +120,7 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
         this.ended = ended;
     }
 
-    public ExamDTO withEnded(Instant ended) {
+    public CreateExamRequest withEnded(Instant ended) {
         setEnded(ended);
         return this;
     }
@@ -149,7 +135,7 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
         this.score = score;
     }
 
-    public ExamDTO withScore(Double score) {
+    public CreateExamRequest withScore(Double score) {
         setScore(score);
         return this;
     }
@@ -161,30 +147,27 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ExamDTO)) return false;
-        ExamDTO examDTO = (ExamDTO) o;
-        return Objects.equals(getCode(), examDTO.getCode()) && Objects.equals(getStudent(), examDTO.getStudent()) && Objects.equals(getQuestion(), examDTO.getQuestion());
+        if (!(o instanceof CreateExamRequest)) return false;
+        CreateExamRequest createExamRequest = (CreateExamRequest) o;
+        return Objects.equals(getCode(), createExamRequest.getCode()) && Objects.equals(getQuestion(), createExamRequest.getQuestion());
     }
 
     @Override
     public int hashCode() {
-        return hash(getCode(), getStudent(), getQuestion());
+        return hash(getCode(), getQuestion());
     }
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("ExamDTO{");
-        sb.append("id=").append(id);
-        sb.append(", code='").append(code).append('\'');
-        sb.append(", header='").append(header).append('\'');
-        sb.append(", body='").append(body).append('\'');
-        sb.append(", studentId=").append(student.getId());
-        sb.append(", questionId=").append(question.getId());
-        sb.append(", started=").append(started);
-        sb.append(", ended=").append(ended);
-        sb.append(", score=").append(score);
-        sb.append('}');
-        return sb.toString();
+        return "CreateExamRequest{" + "id=" + id +
+                ", code='" + code + '\'' +
+                ", header='" + header + '\'' +
+                ", body='" + body + '\'' +
+                ", questionId=" + question.getId() +
+                ", started=" + started +
+                ", ended=" + ended +
+                ", score=" + score +
+                '}';
     }
 
     @Override
@@ -202,9 +185,6 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
 
         if (this.body != null)
             entity.setBody(this.getBody());
-
-        if (this.student != null)
-            entity.setStudent(this.getStudent().toEntity());
 
         if (this.question != null)
             entity.setQuestion(this.getQuestion().toEntity());

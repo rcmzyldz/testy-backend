@@ -1,12 +1,12 @@
-package be.intecbrussel.testy.data.entity;
+package be.intecbrussel.testy.model.entity;
 
-import be.intecbrussel.testy.data.DTOMapper;
-import be.intecbrussel.testy.data.dto.AnswerDTO;
+import be.intecbrussel.testy.model.DTOMapper;
+import be.intecbrussel.testy.model.dto.AnswerDTO;
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -125,7 +125,7 @@ public class AnswerEntity implements java.io.Serializable, Persistable<Long>, DT
         sb.append("id=").append(id);
         sb.append(", header='").append(header).append('\'');
         sb.append(", body='").append(body).append('\'');
-        sb.append(", document=").append(document == null ? "null" : Arrays.asList(document).toString());
+        sb.append(", document=").append(document == null ? "null" : List.of(document).toString());
         sb.append(", questionId=").append(question.getId());
         sb.append('}');
         return sb.toString();

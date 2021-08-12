@@ -1,22 +1,33 @@
-package be.intecbrussel.testy.data.dto;
+package be.intecbrussel.testy.model.entity;
 
-import be.intecbrussel.testy.data.EntityMapper;
-import be.intecbrussel.testy.data.entity.UserEntity;
+import be.intecbrussel.testy.model.DTOMapper;
+import be.intecbrussel.testy.model.dto.UserDTO;
+import org.springframework.data.domain.Persistable;
 
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
-public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
+@Entity
+public class UserEntity implements java.io.Serializable, Persistable<Long>, DTOMapper<UserDTO> {
 
-    public UserDTO() {
+    public UserEntity() {
     }
 
-    public UserDTO(Long id) {
+    public UserEntity(Long id) {
         this.id = id;
     }
 
+    @Id
+    @GeneratedValue
     private Long id;
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -25,11 +36,12 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.id = id;
     }
 
-    public UserDTO withId(Long id) {
+    public UserEntity withId(Long id) {
         setId(id);
         return this;
     }
 
+    @NotEmpty
     private String firstName;
 
     public String getFirstName() {
@@ -40,11 +52,12 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.firstName = firstName;
     }
 
-    public UserDTO withFirstName(String firstName) {
+    public UserEntity withFirstName(String firstName) {
         setFirstName(firstName);
         return this;
     }
 
+    @NotEmpty
     private String lastName;
 
     public String getLastName() {
@@ -55,11 +68,14 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.lastName = lastName;
     }
 
-    public UserDTO withLastName(String lastName) {
+    public UserEntity withLastName(String lastName) {
         setLastName(lastName);
         return this;
     }
 
+    @NotEmpty
+    @Email
+    @Column(unique = true)
     private String email;
 
     public String getEmail() {
@@ -70,11 +86,14 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.email = email;
     }
 
-    public UserDTO withEmail(String email) {
+    public UserEntity withEmail(String email) {
         setEmail(email);
         return this;
     }
 
+    // @Phone // TODO: activate on production..
+    @NotEmpty
+    @Column(unique = true)
     private String phone;
 
     public String getPhone() {
@@ -85,11 +104,13 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.phone = phone;
     }
 
-    public UserDTO withPhone(String phone) {
+    public UserEntity withPhone(String phone) {
         setPhone(phone);
         return this;
     }
 
+    // @ValidPassword // TODO: activate on production..
+    @NotEmpty
     private String password;
 
     public String getPassword() {
@@ -100,11 +121,13 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.password = password;
     }
 
-    public UserDTO withPassword(String password) {
+    public UserEntity withPassword(String password) {
         setPassword(password);
         return this;
     }
 
+    // @ValidRole
+    @NotEmpty
     private String roles;
 
     public String getRoles() {
@@ -112,14 +135,18 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
     }
 
     public void setRoles(String roles) {
+        if (Objects.isNull(roles)) {
+            roles = "ROLE_ANONYMOUS";
+        }
         this.roles = roles;
     }
 
-    public UserDTO withRoles(String roles) {
+    public UserEntity withRoles(String roles) {
         setRoles(roles);
         return this;
     }
 
+    @NotNull
     private String session;
 
     public String getSession() {
@@ -130,7 +157,7 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.session = session;
     }
 
-    public UserDTO withSession(String session) {
+    public UserEntity withSession(String session) {
         setSession(session);
         return this;
     }
@@ -148,7 +175,7 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.activation = activation;
     }
 
-    public UserDTO withActivation(String activation) {
+    public UserEntity withActivation(String activation) {
         setActivation(activation);
         return this;
     }
@@ -163,7 +190,7 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.activated = activated;
     }
 
-    public UserDTO withActivated(Boolean activated) {
+    public UserEntity withActivated(Boolean activated) {
         setActivated(activated);
         return this;
     }
@@ -178,9 +205,45 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.authenticated = authenticated;
     }
 
-    public UserDTO withAuthenticated(Boolean authenticated) {
+    public UserEntity withAuthenticated(Boolean authenticated) {
         setAuthenticated(authenticated);
         return this;
+    }
+
+    @OneToMany(mappedBy = "student")
+    private final Set<ExamEntity> exams = new HashSet<>();
+
+    public void addExam(ExamEntity exam) {
+        exam.setStudent(this);
+        this.exams.add(exam);
+    }
+
+    public UserEntity withExam(ExamEntity exam) {
+        addExam(exam);
+        return this;
+    }
+
+    public void removeExam(ExamEntity exam) {
+        exam.setQuestion(null);
+        this.exams.remove(exam);
+    }
+
+    public UserEntity withoutExam(ExamEntity exam) {
+        removeExam(exam);
+        return this;
+    }
+
+    public void removeExam(Long examId) {
+        this.exams.removeIf(exam -> Objects.equals(exam.getId(), examId));
+    }
+
+    public UserEntity withoutExam(Long examId) {
+        removeExam(examId);
+        return this;
+    }
+
+    public Set<ExamEntity> getExams() {
+        return exams;
     }
 
     private Double score;
@@ -193,11 +256,12 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.score = score;
     }
 
-    public UserDTO withScore(Double score) {
+    public UserEntity withScore(Double score) {
         setScore(score);
         return this;
     }
 
+    @NotEmpty
     private String profile;
 
     public String getProfile() {
@@ -211,11 +275,12 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.profile = profile;
     }
 
-    public UserDTO withProfile(String profile) {
+    public UserEntity withProfile(String profile) {
         setProfile(profile);
         return this;
     }
 
+    @Override
     public boolean isNew() {
         return Objects.isNull(this.id);
     }
@@ -223,19 +288,19 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof UserDTO)) return false;
-        UserDTO userDTO = (UserDTO) o;
-        return Objects.equals(getEmail(), userDTO.getEmail()) && Objects.equals(getPhone(), userDTO.getPhone());
+        if (!(o instanceof UserEntity)) return false;
+        UserEntity that = (UserEntity) o;
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getEmail(), getPhone());
+        return Objects.hash(getId());
     }
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("UserDTO{");
+        final var sb = new StringBuffer("UserEntity{");
         sb.append("id=").append(id);
         sb.append(", firstName='").append(firstName).append('\'');
         sb.append(", lastName='").append(lastName).append('\'');
@@ -247,6 +312,7 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         sb.append(", activation='").append(activation).append('\'');
         sb.append(", activated=").append(activated);
         sb.append(", authenticated=").append(authenticated);
+        sb.append(", exams=").append(exams);
         sb.append(", score=").append(score);
         sb.append(", profile='").append(profile).append('\'');
         sb.append('}');
@@ -254,49 +320,49 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
     }
 
     @Override
-    public UserEntity toEntity() {
+    public UserDTO toDTO() {
 
-        final var entity = new UserEntity();
+        final var dto = new UserDTO();
 
         if (this.id != null)
-            entity.setId(this.getId());
+            dto.setId(this.getId());
 
         if (this.firstName != null)
-            entity.setFirstName(this.getFirstName());
+            dto.setFirstName(this.getFirstName());
 
         if (this.lastName != null)
-            entity.setLastName(this.getLastName());
+            dto.setLastName(this.getLastName());
 
         if (this.email != null)
-            entity.setEmail(this.getEmail());
+            dto.setEmail(this.getEmail());
 
         if (this.phone != null)
-            entity.setPhone(this.getPhone());
+            dto.setPhone(this.getPhone());
 
         if (this.password != null)
-            entity.setPassword(this.getPassword());
+            dto.setPassword(this.getPassword());
 
         if (this.roles != null)
-            entity.setRoles(this.getRoles());
+            dto.setRoles(this.getRoles());
 
         if (this.session != null)
-            entity.setSession(this.getSession());
+            dto.setSession(this.getSession());
 
         if (this.activation != null)
-            entity.setActivation(this.getActivation());
+            dto.setActivation(this.getActivation());
 
         if (this.activated != null)
-            entity.setActivated(this.isActivated());
+            dto.setActivated(this.isActivated());
 
         if (this.authenticated != null)
-            entity.setAuthenticated(this.isAuthenticated());
+            dto.setAuthenticated(this.isAuthenticated());
 
         if (this.score != null)
-            entity.setScore(this.getScore());
+            dto.setScore(this.getScore());
 
         if (this.profile != null)
-            entity.setProfile(this.getProfile());
+            dto.setProfile(this.getProfile());
 
-        return entity;
+        return dto;
     }
 }

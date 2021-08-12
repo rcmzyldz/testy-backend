@@ -1,8 +1,8 @@
 package be.intecbrussel.testy.service;
 
-import be.intecbrussel.testy.data.dto.UserDTO;
-import be.intecbrussel.testy.data.entity.UserEntity;
-import be.intecbrussel.testy.data.http.HttpExceptionMessage;
+import be.intecbrussel.testy.model.dto.UserDTO;
+import be.intecbrussel.testy.model.entity.UserEntity;
+import be.intecbrussel.testy.model.http.HttpExceptionMessage;
 import be.intecbrussel.testy.service.exception.ResourceNotFoundException;
 import be.intecbrussel.testy.repository.UserRepository;
 import org.slf4j.Logger;

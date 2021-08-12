@@ -1,6 +1,6 @@
 package be.intecbrussel.testy.repository;
 
-import be.intecbrussel.testy.data.entity.ChoiceEntity;
+import be.intecbrussel.testy.model.entity.ChoiceEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

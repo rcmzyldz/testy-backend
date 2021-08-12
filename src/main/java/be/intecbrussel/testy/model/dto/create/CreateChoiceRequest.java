@@ -1,18 +1,18 @@
-package be.intecbrussel.testy.data.dto;
+package be.intecbrussel.testy.model.dto.create;
 
-import be.intecbrussel.testy.data.EntityMapper;
-import be.intecbrussel.testy.data.entity.ChoiceEntity;
-import be.intecbrussel.testy.data.entity.QuestionEntity;
+import be.intecbrussel.testy.model.EntityMapper;
+import be.intecbrussel.testy.model.entity.ChoiceEntity;
+import be.intecbrussel.testy.model.entity.QuestionEntity;
 
 import java.util.Arrays;
 import java.util.Objects;
 
-public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntity> {
+public class CreateChoiceRequest implements java.io.Serializable, EntityMapper<ChoiceEntity> {
 
-    public ChoiceDTO() {
+    public CreateChoiceRequest() {
     }
 
-    public ChoiceDTO(Long id) {
+    public CreateChoiceRequest(Long id) {
         this.id = id;
     }
 
@@ -26,7 +26,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         this.id = id;
     }
 
-    public ChoiceDTO withId(Long id) {
+    public CreateChoiceRequest withId(Long id) {
         setId(id);
         return this;
     }
@@ -41,7 +41,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         this.weight = weight;
     }
 
-    public ChoiceDTO withWeight(Double weight) {
+    public CreateChoiceRequest withWeight(Double weight) {
         setWeight(weight);
         return this;
     }
@@ -56,7 +56,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         this.header = header;
     }
 
-    public ChoiceDTO withHeader(String header) {
+    public CreateChoiceRequest withHeader(String header) {
         setHeader(header);
         return this;
     }
@@ -71,7 +71,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         this.body = body;
     }
 
-    public ChoiceDTO withBody(String body) {
+    public CreateChoiceRequest withBody(String body) {
         setBody(body);
         return this;
     }
@@ -86,7 +86,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         this.image = image;
     }
 
-    public ChoiceDTO withImage(Byte[] image) {
+    public CreateChoiceRequest withImage(Byte[] image) {
         setImage(image);
         return this;
     }
@@ -101,7 +101,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         this.document = document;
     }
 
-    public ChoiceDTO withDocument(Byte[] document) {
+    public CreateChoiceRequest withDocument(Byte[] document) {
         setDocument(document);
         return this;
     }
@@ -116,7 +116,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         this.explanation = explanation;
     }
 
-    public ChoiceDTO withExplanation(String explanation) {
+    public CreateChoiceRequest withExplanation(String explanation) {
         setExplanation(explanation);
         return this;
     }
@@ -131,7 +131,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         this.questionId = questionId;
     }
 
-    public ChoiceDTO withQuestion(Long question) {
+    public CreateChoiceRequest withQuestion(Long question) {
         setQuestionId(question);
         return this;
     }
@@ -144,9 +144,9 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ChoiceDTO)) return false;
-        ChoiceDTO choiceDTO = (ChoiceDTO) o;
-        return Objects.equals(getHeader(), choiceDTO.getHeader()) && Objects.equals(getQuestionId(), choiceDTO.getQuestionId());
+        if (!(o instanceof CreateChoiceRequest)) return false;
+        CreateChoiceRequest createChoiceRequest = (CreateChoiceRequest) o;
+        return Objects.equals(getHeader(), createChoiceRequest.getHeader()) && Objects.equals(getQuestionId(), createChoiceRequest.getQuestionId());
     }
 
     @Override
@@ -156,17 +156,15 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("ChoiceDTO{");
-        sb.append("id=").append(id);
-        sb.append(", weight=").append(weight);
-        sb.append(", header='").append(header).append('\'');
-        sb.append(", body='").append(body).append('\'');
-        sb.append(", image=").append(image == null ? "null" : Arrays.asList(image).toString());
-        sb.append(", document=").append(document == null ? "null" : Arrays.asList(document).toString());
-        sb.append(", explanation='").append(explanation).append('\'');
-        sb.append(", questionId=").append(getQuestionId());
-        sb.append('}');
-        return sb.toString();
+        return "ChoiceDTO{" + "id=" + id +
+                ", weight=" + weight +
+                ", header='" + header + '\'' +
+                ", body='" + body + '\'' +
+                ", image=" + (image == null ? "null" : Arrays.asList(image).toString()) +
+                ", document=" + (document == null ? "null" : Arrays.asList(document).toString()) +
+                ", explanation='" + explanation + '\'' +
+                ", questionId=" + getQuestionId() +
+                '}';
     }
 
     @Override

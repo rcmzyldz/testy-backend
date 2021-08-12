@@ -45,10 +45,3 @@ spring:
     properties:
       mail-smtp-auth: true
       mail-smtp-starttls-enable: true
-
-management:
-  endpoints:
-    enabled-by-default: false
-    web:
-      exposure:
-        exclude: env, beans

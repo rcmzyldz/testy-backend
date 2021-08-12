@@ -1,31 +1,23 @@
-package be.intecbrussel.testy.data.entity;
+package be.intecbrussel.testy.model.dto;
 
-import be.intecbrussel.testy.data.DTOMapper;
-import be.intecbrussel.testy.data.dto.ChoiceDTO;
-import org.springframework.data.domain.Persistable;
+import be.intecbrussel.testy.model.EntityMapper;
+import be.intecbrussel.testy.model.entity.ChoiceEntity;
+import be.intecbrussel.testy.model.entity.QuestionEntity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
 import java.util.Arrays;
 import java.util.Objects;
 
+public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntity> {
 
-@Entity
-public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, DTOMapper<ChoiceDTO> {
-
-    public ChoiceEntity() {
+    public ChoiceDTO() {
     }
 
-    public ChoiceEntity(Long id) {
+    public ChoiceDTO(Long id) {
         this.id = id;
     }
 
-    @Id
-    @GeneratedValue
     private Long id;
 
-    @Override
     public Long getId() {
         return this.id;
     }
@@ -34,12 +26,11 @@ public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, DT
         this.id = id;
     }
 
-    public ChoiceEntity withId(Long id) {
+    public ChoiceDTO withId(Long id) {
         setId(id);
         return this;
     }
 
-    @PositiveOrZero
     private Double weight;
 
     public Double getWeight() {
@@ -50,12 +41,11 @@ public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, DT
         this.weight = weight;
     }
 
-    public ChoiceEntity withWeight(Double weight) {
+    public ChoiceDTO withWeight(Double weight) {
         setWeight(weight);
         return this;
     }
 
-    @NotNull
     private String header;
 
     public String getHeader() {
@@ -66,13 +56,11 @@ public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, DT
         this.header = header;
     }
 
-    public ChoiceEntity withHeader(String header) {
+    public ChoiceDTO withHeader(String header) {
         setHeader(header);
         return this;
     }
 
-    @NotNull
-    @Lob
     private String body;
 
     public String getBody() {
@@ -83,7 +71,7 @@ public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, DT
         this.body = body;
     }
 
-    public ChoiceEntity withBody(String body) {
+    public ChoiceDTO withBody(String body) {
         setBody(body);
         return this;
     }
@@ -98,7 +86,7 @@ public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, DT
         this.image = image;
     }
 
-    public ChoiceEntity withImage(Byte[] image) {
+    public ChoiceDTO withImage(Byte[] image) {
         setImage(image);
         return this;
     }
@@ -113,7 +101,7 @@ public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, DT
         this.document = document;
     }
 
-    public ChoiceEntity withDocument(Byte[] document) {
+    public ChoiceDTO withDocument(Byte[] document) {
         setDocument(document);
         return this;
     }
@@ -128,48 +116,47 @@ public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, DT
         this.explanation = explanation;
     }
 
-    public ChoiceEntity withExplanation(String explanation) {
+    public ChoiceDTO withExplanation(String explanation) {
         setExplanation(explanation);
         return this;
     }
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private QuestionEntity question;
+    private Long questionId;
 
-    public QuestionEntity getQuestion() {
-        return question;
+    public Long getQuestionId() {
+        return questionId;
     }
 
-    public void setQuestion(QuestionEntity question) {
-        this.question = question;
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
     }
 
-    public ChoiceEntity withQuestion(QuestionEntity question) {
-        setQuestion(question);
+    public ChoiceDTO withQuestion(Long question) {
+        setQuestionId(question);
         return this;
     }
 
-    @Override
     public boolean isNew() {
         return Objects.isNull(this.id);
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ChoiceEntity)) return false;
-        ChoiceEntity that = (ChoiceEntity) o;
-        return Objects.equals(getId(), that.getId());
+        if (!(o instanceof ChoiceDTO)) return false;
+        ChoiceDTO choiceDTO = (ChoiceDTO) o;
+        return Objects.equals(getHeader(), choiceDTO.getHeader()) && Objects.equals(getQuestionId(), choiceDTO.getQuestionId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(getHeader(), getQuestionId());
     }
 
     @Override
     public String toString() {
-        final var sb = new StringBuffer("ChoiceEntity{");
+        final StringBuffer sb = new StringBuffer("ChoiceDTO{");
         sb.append("id=").append(id);
         sb.append(", weight=").append(weight);
         sb.append(", header='").append(header).append('\'');
@@ -177,31 +164,31 @@ public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, DT
         sb.append(", image=").append(image == null ? "null" : Arrays.asList(image).toString());
         sb.append(", document=").append(document == null ? "null" : Arrays.asList(document).toString());
         sb.append(", explanation='").append(explanation).append('\'');
-        sb.append(", questionId=").append(question.getId());
+        sb.append(", questionId=").append(getQuestionId());
         sb.append('}');
         return sb.toString();
     }
 
     @Override
-    public ChoiceDTO toDTO() {
-        final var dto = new ChoiceDTO();
+    public ChoiceEntity toEntity() {
+        final var entity = new ChoiceEntity();
         if (this.id != null)
-            dto.setId(this.getId());
+            entity.setId(this.getId());
         if (this.weight != null)
-            dto.setWeight(this.getWeight());
+            entity.setWeight(this.getWeight());
         if (this.header != null)
-            dto.setHeader(this.getHeader());
+            entity.setHeader(this.getHeader());
         if (this.body != null)
-            dto.setBody(this.getBody());
+            entity.setBody(this.getBody());
         if (this.image != null)
-            dto.setImage(this.getImage());
+            entity.setImage(this.getImage());
         if (this.document != null)
-            dto.setDocument(this.getDocument());
+            entity.setDocument(this.getDocument());
         if (this.explanation != null)
-            dto.setExplanation(this.getExplanation());
-        if (this.question != null)
-            dto.setQuestionId(this.getQuestion().toDTO().getId());
+            entity.setExplanation(this.getExplanation());
+        if (this.questionId != null)
+            entity.setQuestion(new QuestionEntity(this.getQuestionId()));
 
-        return dto;
+        return entity;
     }
 }

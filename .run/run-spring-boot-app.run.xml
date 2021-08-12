@@ -1,0 +1,28 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="run-spring-boot-app" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="testy-backend" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="be.intecbrussel.testy.Application" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <option name="SHORTEN_COMMAND_LINE" value="NONE" />
+    <additionalParameters>
+      <param>
+        <option name="enabled" value="true" />
+        <option name="name" value="SPRING_DATASOURCE_URL" />
+        <option name="value" value="jdbc:mysql://db_server:3306/database?createDatabaseIfNotExist=true&amp;autoReconnect=true&amp;useSSL=false&amp;allowPublicKeyRetrieval=true" />
+      </param>
+      <param>
+        <option name="enabled" value="true" />
+        <option name="name" value="SPRING_DATASOURCE_USERNAME" />
+        <option name="value" value="root" />
+      </param>
+      <param>
+        <option name="enabled" value="true" />
+        <option name="name" value="SPRING_DATASOURCE_PASSOWRD" />
+        <option name="value" value="testy" />
+      </param>
+    </additionalParameters>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

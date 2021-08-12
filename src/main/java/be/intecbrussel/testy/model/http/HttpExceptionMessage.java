@@ -1,4 +1,4 @@
-package be.intecbrussel.testy.data.http;
+package be.intecbrussel.testy.model.http;
 
 public enum HttpExceptionMessage {
     EXAM_COULD_NOT_BE_CREATED,

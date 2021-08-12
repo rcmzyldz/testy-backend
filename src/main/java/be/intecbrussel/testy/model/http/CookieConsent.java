@@ -1,4 +1,4 @@
-package be.intecbrussel.testy.data.http;
+package be.intecbrussel.testy.model.http;
 
 public enum CookieConsent {
 

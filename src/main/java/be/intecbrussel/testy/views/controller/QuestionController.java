@@ -1,6 +1,6 @@
 package be.intecbrussel.testy.views.controller;
 
-import be.intecbrussel.testy.data.dto.QuestionDTO;
+import be.intecbrussel.testy.model.dto.QuestionDTO;
 import be.intecbrussel.testy.service.QuestionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

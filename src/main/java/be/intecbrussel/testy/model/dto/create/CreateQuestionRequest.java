@@ -1,20 +1,20 @@
-package be.intecbrussel.testy.data.dto;
+package be.intecbrussel.testy.model.dto.create;
 
-import be.intecbrussel.testy.data.EntityMapper;
-import be.intecbrussel.testy.data.entity.ChoiceEntity;
-import be.intecbrussel.testy.data.entity.QuestionEntity;
+import be.intecbrussel.testy.model.EntityMapper;
+import be.intecbrussel.testy.model.entity.ChoiceEntity;
+import be.intecbrussel.testy.model.entity.QuestionEntity;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 
-public class QuestionDTO implements java.io.Serializable, EntityMapper<QuestionEntity> {
+public class CreateQuestionRequest implements java.io.Serializable, EntityMapper<QuestionEntity> {
 
-    public QuestionDTO() {
+    public CreateQuestionRequest() {
     }
 
-    public QuestionDTO(Long id) {
+    public CreateQuestionRequest(Long id) {
         this.id = id;
     }
 
@@ -28,7 +28,7 @@ public class QuestionDTO implements java.io.Serializable, EntityMapper<QuestionE
         this.id = id;
     }
 
-    public QuestionDTO withId(Long id) {
+    public CreateQuestionRequest withId(Long id) {
         setId(id);
         return this;
     }
@@ -43,7 +43,7 @@ public class QuestionDTO implements java.io.Serializable, EntityMapper<QuestionE
         this.header = header;
     }
 
-    public QuestionDTO withHeader(String header) {
+    public CreateQuestionRequest withHeader(String header) {
         setHeader(header);
         return this;
     }
@@ -58,7 +58,7 @@ public class QuestionDTO implements java.io.Serializable, EntityMapper<QuestionE
         this.body = body;
     }
 
-    public QuestionDTO withBody(String body) {
+    public CreateQuestionRequest withBody(String body) {
         setBody(body);
         return this;
     }
@@ -77,17 +77,17 @@ public class QuestionDTO implements java.io.Serializable, EntityMapper<QuestionE
         return choices;
     }
 
-    private AnswerDTO answer;
+    private CreateAnswerRequest answer;
 
-    public AnswerDTO getAnswer() {
+    public CreateAnswerRequest getAnswer() {
         return answer;
     }
 
-    public void setAnswer(AnswerDTO answer) {
+    public void setAnswer(CreateAnswerRequest answer) {
         this.answer = answer;
     }
 
-    public QuestionDTO withAnswer(AnswerDTO answer) {
+    public CreateQuestionRequest withAnswer(CreateAnswerRequest answer) {
         setAnswer(answer);
         return this;
     }
@@ -99,8 +99,8 @@ public class QuestionDTO implements java.io.Serializable, EntityMapper<QuestionE
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof QuestionDTO)) return false;
-        QuestionDTO that = (QuestionDTO) o;
+        if (!(o instanceof CreateQuestionRequest)) return false;
+        CreateQuestionRequest that = (CreateQuestionRequest) o;
         return Objects.equals(getHeader(), that.getHeader()) && Objects.equals(getBody(), that.getBody()) && getChoices().containsAll(that.getChoices());
     }
 
@@ -111,14 +111,12 @@ public class QuestionDTO implements java.io.Serializable, EntityMapper<QuestionE
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("QuestionDTO{");
-        sb.append("id=").append(id);
-        sb.append(", header='").append(header).append('\'');
-        sb.append(", body='").append(body).append('\'');
-        sb.append(", choices=").append(choices);
-        sb.append(", answerId=").append(answer.getId());
-        sb.append('}');
-        return sb.toString();
+        return "QuestionDTO{" + "id=" + id +
+                ", header='" + header + '\'' +
+                ", body='" + body + '\'' +
+                ", choices=" + choices +
+                ", answerId=" + answer.getId() +
+                '}';
     }
 
     @Override

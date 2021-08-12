@@ -1,0 +1,14 @@
+package be.intecbrussel.testy.model.http;
+
+public enum HttpSuccessMessages {
+
+    SINGLE_EXAM_IS_CREATED,
+    MANY_EXAMS_ARE_CREATED,
+    SINGLE_EXAM_IS_UPDATED,
+    MANY_EXAMS_ARE_UPDATED,
+    SINGLE_EXAM_IS_PATCHED,
+    MANY_EXAMS_ARE_PATCHED,
+    SINGLE_EXAM_IS_DELETED,
+    MANY_EXAMS_ARE_DELETED
+
+}

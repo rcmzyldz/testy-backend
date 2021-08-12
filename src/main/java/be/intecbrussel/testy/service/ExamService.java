@@ -1,11 +1,10 @@
 package be.intecbrussel.testy.service;
 
-import be.intecbrussel.testy.data.dto.ExamDTO;
-import be.intecbrussel.testy.data.entity.ExamEntity;
+import be.intecbrussel.testy.model.dto.ExamDTO;
+import be.intecbrussel.testy.model.entity.ExamEntity;
 import be.intecbrussel.testy.repository.ExamRepository;
 import be.intecbrussel.testy.service.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,15 +15,14 @@ import java.util.Objects;
 
 // SPRING
 @Service
-
-// LOMBOK
-
 public class ExamService {
 
+    // LOGGER
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(ExamService.class);
+
+    // INJECT_REPOSITORY
     private final ExamRepository examRepository;
 
-    @Autowired
     public ExamService(ExamRepository examRepository) {
         this.examRepository = examRepository;
     }
@@ -64,6 +62,25 @@ public class ExamService {
 
         dto.setId(examId);
         final var savedEntity = examRepository.save(dto.toEntity());
+        return Objects.requireNonNullElse(savedEntity.getId(), -1L);
+    }
+
+    public Long patchHeader(Long examId, String header) throws NullPointerException, IllegalArgumentException {
+
+        if (Objects.isNull(header)) {
+            throw new NullPointerException("Exam is required");
+        }
+
+        if (Objects.isNull(examId)) {
+            throw new NullPointerException("Exam ID is required");
+        }
+
+        final var oEntity = examRepository.findById(examId);
+        if (oEntity.isEmpty()) {
+            throw new ResourceNotFoundException();
+        }
+
+        final var savedEntity = examRepository.save(oEntity.get().withHeader(header));
         return Objects.requireNonNullElse(savedEntity.getId(), -1L);
     }
 
@@ -112,7 +129,7 @@ public class ExamService {
         return oEntity.get().toDTO();
     }
 
-    public void deleteById(Long examId) throws NullPointerException, IllegalArgumentException, ResourceNotFoundException {
+    public Long deleteById(Long examId) throws NullPointerException, IllegalArgumentException, ResourceNotFoundException {
 
         if (examId < 1) {
             throw new NullPointerException("Exam ID must be greater than zero.");
@@ -123,6 +140,8 @@ public class ExamService {
         }
 
         examRepository.deleteById(examId);
+
+        return examRepository.existsById(examId) ? examId : -1L;
     }
 
 

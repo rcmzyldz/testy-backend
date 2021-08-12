@@ -1,18 +1,18 @@
-package be.intecbrussel.testy.data.dto;
+package be.intecbrussel.testy.model.dto.create;
 
-import be.intecbrussel.testy.data.EntityMapper;
-import be.intecbrussel.testy.data.entity.AnswerEntity;
-import be.intecbrussel.testy.data.entity.QuestionEntity;
+import be.intecbrussel.testy.model.EntityMapper;
+import be.intecbrussel.testy.model.entity.AnswerEntity;
+import be.intecbrussel.testy.model.entity.QuestionEntity;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
-public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntity> {
+public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<AnswerEntity> {
 
-    public AnswerDTO() {
+    public CreateAnswerRequest() {
     }
 
-    public AnswerDTO(Long id) {
+    public CreateAnswerRequest(Long id) {
         this.id = id;
     }
 
@@ -26,7 +26,7 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
         this.id = id;
     }
 
-    public AnswerDTO withId(Long id) {
+    public CreateAnswerRequest withId(Long id) {
         setId(id);
         return this;
     }
@@ -41,7 +41,7 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
         this.header = header;
     }
 
-    public AnswerDTO withHeader(String header) {
+    public CreateAnswerRequest withHeader(String header) {
         setHeader(header);
         return this;
     }
@@ -56,7 +56,7 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
         this.body = body;
     }
 
-    public AnswerDTO withBody(String body) {
+    public CreateAnswerRequest withBody(String body) {
         setBody(body);
         return this;
     }
@@ -71,7 +71,7 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
         this.document = document;
     }
 
-    public AnswerDTO withDocument(String document) {
+    public CreateAnswerRequest withDocument(String document) {
         setDocument(document);
         return this;
     }
@@ -82,11 +82,11 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
         return questionId;
     }
 
-    public void setQuestionId(Long question) {
+    public void setQuestionId(Long questionId) {
         this.questionId = questionId;
     }
 
-    public AnswerDTO withQuestionId(Long question) {
+    public CreateAnswerRequest withQuestionId(Long question) {
         setQuestionId(question);
         return this;
     }
@@ -98,9 +98,9 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AnswerDTO)) return false;
-        AnswerDTO answerDTO = (AnswerDTO) o;
-        return Objects.equals(getHeader(), answerDTO.getHeader()) && Objects.equals(getBody(), answerDTO.getBody()) && Objects.equals(getQuestionId(), answerDTO.getQuestionId());
+        if (!(o instanceof CreateAnswerRequest)) return false;
+        CreateAnswerRequest createAnswerRequest = (CreateAnswerRequest) o;
+        return Objects.equals(getHeader(), createAnswerRequest.getHeader()) && Objects.equals(getBody(), createAnswerRequest.getBody()) && Objects.equals(getQuestionId(), createAnswerRequest.getQuestionId());
     }
 
     @Override
@@ -110,14 +110,12 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("AnswerDTO{");
-        sb.append("id=").append(id);
-        sb.append(", header='").append(header).append('\'');
-        sb.append(", body='").append(body).append('\'');
-        sb.append(", document=").append(document == null ? "null" : Arrays.asList(document).toString());
-        sb.append(", questionId=").append(questionId);
-        sb.append('}');
-        return sb.toString();
+        return "AnswerDTO{" + "id=" + id +
+                ", header='" + header + '\'' +
+                ", body='" + body + '\'' +
+                ", document=" + (document == null ? "null" : List.of(document).toString()) +
+                ", questionId=" + questionId +
+                '}';
     }
 
     @Override

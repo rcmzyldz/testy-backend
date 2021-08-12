@@ -1,7 +1,7 @@
 package be.intecbrussel.testy.service;
 
-import be.intecbrussel.testy.data.dto.QuestionDTO;
-import be.intecbrussel.testy.data.entity.QuestionEntity;
+import be.intecbrussel.testy.model.dto.QuestionDTO;
+import be.intecbrussel.testy.model.entity.QuestionEntity;
 import be.intecbrussel.testy.repository.QuestionRepository;
 import be.intecbrussel.testy.service.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
