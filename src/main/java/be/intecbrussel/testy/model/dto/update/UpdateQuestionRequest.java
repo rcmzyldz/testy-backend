@@ -2,6 +2,7 @@ package be.intecbrussel.testy.model.dto.update;
 
 import be.intecbrussel.testy.model.EntityMapper;
 import be.intecbrussel.testy.model.dto.update.*;
+import be.intecbrussel.testy.model.entity.ChoiceEntity;
 import be.intecbrussel.testy.model.entity.QuestionEntity;
 
 import java.util.HashSet;

@@ -1,20 +1,24 @@
 package be.intecbrussel.testy.model.entity;
 
+import java.util.Arrays;
+import java.util.Objects;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+
+import org.springframework.data.domain.Persistable;
+
 import be.intecbrussel.testy.model.DTOMapper;
-import be.intecbrussel.testy.model.dto.ChoiceDTO;
 import be.intecbrussel.testy.model.dto.create.CreateChoiceRequest;
 import be.intecbrussel.testy.model.dto.response.ChoiceResponse;
 import be.intecbrussel.testy.model.dto.search.SearchChoiceRequest;
 import be.intecbrussel.testy.model.dto.update.UpdateChoiceRequest;
-
-import org.springframework.data.domain.Persistable;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Objects;
 
 
 @Entity

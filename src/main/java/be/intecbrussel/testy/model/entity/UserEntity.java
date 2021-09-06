@@ -1,22 +1,26 @@
 package be.intecbrussel.testy.model.entity;
 
-import be.intecbrussel.testy.model.DTOMapper;
-import be.intecbrussel.testy.model.dto.UserDTO;
-import be.intecbrussel.testy.model.dto.create.CreateUserRequest;
-import be.intecbrussel.testy.model.dto.response.UserResponse;
-import be.intecbrussel.testy.model.dto.search.SearchUserRequest;
-import be.intecbrussel.testy.model.dto.update.UpdateUserRequest;
-
-import org.springframework.data.domain.Persistable;
-
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.data.domain.Persistable;
+
+import be.intecbrussel.testy.model.DTOMapper;
+import be.intecbrussel.testy.model.dto.create.CreateUserRequest;
+import be.intecbrussel.testy.model.dto.response.UserResponse;
+import be.intecbrussel.testy.model.dto.search.SearchUserRequest;
+import be.intecbrussel.testy.model.dto.update.UpdateUserRequest;
 
 @Entity
 public class UserEntity implements java.io.Serializable, Persistable<Long>, 

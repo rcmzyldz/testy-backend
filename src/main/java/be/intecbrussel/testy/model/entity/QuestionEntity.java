@@ -1,20 +1,26 @@
 package be.intecbrussel.testy.model.entity;
 
 
-import be.intecbrussel.testy.model.DTOMapper;
-import be.intecbrussel.testy.model.dto.QuestionDTO;
-import be.intecbrussel.testy.model.dto.create.CreateQuestionRequest;
-import be.intecbrussel.testy.model.dto.response.QuestionResponse;
-import be.intecbrussel.testy.model.dto.search.SearchQuestionRequest;
-import be.intecbrussel.testy.model.dto.update.UpdateQuestionRequest;
-
-import org.springframework.data.domain.Persistable;
-
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import org.springframework.data.domain.Persistable;
+
+import be.intecbrussel.testy.model.DTOMapper;
+import be.intecbrussel.testy.model.dto.create.CreateQuestionRequest;
+import be.intecbrussel.testy.model.dto.response.QuestionResponse;
+import be.intecbrussel.testy.model.dto.search.SearchQuestionRequest;
+import be.intecbrussel.testy.model.dto.update.UpdateQuestionRequest;
 
 @Entity
 public class QuestionEntity implements java.io.Serializable, Persistable<Long>,

@@ -1,18 +1,24 @@
 package be.intecbrussel.testy.model.entity;
 
+import java.time.Instant;
+import java.util.Objects;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.data.domain.Persistable;
+
 import be.intecbrussel.testy.model.DTOMapper;
 import be.intecbrussel.testy.model.dto.create.CreateExamRequest;
 import be.intecbrussel.testy.model.dto.response.ExamResponse;
 import be.intecbrussel.testy.model.dto.search.SearchExamRequest;
 import be.intecbrussel.testy.model.dto.update.UpdateExamRequest;
-
-import org.springframework.data.domain.Persistable;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.time.Instant;
-import java.util.Map;
-import java.util.Objects;
 
 @Entity
 public class ExamEntity implements java.io.Serializable, Persistable<Long>, 

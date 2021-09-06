@@ -3,6 +3,7 @@ package be.intecbrussel.testy.model.dto.update;
 import be.intecbrussel.testy.model.DTOMapper;
 import be.intecbrussel.testy.model.EntityMapper;
 import be.intecbrussel.testy.model.entity.AnswerEntity;
+import be.intecbrussel.testy.model.entity.QuestionEntity;
 import be.intecbrussel.testy.model.dto.update.*;
 
 import java.util.Arrays;
@@ -144,7 +145,7 @@ public class UpdateAnswerRequest implements java.io.Serializable, EntityMapper<A
             entity.setDocument(this.getDocument());
 
         if (this.questionId != null)
-            entity.setQuestion(new QuestionDTO(this.getQuestionId()).toEntity());
+            entity.setQuestion(new QuestionEntity(this.getQuestionId()));
 
         return entity;
     }

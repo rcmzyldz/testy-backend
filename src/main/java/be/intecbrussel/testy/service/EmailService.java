@@ -1,6 +1,10 @@
 package be.intecbrussel.testy.service;
 
-import org.slf4j.Logger;
+import java.util.Objects;
+import java.util.Set;
+
+import javax.mail.MessagingException;
+
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.mail.SimpleMailMessage;
@@ -8,14 +12,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
-import java.util.Objects;
-import java.util.Set;
-
 @Service
 public class EmailService {
 
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(EmailService.class);
     private final JavaMailSender emailSender;
     private final SimpleMailMessage simpleMessage;
 

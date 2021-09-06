@@ -1,19 +1,22 @@
 package be.intecbrussel.testy.model.entity;
 
+import java.util.List;
+import java.util.Objects;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.data.domain.Persistable;
+
 import be.intecbrussel.testy.model.DTOMapper;
-import be.intecbrussel.testy.model.dto.AnswerDTO;
 import be.intecbrussel.testy.model.dto.create.CreateAnswerRequest;
 import be.intecbrussel.testy.model.dto.response.AnswerResponse;
 import be.intecbrussel.testy.model.dto.search.SearchAnswerRequest;
 import be.intecbrussel.testy.model.dto.update.UpdateAnswerRequest;
-
-import org.springframework.data.domain.Persistable;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @Entity
 public class AnswerEntity implements java.io.Serializable, Persistable<Long>, 
