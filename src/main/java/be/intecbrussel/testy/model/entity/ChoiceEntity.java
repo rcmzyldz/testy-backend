@@ -2,17 +2,24 @@ package be.intecbrussel.testy.model.entity;
 
 import be.intecbrussel.testy.model.DTOMapper;
 import be.intecbrussel.testy.model.dto.ChoiceDTO;
+import be.intecbrussel.testy.model.dto.create.CreateChoiceRequest;
+import be.intecbrussel.testy.model.dto.response.ChoiceResponse;
+import be.intecbrussel.testy.model.dto.search.SearchChoiceRequest;
+import be.intecbrussel.testy.model.dto.update.UpdateChoiceRequest;
+
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 
 
 @Entity
-public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, DTOMapper<ChoiceDTO> {
+public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, 
+                            DTOMapper<CreateChoiceRequest, UpdateChoiceRequest, SearchChoiceRequest, ChoiceResponse> {
 
     public ChoiceEntity() {
     }
@@ -182,9 +189,10 @@ public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, DT
         return sb.toString();
     }
 
+
     @Override
-    public ChoiceDTO toDTO() {
-        final var dto = new ChoiceDTO();
+    public CreateChoiceRequest toCreate() {
+        final var dto = new CreateChoiceRequest();
         if (this.id != null)
             dto.setId(this.getId());
         if (this.weight != null)
@@ -200,7 +208,77 @@ public class ChoiceEntity implements java.io.Serializable, Persistable<Long>, DT
         if (this.explanation != null)
             dto.setExplanation(this.getExplanation());
         if (this.question != null)
-            dto.setQuestionId(this.getQuestion().toDTO().getId());
+            dto.setQuestionId(this.getQuestion().toCreate().getId());
+
+        return dto;
+    }
+
+    @Override
+    public UpdateChoiceRequest toUpdate() {
+
+        final var dto = new UpdateChoiceRequest();
+        if (this.id != null)
+            dto.setId(this.getId());
+        if (this.weight != null)
+            dto.setWeight(this.getWeight());
+        if (this.header != null)
+            dto.setHeader(this.getHeader());
+        if (this.body != null)
+            dto.setBody(this.getBody());
+        if (this.image != null)
+            dto.setImage(this.getImage());
+        if (this.document != null)
+            dto.setDocument(this.getDocument());
+        if (this.explanation != null)
+            dto.setExplanation(this.getExplanation());
+        if (this.question != null)
+            dto.setQuestionId(this.getQuestion().toUpdate().getId());
+
+        return dto;
+    }
+
+    @Override
+    public SearchChoiceRequest toSearch() {
+        final var dto = new SearchChoiceRequest();
+        if (this.id != null)
+            dto.setId(this.getId());
+        if (this.weight != null)
+            dto.setWeight(this.getWeight());
+        if (this.header != null)
+            dto.setHeader(this.getHeader());
+        if (this.body != null)
+            dto.setBody(this.getBody());
+        if (this.image != null)
+            dto.setImage(this.getImage());
+        if (this.document != null)
+            dto.setDocument(this.getDocument());
+        if (this.explanation != null)
+            dto.setExplanation(this.getExplanation());
+        if (this.question != null)
+            dto.setQuestionId(this.getQuestion().toSearch().getId());
+
+        return dto;
+    }
+
+    @Override
+    public ChoiceResponse toResponse() {
+        final var dto = new ChoiceResponse();
+        if (this.id != null)
+            dto.setId(this.getId());
+        if (this.weight != null)
+            dto.setWeight(this.getWeight());
+        if (this.header != null)
+            dto.setHeader(this.getHeader());
+        if (this.body != null)
+            dto.setBody(this.getBody());
+        if (this.image != null)
+            dto.setImage(this.getImage());
+        if (this.document != null)
+            dto.setDocument(this.getDocument());
+        if (this.explanation != null)
+            dto.setExplanation(this.getExplanation());
+        if (this.question != null)
+            dto.setQuestionId(this.getQuestion().toResponse().getId());
 
         return dto;
     }

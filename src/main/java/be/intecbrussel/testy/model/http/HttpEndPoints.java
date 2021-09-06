@@ -2,6 +2,10 @@ package be.intecbrussel.testy.model.http;
 
 public class HttpEndPoints {
 
+
+    private HttpEndPoints() {
+    }
+
     public static final String CREATE_SINGLE_EXAM = "create/single/";
     public static final String CREATE_MULTIPLE_EXAMS = "create/many/";
     public static final String UPDATE_SINGLE_EXAM_BY_ID = "update/single/";

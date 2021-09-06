@@ -1,4 +1,4 @@
-package be.intecbrussel.testy.model.dto.create;
+package be.intecbrussel.testy.model.dto.update;
 
 import be.intecbrussel.testy.model.EntityMapper;
 import be.intecbrussel.testy.model.entity.ChoiceEntity;
@@ -7,12 +7,14 @@ import be.intecbrussel.testy.model.entity.QuestionEntity;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class CreateChoiceRequest implements java.io.Serializable, EntityMapper<ChoiceEntity> {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class UpdateChoiceRequest implements java.io.Serializable, EntityMapper<ChoiceEntity> {
 
-    public CreateChoiceRequest() {
+    public UpdateChoiceRequest() {
     }
 
-    public CreateChoiceRequest(Long id) {
+    public UpdateChoiceRequest(Long id) {
         this.id = id;
     }
 
@@ -26,7 +28,7 @@ public class CreateChoiceRequest implements java.io.Serializable, EntityMapper<C
         this.id = id;
     }
 
-    public CreateChoiceRequest withId(Long id) {
+    public UpdateChoiceRequest withId(Long id) {
         setId(id);
         return this;
     }
@@ -41,7 +43,7 @@ public class CreateChoiceRequest implements java.io.Serializable, EntityMapper<C
         this.weight = weight;
     }
 
-    public CreateChoiceRequest withWeight(Double weight) {
+    public UpdateChoiceRequest withWeight(Double weight) {
         setWeight(weight);
         return this;
     }
@@ -56,7 +58,7 @@ public class CreateChoiceRequest implements java.io.Serializable, EntityMapper<C
         this.header = header;
     }
 
-    public CreateChoiceRequest withHeader(String header) {
+    public UpdateChoiceRequest withHeader(String header) {
         setHeader(header);
         return this;
     }
@@ -71,7 +73,7 @@ public class CreateChoiceRequest implements java.io.Serializable, EntityMapper<C
         this.body = body;
     }
 
-    public CreateChoiceRequest withBody(String body) {
+    public UpdateChoiceRequest withBody(String body) {
         setBody(body);
         return this;
     }
@@ -86,7 +88,7 @@ public class CreateChoiceRequest implements java.io.Serializable, EntityMapper<C
         this.image = image;
     }
 
-    public CreateChoiceRequest withImage(Byte[] image) {
+    public UpdateChoiceRequest withImage(Byte[] image) {
         setImage(image);
         return this;
     }
@@ -101,7 +103,7 @@ public class CreateChoiceRequest implements java.io.Serializable, EntityMapper<C
         this.document = document;
     }
 
-    public CreateChoiceRequest withDocument(Byte[] document) {
+    public UpdateChoiceRequest withDocument(Byte[] document) {
         setDocument(document);
         return this;
     }
@@ -116,7 +118,7 @@ public class CreateChoiceRequest implements java.io.Serializable, EntityMapper<C
         this.explanation = explanation;
     }
 
-    public CreateChoiceRequest withExplanation(String explanation) {
+    public UpdateChoiceRequest withExplanation(String explanation) {
         setExplanation(explanation);
         return this;
     }
@@ -131,7 +133,7 @@ public class CreateChoiceRequest implements java.io.Serializable, EntityMapper<C
         this.questionId = questionId;
     }
 
-    public CreateChoiceRequest withQuestion(Long question) {
+    public UpdateChoiceRequest withQuestion(Long question) {
         setQuestionId(question);
         return this;
     }
@@ -144,9 +146,9 @@ public class CreateChoiceRequest implements java.io.Serializable, EntityMapper<C
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CreateChoiceRequest)) return false;
-        CreateChoiceRequest createChoiceRequest = (CreateChoiceRequest) o;
-        return Objects.equals(getHeader(), createChoiceRequest.getHeader()) && Objects.equals(getQuestionId(), createChoiceRequest.getQuestionId());
+        if (!(o instanceof UpdateChoiceRequest)) return false;
+        UpdateChoiceRequest choiceDTO = (UpdateChoiceRequest) o;
+        return Objects.equals(getHeader(), choiceDTO.getHeader()) && Objects.equals(getQuestionId(), choiceDTO.getQuestionId());
     }
 
     @Override
@@ -156,15 +158,17 @@ public class CreateChoiceRequest implements java.io.Serializable, EntityMapper<C
 
     @Override
     public String toString() {
-        return "{" + "id=" + id +
-                ", weight=" + weight +
-                ", header='" + header + '\'' +
-                ", body='" + body + '\'' +
-                ", image=" + (image == null ? "null" : Arrays.asList(image).toString()) +
-                ", document=" + (document == null ? "null" : Arrays.asList(document).toString()) +
-                ", explanation='" + explanation + '\'' +
-                ", questionId=" + getQuestionId() +
-                '}';
+        final var sb = new StringBuffer("UpdateChoiceRequest{");
+        sb.append("id=").append(id);
+        sb.append(", weight=").append(weight);
+        sb.append(", header='").append(header).append('\'');
+        sb.append(", body='").append(body).append('\'');
+        sb.append(", image=").append(image == null ? "null" : Arrays.asList(image).toString());
+        sb.append(", document=").append(document == null ? "null" : Arrays.asList(document).toString());
+        sb.append(", explanation='").append(explanation).append('\'');
+        sb.append(", questionId=").append(getQuestionId());
+        sb.append('}');
+        return sb.toString();
     }
 
     @Override

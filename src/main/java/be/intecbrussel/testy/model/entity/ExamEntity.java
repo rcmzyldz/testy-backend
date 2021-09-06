@@ -1,16 +1,22 @@
 package be.intecbrussel.testy.model.entity;
 
 import be.intecbrussel.testy.model.DTOMapper;
-import be.intecbrussel.testy.model.dto.ExamDTO;
+import be.intecbrussel.testy.model.dto.create.CreateExamRequest;
+import be.intecbrussel.testy.model.dto.response.ExamResponse;
+import be.intecbrussel.testy.model.dto.search.SearchExamRequest;
+import be.intecbrussel.testy.model.dto.update.UpdateExamRequest;
+
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
+import java.util.Map;
 import java.util.Objects;
 
 @Entity
-public class ExamEntity implements java.io.Serializable, Persistable<Long>, DTOMapper<ExamDTO> {
+public class ExamEntity implements java.io.Serializable, Persistable<Long>, 
+                            DTOMapper<CreateExamRequest, UpdateExamRequest, SearchExamRequest, ExamResponse> {
 
     public ExamEntity() {
     }
@@ -163,6 +169,21 @@ public class ExamEntity implements java.io.Serializable, Persistable<Long>, DTOM
         return this;
     }
 
+    private boolean isActivated;
+
+    public boolean getIsActivated() {
+        return isActivated;
+    }
+
+    public void setIsActivated(boolean isActivated) {
+        this.isActivated = isActivated;
+    }
+
+    public ExamEntity withIsActivated(boolean isActivated) {
+        setIsActivated(isActivated);
+        return this;
+    }
+
     @Override
     public boolean isNew() {
         return Objects.isNull(this.id);
@@ -196,19 +217,86 @@ public class ExamEntity implements java.io.Serializable, Persistable<Long>, DTOM
         return sb.toString();
     }
 
+
     @Override
-    public ExamDTO toDTO() {
-        final var dto = new ExamDTO();
+    public CreateExamRequest toCreate() {
+        final var dto = new CreateExamRequest();
         dto.setId(this.getId());
         dto.setCode(this.getCode());
         dto.setHeader(this.getHeader());
         dto.setBody(this.getBody());
-        dto.setStudent(this.getStudent().toDTO());
-        dto.setQuestion(this.getQuestion().toDTO());
+        dto.setStudent(this.getStudent().toCreate());
+        dto.setQuestion(this.getQuestion().toCreate());
         dto.setStarted(this.getStarted());
         dto.setEnded(this.getEnded());
         dto.setScore(this.getScore());
 
         return dto;
     }
+
+    @Override
+    public UpdateExamRequest toUpdate() {
+        final var dto = new UpdateExamRequest();
+      
+        dto.setId(this.getId());
+        dto.setCode(this.getCode());
+        dto.setHeader(this.getHeader());
+        dto.setBody(this.getBody());
+        dto.setStudent(this.getStudent().toUpdate());
+        dto.setQuestion(this.getQuestion().toUpdate());
+        dto.setStarted(this.getStarted());
+        dto.setEnded(this.getEnded());
+        dto.setScore(this.getScore());
+
+        return dto;
+    }
+
+    public UpdateExamRequest toUpdate(final String code, final String header, final String body) {
+        final var dto = new UpdateExamRequest();
+
+        dto.setId(this.getId());
+        dto.setCode(code);
+        dto.setHeader(header);
+        dto.setBody(body);
+        dto.setStudent(this.getStudent().toUpdate());
+        dto.setQuestion(this.getQuestion().toUpdate());
+        dto.setStarted(this.getStarted());
+        dto.setEnded(this.getEnded());
+        dto.setScore(this.getScore());
+
+        return dto;
+    }
+
+    @Override
+    public SearchExamRequest toSearch() {
+        final var dto = new SearchExamRequest();
+        dto.setId(this.getId());
+        dto.setCode(this.getCode());
+        dto.setHeader(this.getHeader());
+        dto.setBody(this.getBody());
+        dto.setStudent(this.getStudent().toSearch());
+        dto.setQuestion(this.getQuestion().toSearch());
+        dto.setStarted(this.getStarted());
+        dto.setEnded(this.getEnded());
+        dto.setScore(this.getScore());
+
+        return dto;
+    }
+
+    @Override
+    public ExamResponse toResponse() {
+        final var dto = new ExamResponse();
+        dto.setId(this.getId());
+        dto.setCode(this.getCode());
+        dto.setHeader(this.getHeader());
+        dto.setBody(this.getBody());
+        dto.setStudent(this.getStudent().toResponse());
+        dto.setQuestion(this.getQuestion().toResponse());
+        dto.setStarted(this.getStarted());
+        dto.setEnded(this.getEnded());
+        dto.setScore(this.getScore());
+
+        return dto;
+    }
+
 }

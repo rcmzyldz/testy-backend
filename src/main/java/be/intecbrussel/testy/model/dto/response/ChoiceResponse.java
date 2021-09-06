@@ -1,4 +1,4 @@
-package be.intecbrussel.testy.model.dto;
+package be.intecbrussel.testy.model.dto.response;
 
 import be.intecbrussel.testy.model.EntityMapper;
 import be.intecbrussel.testy.model.entity.ChoiceEntity;
@@ -7,12 +7,14 @@ import be.intecbrussel.testy.model.entity.QuestionEntity;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntity> {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ChoiceResponse implements java.io.Serializable, EntityMapper<ChoiceEntity> {
 
-    public ChoiceDTO() {
+    public ChoiceResponse() {
     }
 
-    public ChoiceDTO(Long id) {
+    public ChoiceResponse(Long id) {
         this.id = id;
     }
 
@@ -26,7 +28,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         this.id = id;
     }
 
-    public ChoiceDTO withId(Long id) {
+    public ChoiceResponse withId(Long id) {
         setId(id);
         return this;
     }
@@ -41,7 +43,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         this.weight = weight;
     }
 
-    public ChoiceDTO withWeight(Double weight) {
+    public ChoiceResponse withWeight(Double weight) {
         setWeight(weight);
         return this;
     }
@@ -56,7 +58,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         this.header = header;
     }
 
-    public ChoiceDTO withHeader(String header) {
+    public ChoiceResponse withHeader(String header) {
         setHeader(header);
         return this;
     }
@@ -71,7 +73,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         this.body = body;
     }
 
-    public ChoiceDTO withBody(String body) {
+    public ChoiceResponse withBody(String body) {
         setBody(body);
         return this;
     }
@@ -86,7 +88,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         this.image = image;
     }
 
-    public ChoiceDTO withImage(Byte[] image) {
+    public ChoiceResponse withImage(Byte[] image) {
         setImage(image);
         return this;
     }
@@ -101,7 +103,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         this.document = document;
     }
 
-    public ChoiceDTO withDocument(Byte[] document) {
+    public ChoiceResponse withDocument(Byte[] document) {
         setDocument(document);
         return this;
     }
@@ -116,7 +118,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         this.explanation = explanation;
     }
 
-    public ChoiceDTO withExplanation(String explanation) {
+    public ChoiceResponse withExplanation(String explanation) {
         setExplanation(explanation);
         return this;
     }
@@ -131,7 +133,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
         this.questionId = questionId;
     }
 
-    public ChoiceDTO withQuestion(Long question) {
+    public ChoiceResponse withQuestion(Long question) {
         setQuestionId(question);
         return this;
     }
@@ -144,8 +146,8 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ChoiceDTO)) return false;
-        ChoiceDTO choiceDTO = (ChoiceDTO) o;
+        if (!(o instanceof ChoiceResponse)) return false;
+        ChoiceResponse choiceDTO = (ChoiceResponse) o;
         return Objects.equals(getHeader(), choiceDTO.getHeader()) && Objects.equals(getQuestionId(), choiceDTO.getQuestionId());
     }
 
@@ -156,7 +158,7 @@ public class ChoiceDTO implements java.io.Serializable, EntityMapper<ChoiceEntit
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("ChoiceDTO{");
+        final StringBuffer sb = new StringBuffer("ChoiceResponse{");
         sb.append("id=").append(id);
         sb.append(", weight=").append(weight);
         sb.append(", header='").append(header).append('\'');

@@ -1,6 +1,8 @@
 package be.intecbrussel.testy.model;
 
-public interface EntityMapper<D> {
+public interface EntityMapper<E> {
 
-    D toEntity ();
+    E toEntity ();
+
+    
 }

@@ -1,4 +1,4 @@
-package be.intecbrussel.testy.model.dto;
+package be.intecbrussel.testy.model.dto.response;
 
 import be.intecbrussel.testy.model.EntityMapper;
 import be.intecbrussel.testy.model.entity.UserEntity;
@@ -6,12 +6,15 @@ import be.intecbrussel.testy.model.entity.UserEntity;
 import java.util.Objects;
 import java.util.UUID;
 
-public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-    public UserDTO() {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class UserResponse implements java.io.Serializable, EntityMapper<UserEntity> {
+
+    public UserResponse() {
     }
 
-    public UserDTO(Long id) {
+    public UserResponse(Long id) {
         this.id = id;
     }
 
@@ -25,7 +28,7 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.id = id;
     }
 
-    public UserDTO withId(Long id) {
+    public UserResponse withId(Long id) {
         setId(id);
         return this;
     }
@@ -40,7 +43,7 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.firstName = firstName;
     }
 
-    public UserDTO withFirstName(String firstName) {
+    public UserResponse withFirstName(String firstName) {
         setFirstName(firstName);
         return this;
     }
@@ -55,7 +58,7 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.lastName = lastName;
     }
 
-    public UserDTO withLastName(String lastName) {
+    public UserResponse withLastName(String lastName) {
         setLastName(lastName);
         return this;
     }
@@ -70,7 +73,7 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.email = email;
     }
 
-    public UserDTO withEmail(String email) {
+    public UserResponse withEmail(String email) {
         setEmail(email);
         return this;
     }
@@ -85,7 +88,7 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.phone = phone;
     }
 
-    public UserDTO withPhone(String phone) {
+    public UserResponse withPhone(String phone) {
         setPhone(phone);
         return this;
     }
@@ -100,7 +103,7 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.password = password;
     }
 
-    public UserDTO withPassword(String password) {
+    public UserResponse withPassword(String password) {
         setPassword(password);
         return this;
     }
@@ -115,7 +118,7 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.roles = roles;
     }
 
-    public UserDTO withRoles(String roles) {
+    public UserResponse withRoles(String roles) {
         setRoles(roles);
         return this;
     }
@@ -130,7 +133,7 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.session = session;
     }
 
-    public UserDTO withSession(String session) {
+    public UserResponse withSession(String session) {
         setSession(session);
         return this;
     }
@@ -148,7 +151,7 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.activation = activation;
     }
 
-    public UserDTO withActivation(String activation) {
+    public UserResponse withActivation(String activation) {
         setActivation(activation);
         return this;
     }
@@ -163,7 +166,7 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.activated = activated;
     }
 
-    public UserDTO withActivated(Boolean activated) {
+    public UserResponse withActivated(Boolean activated) {
         setActivated(activated);
         return this;
     }
@@ -178,7 +181,7 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.authenticated = authenticated;
     }
 
-    public UserDTO withAuthenticated(Boolean authenticated) {
+    public UserResponse withAuthenticated(Boolean authenticated) {
         setAuthenticated(authenticated);
         return this;
     }
@@ -193,7 +196,7 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.score = score;
     }
 
-    public UserDTO withScore(Double score) {
+    public UserResponse withScore(Double score) {
         setScore(score);
         return this;
     }
@@ -211,7 +214,7 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
         this.profile = profile;
     }
 
-    public UserDTO withProfile(String profile) {
+    public UserResponse withProfile(String profile) {
         setProfile(profile);
         return this;
     }
@@ -223,8 +226,8 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof UserDTO)) return false;
-        UserDTO userDTO = (UserDTO) o;
+        if (!(o instanceof UserResponse)) return false;
+        UserResponse userDTO = (UserResponse) o;
         return Objects.equals(getEmail(), userDTO.getEmail()) && Objects.equals(getPhone(), userDTO.getPhone());
     }
 
@@ -235,7 +238,7 @@ public class UserDTO implements java.io.Serializable, EntityMapper<UserEntity> {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("UserDTO{");
+        final StringBuffer sb = new StringBuffer("UserResponse{");
         sb.append("id=").append(id);
         sb.append(", firstName='").append(firstName).append('\'');
         sb.append(", lastName='").append(lastName).append('\'');

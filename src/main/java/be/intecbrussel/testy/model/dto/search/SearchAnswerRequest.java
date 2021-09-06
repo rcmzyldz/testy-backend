@@ -1,4 +1,4 @@
-package be.intecbrussel.testy.model.dto;
+package be.intecbrussel.testy.model.dto.search;
 
 import be.intecbrussel.testy.model.EntityMapper;
 import be.intecbrussel.testy.model.entity.AnswerEntity;
@@ -7,12 +7,15 @@ import be.intecbrussel.testy.model.entity.QuestionEntity;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntity> {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-    public AnswerDTO() {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class SearchAnswerRequest implements java.io.Serializable, EntityMapper<AnswerEntity> {
+
+    public SearchAnswerRequest() {
     }
 
-    public AnswerDTO(Long id) {
+    public SearchAnswerRequest(Long id) {
         this.id = id;
     }
 
@@ -26,7 +29,7 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
         this.id = id;
     }
 
-    public AnswerDTO withId(Long id) {
+    public SearchAnswerRequest withId(Long id) {
         setId(id);
         return this;
     }
@@ -41,7 +44,7 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
         this.header = header;
     }
 
-    public AnswerDTO withHeader(String header) {
+    public SearchAnswerRequest withHeader(String header) {
         setHeader(header);
         return this;
     }
@@ -56,7 +59,7 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
         this.body = body;
     }
 
-    public AnswerDTO withBody(String body) {
+    public SearchAnswerRequest withBody(String body) {
         setBody(body);
         return this;
     }
@@ -71,7 +74,7 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
         this.document = document;
     }
 
-    public AnswerDTO withDocument(String document) {
+    public SearchAnswerRequest withDocument(String document) {
         setDocument(document);
         return this;
     }
@@ -82,11 +85,11 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
         return questionId;
     }
 
-    public void setQuestionId(Long question) {
+    public void setQuestionId(Long questionId) {
         this.questionId = questionId;
     }
 
-    public AnswerDTO withQuestionId(Long question) {
+    public SearchAnswerRequest withQuestionId(Long question) {
         setQuestionId(question);
         return this;
     }
@@ -98,8 +101,8 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AnswerDTO)) return false;
-        AnswerDTO answerDTO = (AnswerDTO) o;
+        if (!(o instanceof SearchAnswerRequest)) return false;
+        SearchAnswerRequest answerDTO = (SearchAnswerRequest) o;
         return Objects.equals(getHeader(), answerDTO.getHeader()) && Objects.equals(getBody(), answerDTO.getBody()) && Objects.equals(getQuestionId(), answerDTO.getQuestionId());
     }
 
@@ -110,7 +113,7 @@ public class AnswerDTO implements java.io.Serializable, EntityMapper<AnswerEntit
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("AnswerDTO{");
+        final var sb = new StringBuffer("SearchAnswerRequest{");
         sb.append("id=").append(id);
         sb.append(", header='").append(header).append('\'');
         sb.append(", body='").append(body).append('\'');

@@ -1,4 +1,4 @@
-package be.intecbrussel.testy.model.dto.create;
+package be.intecbrussel.testy.model.dto.update;
 
 import be.intecbrussel.testy.model.EntityMapper;
 import be.intecbrussel.testy.model.entity.UserEntity;
@@ -6,12 +6,15 @@ import be.intecbrussel.testy.model.entity.UserEntity;
 import java.util.Objects;
 import java.util.UUID;
 
-public class CreateUserRequest implements java.io.Serializable, EntityMapper<UserEntity> {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-    public CreateUserRequest() {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class UpdateUserRequest implements java.io.Serializable, EntityMapper<UserEntity> {
+
+    public UpdateUserRequest() {
     }
 
-    public CreateUserRequest(Long id) {
+    public UpdateUserRequest(Long id) {
         this.id = id;
     }
 
@@ -25,7 +28,7 @@ public class CreateUserRequest implements java.io.Serializable, EntityMapper<Use
         this.id = id;
     }
 
-    public CreateUserRequest withId(Long id) {
+    public UpdateUserRequest withId(Long id) {
         setId(id);
         return this;
     }
@@ -40,7 +43,7 @@ public class CreateUserRequest implements java.io.Serializable, EntityMapper<Use
         this.firstName = firstName;
     }
 
-    public CreateUserRequest withFirstName(String firstName) {
+    public UpdateUserRequest withFirstName(String firstName) {
         setFirstName(firstName);
         return this;
     }
@@ -55,7 +58,7 @@ public class CreateUserRequest implements java.io.Serializable, EntityMapper<Use
         this.lastName = lastName;
     }
 
-    public CreateUserRequest withLastName(String lastName) {
+    public UpdateUserRequest withLastName(String lastName) {
         setLastName(lastName);
         return this;
     }
@@ -70,7 +73,7 @@ public class CreateUserRequest implements java.io.Serializable, EntityMapper<Use
         this.email = email;
     }
 
-    public CreateUserRequest withEmail(String email) {
+    public UpdateUserRequest withEmail(String email) {
         setEmail(email);
         return this;
     }
@@ -85,7 +88,7 @@ public class CreateUserRequest implements java.io.Serializable, EntityMapper<Use
         this.phone = phone;
     }
 
-    public CreateUserRequest withPhone(String phone) {
+    public UpdateUserRequest withPhone(String phone) {
         setPhone(phone);
         return this;
     }
@@ -100,7 +103,7 @@ public class CreateUserRequest implements java.io.Serializable, EntityMapper<Use
         this.password = password;
     }
 
-    public CreateUserRequest withPassword(String password) {
+    public UpdateUserRequest withPassword(String password) {
         setPassword(password);
         return this;
     }
@@ -115,7 +118,7 @@ public class CreateUserRequest implements java.io.Serializable, EntityMapper<Use
         this.roles = roles;
     }
 
-    public CreateUserRequest withRoles(String roles) {
+    public UpdateUserRequest withRoles(String roles) {
         setRoles(roles);
         return this;
     }
@@ -130,7 +133,7 @@ public class CreateUserRequest implements java.io.Serializable, EntityMapper<Use
         this.session = session;
     }
 
-    public CreateUserRequest withSession(String session) {
+    public UpdateUserRequest withSession(String session) {
         setSession(session);
         return this;
     }
@@ -148,7 +151,7 @@ public class CreateUserRequest implements java.io.Serializable, EntityMapper<Use
         this.activation = activation;
     }
 
-    public CreateUserRequest withActivation(String activation) {
+    public UpdateUserRequest withActivation(String activation) {
         setActivation(activation);
         return this;
     }
@@ -163,7 +166,7 @@ public class CreateUserRequest implements java.io.Serializable, EntityMapper<Use
         this.activated = activated;
     }
 
-    public CreateUserRequest withActivated(Boolean activated) {
+    public UpdateUserRequest withActivated(Boolean activated) {
         setActivated(activated);
         return this;
     }
@@ -178,7 +181,7 @@ public class CreateUserRequest implements java.io.Serializable, EntityMapper<Use
         this.authenticated = authenticated;
     }
 
-    public CreateUserRequest withAuthenticated(Boolean authenticated) {
+    public UpdateUserRequest withAuthenticated(Boolean authenticated) {
         setAuthenticated(authenticated);
         return this;
     }
@@ -193,7 +196,7 @@ public class CreateUserRequest implements java.io.Serializable, EntityMapper<Use
         this.score = score;
     }
 
-    public CreateUserRequest withScore(Double score) {
+    public UpdateUserRequest withScore(Double score) {
         setScore(score);
         return this;
     }
@@ -211,7 +214,7 @@ public class CreateUserRequest implements java.io.Serializable, EntityMapper<Use
         this.profile = profile;
     }
 
-    public CreateUserRequest withProfile(String profile) {
+    public UpdateUserRequest withProfile(String profile) {
         setProfile(profile);
         return this;
     }
@@ -223,11 +226,11 @@ public class CreateUserRequest implements java.io.Serializable, EntityMapper<Use
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CreateUserRequest)) return false;
-        CreateUserRequest createUserRequest = (CreateUserRequest) o;
-        return Objects.equals(getEmail(), createUserRequest.getEmail()) && Objects.equals(getPhone(), createUserRequest.getPhone());
+        if (!(o instanceof UpdateUserRequest)) return false;
+        UpdateUserRequest userDTO = (UpdateUserRequest) o;
+        return Objects.equals(getEmail(), userDTO.getEmail()) && Objects.equals(getPhone(), userDTO.getPhone());
     }
-    
+
     @Override
     public int hashCode() {
         return Objects.hash(getEmail(), getPhone());
@@ -235,20 +238,22 @@ public class CreateUserRequest implements java.io.Serializable, EntityMapper<Use
 
     @Override
     public String toString() {
-        return "{" + "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", password='" + password + '\'' +
-                ", roles='" + roles + '\'' +
-                ", session='" + session + '\'' +
-                ", activation='" + activation + '\'' +
-                ", activated=" + activated +
-                ", authenticated=" + authenticated +
-                ", score=" + score +
-                ", profile='" + profile + '\'' +
-                '}';
+        final var sb = new StringBuffer("{");
+        sb.append("id=").append(id);
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", phone='").append(phone).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", roles='").append(roles).append('\'');
+        sb.append(", session='").append(session).append('\'');
+        sb.append(", activation='").append(activation).append('\'');
+        sb.append(", activated=").append(activated);
+        sb.append(", authenticated=").append(authenticated);
+        sb.append(", score=").append(score);
+        sb.append(", profile='").append(profile).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 
     @Override

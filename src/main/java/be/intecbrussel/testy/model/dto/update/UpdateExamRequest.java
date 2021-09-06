@@ -1,4 +1,4 @@
-package be.intecbrussel.testy.model.dto;
+package be.intecbrussel.testy.model.dto.update;
 
 import be.intecbrussel.testy.model.EntityMapper;
 import be.intecbrussel.testy.model.entity.ExamEntity;
@@ -10,12 +10,12 @@ import java.util.Objects;
 import static java.util.Objects.*;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
+public class UpdateExamRequest implements java.io.Serializable, EntityMapper<ExamEntity> {
 
-    public ExamDTO() {
+    public UpdateExamRequest() {
     }
 
-    public ExamDTO(Long id) {
+    public UpdateExamRequest(Long id) {
         this.id = id;
     }
 
@@ -29,7 +29,7 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
         this.id = id;
     }
 
-    public ExamDTO withId(Long id) {
+    public UpdateExamRequest withId(Long id) {
         setId(id);
         return this;
     }
@@ -44,7 +44,7 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
         this.code = code;
     }
 
-    public ExamDTO withCode(String code) {
+    public UpdateExamRequest withCode(String code) {
         setCode(code);
         return this;
     }
@@ -59,7 +59,7 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
         this.header = header;
     }
 
-    public ExamDTO withHeader(String header) {
+    public UpdateExamRequest withHeader(String header) {
         setHeader(header);
         return this;
     }
@@ -74,37 +74,37 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
         this.body = body;
     }
 
-    public ExamDTO withBody(String body) {
+    public UpdateExamRequest withBody(String body) {
         setBody(body);
         return this;
     }
 
-    private UserDTO student;
+    private UpdateUserRequest student;
 
-    public UserDTO getStudent() {
+    public UpdateUserRequest getStudent() {
         return student;
     }
 
-    public void setStudent(UserDTO student) {
+    public void setStudent(UpdateUserRequest student) {
         this.student = student;
     }
 
-    public ExamDTO withStudent(UserDTO student) {
+    public UpdateExamRequest withStudent(UpdateUserRequest student) {
         setStudent(student);
         return this;
     }
 
-    private QuestionDTO question;
+    private UpdateQuestionRequest question;
 
-    public QuestionDTO getQuestion() {
+    public UpdateQuestionRequest getQuestion() {
         return question;
     }
 
-    public void setQuestion(QuestionDTO question) {
+    public void setQuestion(UpdateQuestionRequest question) {
         this.question = question;
     }
 
-    public ExamDTO withQuestion(QuestionDTO question) {
+    public UpdateExamRequest withQuestion(UpdateQuestionRequest question) {
         setQuestion(question);
         return this;
     }
@@ -119,7 +119,7 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
         this.started = started;
     }
 
-    public ExamDTO withStarted(Instant started) {
+    public UpdateExamRequest withStarted(Instant started) {
         setStarted(started);
         return this;
     }
@@ -134,7 +134,7 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
         this.ended = ended;
     }
 
-    public ExamDTO withEnded(Instant ended) {
+    public UpdateExamRequest withEnded(Instant ended) {
         setEnded(ended);
         return this;
     }
@@ -149,7 +149,7 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
         this.score = score;
     }
 
-    public ExamDTO withScore(Double score) {
+    public UpdateExamRequest withScore(Double score) {
         setScore(score);
         return this;
     }
@@ -161,8 +161,8 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ExamDTO)) return false;
-        ExamDTO examDTO = (ExamDTO) o;
+        if (!(o instanceof UpdateExamRequest)) return false;
+        UpdateExamRequest examDTO = (UpdateExamRequest) o;
         return Objects.equals(getCode(), examDTO.getCode()) && Objects.equals(getStudent(), examDTO.getStudent()) && Objects.equals(getQuestion(), examDTO.getQuestion());
     }
 
@@ -173,7 +173,7 @@ public class ExamDTO implements java.io.Serializable, EntityMapper<ExamEntity> {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("ExamDTO{");
+        final StringBuffer sb = new StringBuffer("UpdateExamRequest{");
         sb.append("id=").append(id);
         sb.append(", code='").append(code).append('\'');
         sb.append(", header='").append(header).append('\'');

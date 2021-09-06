@@ -2,6 +2,11 @@ package be.intecbrussel.testy.model.entity;
 
 import be.intecbrussel.testy.model.DTOMapper;
 import be.intecbrussel.testy.model.dto.UserDTO;
+import be.intecbrussel.testy.model.dto.create.CreateUserRequest;
+import be.intecbrussel.testy.model.dto.response.UserResponse;
+import be.intecbrussel.testy.model.dto.search.SearchUserRequest;
+import be.intecbrussel.testy.model.dto.update.UpdateUserRequest;
+
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
@@ -14,7 +19,8 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-public class UserEntity implements java.io.Serializable, Persistable<Long>, DTOMapper<UserDTO> {
+public class UserEntity implements java.io.Serializable, Persistable<Long>, 
+                                DTOMapper<CreateUserRequest, UpdateUserRequest, SearchUserRequest, UserResponse> {
 
     public UserEntity() {
     }
@@ -280,6 +286,21 @@ public class UserEntity implements java.io.Serializable, Persistable<Long>, DTOM
         return this;
     }
 
+    private boolean isActive;
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public UserEntity withIsActive(boolean isActive) {
+        setIsActive(isActive);
+        return this;
+    }
+
     @Override
     public boolean isNew() {
         return Objects.isNull(this.id);
@@ -320,9 +341,146 @@ public class UserEntity implements java.io.Serializable, Persistable<Long>, DTOM
     }
 
     @Override
-    public UserDTO toDTO() {
+    public CreateUserRequest toCreate() {
+        final var dto = new CreateUserRequest();
 
-        final var dto = new UserDTO();
+        if (this.id != null)
+            dto.setId(this.getId());
+
+        if (this.firstName != null)
+            dto.setFirstName(this.getFirstName());
+
+        if (this.lastName != null)
+            dto.setLastName(this.getLastName());
+
+        if (this.email != null)
+            dto.setEmail(this.getEmail());
+
+        if (this.phone != null)
+            dto.setPhone(this.getPhone());
+
+        if (this.password != null)
+            dto.setPassword(this.getPassword());
+
+        if (this.roles != null)
+            dto.setRoles(this.getRoles());
+
+        if (this.session != null)
+            dto.setSession(this.getSession());
+
+        if (this.activation != null)
+            dto.setActivation(this.getActivation());
+
+        if (this.activated != null)
+            dto.setActivated(this.isActivated());
+
+        if (this.authenticated != null)
+            dto.setAuthenticated(this.isAuthenticated());
+
+        if (this.score != null)
+            dto.setScore(this.getScore());
+
+        if (this.profile != null)
+            dto.setProfile(this.getProfile());
+
+        return dto;
+    }
+
+    @Override
+    public UpdateUserRequest toUpdate() {
+        final var dto = new UpdateUserRequest();
+
+        if (this.id != null)
+            dto.setId(this.getId());
+
+        if (this.firstName != null)
+            dto.setFirstName(this.getFirstName());
+
+        if (this.lastName != null)
+            dto.setLastName(this.getLastName());
+
+        if (this.email != null)
+            dto.setEmail(this.getEmail());
+
+        if (this.phone != null)
+            dto.setPhone(this.getPhone());
+
+        if (this.password != null)
+            dto.setPassword(this.getPassword());
+
+        if (this.roles != null)
+            dto.setRoles(this.getRoles());
+
+        if (this.session != null)
+            dto.setSession(this.getSession());
+
+        if (this.activation != null)
+            dto.setActivation(this.getActivation());
+
+        if (this.activated != null)
+            dto.setActivated(this.isActivated());
+
+        if (this.authenticated != null)
+            dto.setAuthenticated(this.isAuthenticated());
+
+        if (this.score != null)
+            dto.setScore(this.getScore());
+
+        if (this.profile != null)
+            dto.setProfile(this.getProfile());
+
+        return dto;
+    }
+
+    @Override
+    public SearchUserRequest toSearch() {
+        final var dto = new SearchUserRequest();
+
+        if (this.id != null)
+            dto.setId(this.getId());
+
+        if (this.firstName != null)
+            dto.setFirstName(this.getFirstName());
+
+        if (this.lastName != null)
+            dto.setLastName(this.getLastName());
+
+        if (this.email != null)
+            dto.setEmail(this.getEmail());
+
+        if (this.phone != null)
+            dto.setPhone(this.getPhone());
+
+        if (this.password != null)
+            dto.setPassword(this.getPassword());
+
+        if (this.roles != null)
+            dto.setRoles(this.getRoles());
+
+        if (this.session != null)
+            dto.setSession(this.getSession());
+
+        if (this.activation != null)
+            dto.setActivation(this.getActivation());
+
+        if (this.activated != null)
+            dto.setActivated(this.isActivated());
+
+        if (this.authenticated != null)
+            dto.setAuthenticated(this.isAuthenticated());
+
+        if (this.score != null)
+            dto.setScore(this.getScore());
+
+        if (this.profile != null)
+            dto.setProfile(this.getProfile());
+
+        return dto;
+    }
+
+    @Override
+    public UserResponse toResponse() {
+        final var dto = new UserResponse();
 
         if (this.id != null)
             dto.setId(this.getId());

@@ -1,4 +1,4 @@
-package be.intecbrussel.testy.model.dto.create;
+package be.intecbrussel.testy.model.dto.response;
 
 import be.intecbrussel.testy.model.EntityMapper;
 import be.intecbrussel.testy.model.entity.ExamEntity;
@@ -7,16 +7,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.Instant;
 import java.util.Objects;
 
-import static java.util.Objects.hash;
-import static java.util.Objects.isNull;
+import static java.util.Objects.*;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CreateExamRequest implements java.io.Serializable, EntityMapper<ExamEntity> {
+public class ExamResponse implements java.io.Serializable, EntityMapper<ExamEntity> {
 
-    public CreateExamRequest() {
+    public ExamResponse() {
     }
 
-    public CreateExamRequest(Long id) {
+    public ExamResponse(Long id) {
         this.id = id;
     }
 
@@ -30,7 +29,7 @@ public class CreateExamRequest implements java.io.Serializable, EntityMapper<Exa
         this.id = id;
     }
 
-    public CreateExamRequest withId(Long id) {
+    public ExamResponse withId(Long id) {
         setId(id);
         return this;
     }
@@ -45,7 +44,7 @@ public class CreateExamRequest implements java.io.Serializable, EntityMapper<Exa
         this.code = code;
     }
 
-    public CreateExamRequest withCode(String code) {
+    public ExamResponse withCode(String code) {
         setCode(code);
         return this;
     }
@@ -60,7 +59,7 @@ public class CreateExamRequest implements java.io.Serializable, EntityMapper<Exa
         this.header = header;
     }
 
-    public CreateExamRequest withHeader(String header) {
+    public ExamResponse withHeader(String header) {
         setHeader(header);
         return this;
     }
@@ -75,38 +74,38 @@ public class CreateExamRequest implements java.io.Serializable, EntityMapper<Exa
         this.body = body;
     }
 
-    public CreateExamRequest withBody(String body) {
+    public ExamResponse withBody(String body) {
         setBody(body);
         return this;
     }
 
-    private CreateQuestionRequest question;
+    private UserResponse student;
 
-    public CreateQuestionRequest getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(CreateQuestionRequest question) {
-        this.question = question;
-    }
-
-    public CreateExamRequest withQuestion(CreateQuestionRequest question) {
-        setQuestion(question);
-        return this;
-    }
-
-    private CreateUserRequest student;
-
-    public CreateUserRequest getStudent(){
+    public UserResponse getStudent() {
         return student;
     }
 
-    public void setStudent(CreateUserRequest student) {
+    public void setStudent(UserResponse student) {
         this.student = student;
     }
 
-    public CreateExamRequest withStudent(CreateUserRequest student) {
+    public ExamResponse withStudent(UserResponse student) {
         setStudent(student);
+        return this;
+    }
+
+    private QuestionResponse question;
+
+    public QuestionResponse getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(QuestionResponse question) {
+        this.question = question;
+    }
+
+    public ExamResponse withQuestion(QuestionResponse question) {
+        setQuestion(question);
         return this;
     }
 
@@ -120,7 +119,7 @@ public class CreateExamRequest implements java.io.Serializable, EntityMapper<Exa
         this.started = started;
     }
 
-    public CreateExamRequest withStarted(Instant started) {
+    public ExamResponse withStarted(Instant started) {
         setStarted(started);
         return this;
     }
@@ -135,7 +134,7 @@ public class CreateExamRequest implements java.io.Serializable, EntityMapper<Exa
         this.ended = ended;
     }
 
-    public CreateExamRequest withEnded(Instant ended) {
+    public ExamResponse withEnded(Instant ended) {
         setEnded(ended);
         return this;
     }
@@ -150,7 +149,7 @@ public class CreateExamRequest implements java.io.Serializable, EntityMapper<Exa
         this.score = score;
     }
 
-    public CreateExamRequest withScore(Double score) {
+    public ExamResponse withScore(Double score) {
         setScore(score);
         return this;
     }
@@ -162,27 +161,30 @@ public class CreateExamRequest implements java.io.Serializable, EntityMapper<Exa
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CreateExamRequest)) return false;
-        CreateExamRequest createExamRequest = (CreateExamRequest) o;
-        return Objects.equals(getCode(), createExamRequest.getCode()) && Objects.equals(getQuestion(), createExamRequest.getQuestion());
+        if (!(o instanceof ExamResponse)) return false;
+        ExamResponse examDTO = (ExamResponse) o;
+        return Objects.equals(getCode(), examDTO.getCode()) && Objects.equals(getStudent(), examDTO.getStudent()) && Objects.equals(getQuestion(), examDTO.getQuestion());
     }
 
     @Override
     public int hashCode() {
-        return hash(getCode(), getQuestion());
+        return hash(getCode(), getStudent(), getQuestion());
     }
 
     @Override
     public String toString() {
-        return "{" + "id=" + id +
-                ", code='" + code + '\'' +
-                ", header='" + header + '\'' +
-                ", body='" + body + '\'' +
-                ", questionId=" + question.getId() +
-                ", started=" + started +
-                ", ended=" + ended +
-                ", score=" + score +
-                '}';
+        final StringBuffer sb = new StringBuffer("{");
+        sb.append("id=").append(id);
+        sb.append(", code='").append(code).append('\'');
+        sb.append(", header='").append(header).append('\'');
+        sb.append(", body='").append(body).append('\'');
+        sb.append(", studentId=").append(student.getId());
+        sb.append(", questionId=").append(question.getId());
+        sb.append(", started=").append(started);
+        sb.append(", ended=").append(ended);
+        sb.append(", score=").append(score);
+        sb.append('}');
+        return sb.toString();
     }
 
     @Override
@@ -200,6 +202,9 @@ public class CreateExamRequest implements java.io.Serializable, EntityMapper<Exa
 
         if (this.body != null)
             entity.setBody(this.getBody());
+
+        if (this.student != null)
+            entity.setStudent(this.getStudent().toEntity());
 
         if (this.question != null)
             entity.setQuestion(this.getQuestion().toEntity());

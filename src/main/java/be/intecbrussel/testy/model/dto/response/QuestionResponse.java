@@ -1,4 +1,4 @@
-package be.intecbrussel.testy.model.dto.create;
+package be.intecbrussel.testy.model.dto.response;
 
 import be.intecbrussel.testy.model.EntityMapper;
 import be.intecbrussel.testy.model.entity.ChoiceEntity;
@@ -8,13 +8,15 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-public class CreateQuestionRequest implements java.io.Serializable, EntityMapper<QuestionEntity> {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class QuestionResponse implements java.io.Serializable, EntityMapper<QuestionEntity> {
 
-    public CreateQuestionRequest() {
+    public QuestionResponse() {
     }
 
-    public CreateQuestionRequest(Long id) {
+    public QuestionResponse(Long id) {
         this.id = id;
     }
 
@@ -28,7 +30,7 @@ public class CreateQuestionRequest implements java.io.Serializable, EntityMapper
         this.id = id;
     }
 
-    public CreateQuestionRequest withId(Long id) {
+    public QuestionResponse withId(Long id) {
         setId(id);
         return this;
     }
@@ -43,7 +45,7 @@ public class CreateQuestionRequest implements java.io.Serializable, EntityMapper
         this.header = header;
     }
 
-    public CreateQuestionRequest withHeader(String header) {
+    public QuestionResponse withHeader(String header) {
         setHeader(header);
         return this;
     }
@@ -58,7 +60,7 @@ public class CreateQuestionRequest implements java.io.Serializable, EntityMapper
         this.body = body;
     }
 
-    public CreateQuestionRequest withBody(String body) {
+    public QuestionResponse withBody(String body) {
         setBody(body);
         return this;
     }
@@ -77,17 +79,17 @@ public class CreateQuestionRequest implements java.io.Serializable, EntityMapper
         return choices;
     }
 
-    private CreateAnswerRequest answer;
+    private AnswerResponse answer;
 
-    public CreateAnswerRequest getAnswer() {
+    public AnswerResponse getAnswer() {
         return answer;
     }
 
-    public void setAnswer(CreateAnswerRequest answer) {
+    public void setAnswer(AnswerResponse answer) {
         this.answer = answer;
     }
 
-    public CreateQuestionRequest withAnswer(CreateAnswerRequest answer) {
+    public QuestionResponse withAnswer(AnswerResponse answer) {
         setAnswer(answer);
         return this;
     }
@@ -99,8 +101,8 @@ public class CreateQuestionRequest implements java.io.Serializable, EntityMapper
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CreateQuestionRequest)) return false;
-        CreateQuestionRequest that = (CreateQuestionRequest) o;
+        if (!(o instanceof QuestionResponse)) return false;
+        QuestionResponse that = (QuestionResponse) o;
         return Objects.equals(getHeader(), that.getHeader()) && Objects.equals(getBody(), that.getBody()) && getChoices().containsAll(that.getChoices());
     }
 
@@ -111,12 +113,14 @@ public class CreateQuestionRequest implements java.io.Serializable, EntityMapper
 
     @Override
     public String toString() {
-        return "{" + "id=" + id +
-                ", header='" + header + '\'' +
-                ", body='" + body + '\'' +
-                ", choices=" + choices +
-                ", answerId=" + answer.getId() +
-                '}';
+        final StringBuffer sb = new StringBuffer("QuestionResponse{");
+        sb.append("id=").append(id);
+        sb.append(", header='").append(header).append('\'');
+        sb.append(", body='").append(body).append('\'');
+        sb.append(", choices=").append(choices);
+        sb.append(", answerId=").append(answer.getId());
+        sb.append('}');
+        return sb.toString();
     }
 
     @Override

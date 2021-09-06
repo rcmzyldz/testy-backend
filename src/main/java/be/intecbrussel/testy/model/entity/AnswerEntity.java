@@ -2,15 +2,22 @@ package be.intecbrussel.testy.model.entity;
 
 import be.intecbrussel.testy.model.DTOMapper;
 import be.intecbrussel.testy.model.dto.AnswerDTO;
+import be.intecbrussel.testy.model.dto.create.CreateAnswerRequest;
+import be.intecbrussel.testy.model.dto.response.AnswerResponse;
+import be.intecbrussel.testy.model.dto.search.SearchAnswerRequest;
+import be.intecbrussel.testy.model.dto.update.UpdateAnswerRequest;
+
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Entity
-public class AnswerEntity implements java.io.Serializable, Persistable<Long>, DTOMapper<AnswerDTO> {
+public class AnswerEntity implements java.io.Serializable, Persistable<Long>, 
+                                DTOMapper<CreateAnswerRequest, UpdateAnswerRequest, SearchAnswerRequest, AnswerResponse> {
 
     public AnswerEntity() {
     }
@@ -132,9 +139,9 @@ public class AnswerEntity implements java.io.Serializable, Persistable<Long>, DT
     }
 
     @Override
-    public AnswerDTO toDTO() {
-
-        final var dto = new AnswerDTO();
+    public CreateAnswerRequest toCreate() {
+        
+        final var dto = new CreateAnswerRequest();
 
         if (this.id != null)
             dto.setId(this.getId());
@@ -149,7 +156,75 @@ public class AnswerEntity implements java.io.Serializable, Persistable<Long>, DT
             dto.setDocument(this.getDocument());
 
         if (this.question != null)
-            dto.setQuestionId(this.getQuestion().toDTO().getId());
+            dto.setQuestionId(this.getQuestion().toCreate().getId());
+
+        return dto;
+
+    }
+
+    @Override
+    public UpdateAnswerRequest toUpdate() {
+
+        final var dto = new UpdateAnswerRequest();
+
+        if (this.id != null)
+            dto.setId(this.getId());
+
+        if (this.header != null)
+            dto.setHeader(this.getHeader());
+
+        if (this.body != null)
+            dto.setBody(this.getBody());
+
+        if (this.document != null)
+            dto.setDocument(this.getDocument());
+
+        if (this.question != null)
+            dto.setQuestionId(this.getQuestion().toUpdate().getId());
+
+        return dto;
+    }
+
+    @Override
+    public SearchAnswerRequest toSearch() {
+        final var dto = new SearchAnswerRequest();
+
+        if (this.id != null)
+            dto.setId(this.getId());
+
+        if (this.header != null)
+            dto.setHeader(this.getHeader());
+
+        if (this.body != null)
+            dto.setBody(this.getBody());
+
+        if (this.document != null)
+            dto.setDocument(this.getDocument());
+
+        if (this.question != null)
+            dto.setQuestionId(this.getQuestion().toSearch().getId());
+
+        return dto;
+    }
+
+    @Override
+    public AnswerResponse toResponse() {
+        final var dto = new AnswerResponse();
+
+        if (this.id != null)
+            dto.setId(this.getId());
+
+        if (this.header != null)
+            dto.setHeader(this.getHeader());
+
+        if (this.body != null)
+            dto.setBody(this.getBody());
+
+        if (this.document != null)
+            dto.setDocument(this.getDocument());
+
+        if (this.question != null)
+            dto.setQuestionId(this.getQuestion().toResponse().getId());
 
         return dto;
     }

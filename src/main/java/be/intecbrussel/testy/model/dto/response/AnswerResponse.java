@@ -1,18 +1,21 @@
-package be.intecbrussel.testy.model.dto.create;
+package be.intecbrussel.testy.model.dto.response;
 
 import be.intecbrussel.testy.model.EntityMapper;
 import be.intecbrussel.testy.model.entity.AnswerEntity;
 import be.intecbrussel.testy.model.entity.QuestionEntity;
 
-import java.util.List;
+import java.util.Arrays;
 import java.util.Objects;
 
-public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<AnswerEntity> {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-    public CreateAnswerRequest() {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class AnswerResponse implements java.io.Serializable, EntityMapper<AnswerEntity> {
+
+    public AnswerResponse() {
     }
 
-    public CreateAnswerRequest(Long id) {
+    public AnswerResponse(Long id) {
         this.id = id;
     }
 
@@ -26,7 +29,7 @@ public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<A
         this.id = id;
     }
 
-    public CreateAnswerRequest withId(Long id) {
+    public AnswerResponse withId(Long id) {
         setId(id);
         return this;
     }
@@ -41,7 +44,7 @@ public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<A
         this.header = header;
     }
 
-    public CreateAnswerRequest withHeader(String header) {
+    public AnswerResponse withHeader(String header) {
         setHeader(header);
         return this;
     }
@@ -56,7 +59,7 @@ public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<A
         this.body = body;
     }
 
-    public CreateAnswerRequest withBody(String body) {
+    public AnswerResponse withBody(String body) {
         setBody(body);
         return this;
     }
@@ -71,7 +74,7 @@ public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<A
         this.document = document;
     }
 
-    public CreateAnswerRequest withDocument(String document) {
+    public AnswerResponse withDocument(String document) {
         setDocument(document);
         return this;
     }
@@ -86,7 +89,7 @@ public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<A
         this.questionId = questionId;
     }
 
-    public CreateAnswerRequest withQuestionId(Long question) {
+    public AnswerResponse withQuestionId(Long question) {
         setQuestionId(question);
         return this;
     }
@@ -98,9 +101,9 @@ public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<A
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CreateAnswerRequest)) return false;
-        CreateAnswerRequest createAnswerRequest = (CreateAnswerRequest) o;
-        return Objects.equals(getHeader(), createAnswerRequest.getHeader()) && Objects.equals(getBody(), createAnswerRequest.getBody()) && Objects.equals(getQuestionId(), createAnswerRequest.getQuestionId());
+        if (!(o instanceof AnswerResponse)) return false;
+        AnswerResponse answerDTO = (AnswerResponse) o;
+        return Objects.equals(getHeader(), answerDTO.getHeader()) && Objects.equals(getBody(), answerDTO.getBody()) && Objects.equals(getQuestionId(), answerDTO.getQuestionId());
     }
 
     @Override
@@ -110,12 +113,14 @@ public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<A
 
     @Override
     public String toString() {
-        return "{" + "id=" + id +
-                ", header='" + header + '\'' +
-                ", body='" + body + '\'' +
-                ", document=" + (document == null ? "null" : List.of(document).toString()) +
-                ", questionId=" + questionId +
-                '}';
+        final var sb = new StringBuffer("AnswerResponse{");
+        sb.append("id=").append(id);
+        sb.append(", header='").append(header).append('\'');
+        sb.append(", body='").append(body).append('\'');
+        sb.append(", document=").append(document == null ? "null" : Arrays.asList(document).toString());
+        sb.append(", questionId=").append(questionId);
+        sb.append('}');
+        return sb.toString();
     }
 
     @Override

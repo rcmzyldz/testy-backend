@@ -3,6 +3,11 @@ package be.intecbrussel.testy.model.entity;
 
 import be.intecbrussel.testy.model.DTOMapper;
 import be.intecbrussel.testy.model.dto.QuestionDTO;
+import be.intecbrussel.testy.model.dto.create.CreateQuestionRequest;
+import be.intecbrussel.testy.model.dto.response.QuestionResponse;
+import be.intecbrussel.testy.model.dto.search.SearchQuestionRequest;
+import be.intecbrussel.testy.model.dto.update.UpdateQuestionRequest;
+
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
@@ -12,7 +17,8 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class QuestionEntity implements java.io.Serializable, Persistable<Long>, DTOMapper<QuestionDTO> {
+public class QuestionEntity implements java.io.Serializable, Persistable<Long>,
+                                 DTOMapper<CreateQuestionRequest, UpdateQuestionRequest, SearchQuestionRequest, QuestionResponse> {
 
     public QuestionEntity() {
     }
@@ -178,9 +184,8 @@ public class QuestionEntity implements java.io.Serializable, Persistable<Long>, 
     }
 
     @Override
-    public QuestionDTO toDTO() {
-
-        final var dto = new QuestionDTO();
+    public CreateQuestionRequest toCreate() {
+        final var dto = new CreateQuestionRequest();
 
         if (this.id != null)
             dto.setId(this.getId());
@@ -192,12 +197,87 @@ public class QuestionEntity implements java.io.Serializable, Persistable<Long>, 
             dto.setBody(this.getBody());
 
         if (this.answer != null)
-            dto.setAnswer(this.getAnswer().toDTO());
+            dto.setAnswer(this.getAnswer().toCreate());
 
         if (!this.choices.isEmpty())
             for (ChoiceEntity choice : getChoices()) {
                 if (choice != null)
-                    dto.addChoice(choice.toDTO().getId());
+                    dto.addChoice(choice.toCreate().getId());
+            }
+
+        return dto;
+    }
+
+    @Override
+    public UpdateQuestionRequest toUpdate() {
+        final var dto = new UpdateQuestionRequest();
+
+        if (this.id != null)
+            dto.setId(this.getId());
+
+        if (this.header != null)
+            dto.setHeader(this.getHeader());
+
+        if (this.body != null)
+            dto.setBody(this.getBody());
+
+        if (this.answer != null)
+            dto.setAnswer(this.getAnswer().toUpdate());
+
+        if (!this.choices.isEmpty())
+            for (ChoiceEntity choice : getChoices()) {
+                if (choice != null)
+                    dto.addChoice(choice.toUpdate().getId());
+            }
+
+        return dto;
+    }
+
+    @Override
+    public SearchQuestionRequest toSearch() {
+        final var dto = new SearchQuestionRequest();
+
+        if (this.id != null)
+            dto.setId(this.getId());
+
+        if (this.header != null)
+            dto.setHeader(this.getHeader());
+
+        if (this.body != null)
+            dto.setBody(this.getBody());
+
+        if (this.answer != null)
+            dto.setAnswer(this.getAnswer().toSearch());
+
+        if (!this.choices.isEmpty())
+            for (ChoiceEntity choice : getChoices()) {
+                if (choice != null)
+                    dto.addChoice(choice.toSearch().getId());
+            }
+
+        return dto;
+    }
+
+    @Override
+    public QuestionResponse toResponse() {
+        final var dto = new QuestionResponse();
+
+        if (this.id != null)
+            dto.setId(this.getId());
+
+        if (this.header != null)
+            dto.setHeader(this.getHeader());
+
+        if (this.body != null)
+            dto.setBody(this.getBody());
+
+        if (this.answer != null)
+            dto.setAnswer(this.getAnswer().toResponse());
+
+        if (!this.choices.isEmpty())
+            for (ChoiceEntity choice : getChoices()) {
+                if (choice != null)
+                    dto.addChoice(choice.toResponse().getId());
             }
 
         return dto;

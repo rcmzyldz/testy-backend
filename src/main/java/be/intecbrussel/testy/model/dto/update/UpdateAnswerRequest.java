@@ -1,18 +1,22 @@
-package be.intecbrussel.testy.model.dto.create;
+package be.intecbrussel.testy.model.dto.update;
 
+import be.intecbrussel.testy.model.DTOMapper;
 import be.intecbrussel.testy.model.EntityMapper;
 import be.intecbrussel.testy.model.entity.AnswerEntity;
-import be.intecbrussel.testy.model.entity.QuestionEntity;
+import be.intecbrussel.testy.model.dto.update.*;
 
-import java.util.List;
+import java.util.Arrays;
 import java.util.Objects;
 
-public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<AnswerEntity> {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-    public CreateAnswerRequest() {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class UpdateAnswerRequest implements java.io.Serializable, EntityMapper<AnswerEntity> {
+
+    public UpdateAnswerRequest() {
     }
 
-    public CreateAnswerRequest(Long id) {
+    public UpdateAnswerRequest(Long id) {
         this.id = id;
     }
 
@@ -26,7 +30,7 @@ public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<A
         this.id = id;
     }
 
-    public CreateAnswerRequest withId(Long id) {
+    public UpdateAnswerRequest withId(Long id) {
         setId(id);
         return this;
     }
@@ -41,7 +45,7 @@ public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<A
         this.header = header;
     }
 
-    public CreateAnswerRequest withHeader(String header) {
+    public UpdateAnswerRequest withHeader(String header) {
         setHeader(header);
         return this;
     }
@@ -56,7 +60,7 @@ public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<A
         this.body = body;
     }
 
-    public CreateAnswerRequest withBody(String body) {
+    public UpdateAnswerRequest withBody(String body) {
         setBody(body);
         return this;
     }
@@ -71,7 +75,7 @@ public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<A
         this.document = document;
     }
 
-    public CreateAnswerRequest withDocument(String document) {
+    public UpdateAnswerRequest withDocument(String document) {
         setDocument(document);
         return this;
     }
@@ -86,7 +90,7 @@ public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<A
         this.questionId = questionId;
     }
 
-    public CreateAnswerRequest withQuestionId(Long question) {
+    public UpdateAnswerRequest withQuestionId(Long question) {
         setQuestionId(question);
         return this;
     }
@@ -97,10 +101,13 @@ public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<A
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CreateAnswerRequest)) return false;
-        CreateAnswerRequest createAnswerRequest = (CreateAnswerRequest) o;
-        return Objects.equals(getHeader(), createAnswerRequest.getHeader()) && Objects.equals(getBody(), createAnswerRequest.getBody()) && Objects.equals(getQuestionId(), createAnswerRequest.getQuestionId());
+        if (this == o)
+            return true;
+        if (!(o instanceof UpdateAnswerRequest))
+            return false;
+        UpdateAnswerRequest answerDTO = (UpdateAnswerRequest) o;
+        return Objects.equals(getHeader(), answerDTO.getHeader()) && Objects.equals(getBody(), answerDTO.getBody())
+                && Objects.equals(getQuestionId(), answerDTO.getQuestionId());
     }
 
     @Override
@@ -110,12 +117,14 @@ public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<A
 
     @Override
     public String toString() {
-        return "{" + "id=" + id +
-                ", header='" + header + '\'' +
-                ", body='" + body + '\'' +
-                ", document=" + (document == null ? "null" : List.of(document).toString()) +
-                ", questionId=" + questionId +
-                '}';
+        final var sb = new StringBuffer("UpdateAnswerRequest{");
+        sb.append("id=").append(id);
+        sb.append(", header='").append(header).append('\'');
+        sb.append(", body='").append(body).append('\'');
+        sb.append(", document=").append(document == null ? "null" : Arrays.asList(document).toString());
+        sb.append(", questionId=").append(questionId);
+        sb.append('}');
+        return sb.toString();
     }
 
     @Override
@@ -135,8 +144,10 @@ public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<A
             entity.setDocument(this.getDocument());
 
         if (this.questionId != null)
-            entity.setQuestion(new QuestionEntity(this.getQuestionId()));
+            entity.setQuestion(new QuestionDTO(this.getQuestionId()).toEntity());
 
         return entity;
     }
+
+
 }

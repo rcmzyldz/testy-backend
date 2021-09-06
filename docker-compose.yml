@@ -1,35 +1,72 @@
-version: '3.9'
+version: "3.9"
 
 services:
 
   db_server:
     image: mysql:8.0
+    volumes:
+      - testy-db-disk:/var/lib/mysql
     restart: always
+    networks:
+      - testy-network
     environment:
-      MYSQL_DATABASE: database
+      MYSQL_DATABASE: testydb
       MYSQL_ROOT_PASSWORD: testy
     ports:
-      - 3306:3306
+      - 3333:3306
 
   db_admin:
     image: adminer:4.8.1-standalone
+    volumes:
+      - testy-temp-disk:/var/lib/adminer
     restart: always
     depends_on:
       - db_server
+    networks:
+      - testy-network
     ports:
-      - 9000:8080
+      - 9999:8080
 
   backend:
-    image: yilmazchef/testy-backend
+    image: yilmazchef/testy-backend:latest
+    restart: always
+    volumes:
+      - testy-temp-disk:/var/lib/backend
     depends_on:
       - db_server
       - db_admin
+    networks:
+      - testy-network
     links:
       - db_server:db_server
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db_server:3306/database?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://db_server:3306/testydb?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSOWRD: testy
+      SPRING_DATASOURCE_PASSOWRD: fooda
     ports:
-      - 8001:8080
+      - 8888:8080
 
+  ide:
+    image: registry.jetbrains.team/p/prj/containers/projector-idea-c:latest
+    restart: always
+    volumes:
+      - testy-perm-disk:/home/projector-user:cached
+    depends_on:
+      - db_server
+      - db_admin
+      - backend
+    networks:
+      - testy-network
+    ports:
+      - 7777:8887
+
+volumes:
+  testy-db-disk:
+    external: true
+  testy-temp-disk: 
+    external: true
+  testy-perm-disk: 
+    external: true
+
+networks:
+  testy-network:

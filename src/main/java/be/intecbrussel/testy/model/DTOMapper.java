@@ -1,6 +1,12 @@
 package be.intecbrussel.testy.model;
 
-public interface DTOMapper<D> {
+public interface DTOMapper<C, U, S, R> {
 
-    D toDTO ();
+    C toCreate();
+
+    U toUpdate();
+
+    S toSearch();
+
+    R toResponse();
 }
