@@ -9,6 +9,8 @@ import java.util.Objects;
 
 public class CreateAnswerRequest implements java.io.Serializable, EntityMapper<AnswerEntity> {
 
+    // TODO: remove id, is_new and all other unnecessary fields while creating.
+
     public CreateAnswerRequest() {
     }
 

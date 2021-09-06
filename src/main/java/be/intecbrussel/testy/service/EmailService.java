@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
+    // TODO: add email functionalities to the controllers. 
+    // For example, when a user is required to be validated, we can send the validation code via an email. 
+
     private final JavaMailSender emailSender;
     private final SimpleMailMessage simpleMessage;
 
