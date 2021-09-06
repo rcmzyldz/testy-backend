@@ -225,8 +225,10 @@ public class UpdateUserRequest implements java.io.Serializable, EntityMapper<Use
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UpdateUserRequest)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof UpdateUserRequest))
+            return false;
         UpdateUserRequest userDTO = (UpdateUserRequest) o;
         return Objects.equals(getEmail(), userDTO.getEmail()) && Objects.equals(getPhone(), userDTO.getPhone());
     }
@@ -299,6 +301,91 @@ public class UpdateUserRequest implements java.io.Serializable, EntityMapper<Use
 
         if (this.profile != null)
             entity.setProfile(this.getProfile());
+
+        return entity;
+    }
+
+    public UserEntity toEntity(UserEntity entityToUpdate) {
+
+        final var entity = new UserEntity();
+
+        if (this.id != null) {
+            entity.setId(this.getId());
+        } else {
+            entity.setId(entityToUpdate.getId());
+        }
+
+        if (this.firstName != null) {
+            entity.setFirstName(this.getFirstName());
+        } else {
+            entity.setFirstName(entityToUpdate.getFirstName());
+        }
+
+        if (this.lastName != null) {
+            entity.setLastName(this.getLastName());
+        } else {
+            entity.setLastName(entityToUpdate.getLastName());
+        }
+
+        if (this.email != null) {
+            entity.setEmail(this.getEmail());
+        } else {
+            entity.setEmail(entityToUpdate.getEmail());
+        }
+
+        if (this.phone != null) {
+            entity.setPhone(this.getPhone());
+        } else {
+            entity.setPhone(entityToUpdate.getPhone());
+        }
+
+        if (this.password != null){
+            entity.setPassword(this.getPassword());
+        } else {
+            entity.setPassword(entityToUpdate.getPassword());
+        }
+
+        if (this.roles != null){
+            entity.setRoles(this.getRoles());
+        } else {
+            entity.setRoles(entityToUpdate.getRoles());
+        }
+
+        if (this.session != null){
+            entity.setSession(this.getSession());
+        } else {
+            entity.setSession(entityToUpdate.getSession());
+        }
+
+        if (this.activation != null){
+            entity.setActivation(this.getActivation());
+        } else {
+            entity.setActivation(entityToUpdate.getActivation());
+        }
+
+        if (this.activated != null){
+            entity.setActivated(this.isActivated());
+        } else {
+            entity.setActivated(entityToUpdate.isActivated());
+        }
+
+        if (this.authenticated != null){
+            entity.setAuthenticated(this.isAuthenticated());
+        } else {
+            entity.setAuthenticated(entityToUpdate.isAuthenticated());
+        }
+
+        if (this.score != null){
+            entity.setScore(this.getScore());
+        } else {
+            entity.setScore(entityToUpdate.getScore());
+        }
+
+        if (this.profile != null){
+            entity.setProfile(this.getProfile());
+        } else {
+            entity.setProfile(entityToUpdate.getProfile());
+        }
 
         return entity;
     }

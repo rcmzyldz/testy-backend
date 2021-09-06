@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UpdateChoiceRequest implements java.io.Serializable, EntityMapper<ChoiceEntity> {
 
@@ -142,13 +143,15 @@ public class UpdateChoiceRequest implements java.io.Serializable, EntityMapper<C
         return Objects.isNull(this.id);
     }
 
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UpdateChoiceRequest)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof UpdateChoiceRequest))
+            return false;
         UpdateChoiceRequest choiceDTO = (UpdateChoiceRequest) o;
-        return Objects.equals(getHeader(), choiceDTO.getHeader()) && Objects.equals(getQuestionId(), choiceDTO.getQuestionId());
+        return Objects.equals(getHeader(), choiceDTO.getHeader())
+                && Objects.equals(getQuestionId(), choiceDTO.getQuestionId());
     }
 
     @Override
@@ -188,6 +191,43 @@ public class UpdateChoiceRequest implements java.io.Serializable, EntityMapper<C
             entity.setDocument(this.getDocument());
         if (this.explanation != null)
             entity.setExplanation(this.getExplanation());
+        if (this.questionId != null)
+            entity.setQuestion(new QuestionEntity(this.getQuestionId()));
+
+        return entity;
+    }
+
+    public ChoiceEntity toEntity(ChoiceEntity entityToUpdate) {
+
+        final var entity = new ChoiceEntity();
+
+        if (this.id != null){
+            entity.setId(this.getId());
+        } else {
+            entity.setId(entityToUpdate.getId());
+        }
+
+        if (this.weight != null){
+            entity.setWeight(this.getWeight());
+        } else {
+            
+        }
+
+        if (this.header != null)
+            entity.setHeader(this.getHeader());
+
+        if (this.body != null)
+            entity.setBody(this.getBody());
+
+        if (this.image != null)
+            entity.setImage(this.getImage());
+
+        if (this.document != null)
+            entity.setDocument(this.getDocument());
+
+        if (this.explanation != null)
+            entity.setExplanation(this.getExplanation());
+
         if (this.questionId != null)
             entity.setQuestion(new QuestionEntity(this.getQuestionId()));
 

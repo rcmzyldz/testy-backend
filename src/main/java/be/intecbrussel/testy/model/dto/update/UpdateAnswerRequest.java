@@ -150,5 +150,40 @@ public class UpdateAnswerRequest implements java.io.Serializable, EntityMapper<A
         return entity;
     }
 
+    public AnswerEntity toEntity(AnswerEntity entityToUpdate) {
+        final var entity = new AnswerEntity();
+
+        if (this.id != null) {
+            entity.setId(this.getId());
+        } else {
+            entity.setId(entityToUpdate.getId());
+        }
+
+        if (this.header != null) {
+            entity.setHeader(this.getHeader());
+        } else {
+            entity.setHeader(entityToUpdate.getHeader());
+        }
+
+        if (this.body != null) {
+            entity.setBody(this.getBody());
+        } else {
+            entity.setBody(entityToUpdate.getBody());
+        }
+
+        if (this.document != null) {
+            entity.setDocument(this.getDocument());
+        } else {
+            entity.setDocument(entityToUpdate.getDocument());
+        }
+
+        if (this.questionId != null) {
+            entity.setQuestion(new QuestionEntity(this.getQuestionId()));
+        } else {
+            entity.setQuestion(entityToUpdate.getQuestion());
+        }
+
+        return entity;
+    }
 
 }

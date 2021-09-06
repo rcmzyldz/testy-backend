@@ -1,0 +1,14 @@
+{
+  "firstName": "Yilmaz",
+  "lastName": "Mustafa",
+  "email": "yilmaz@intecbrussel.be",
+  "phone": "467711709",
+  "password": "1234",
+  "roles": "ROLE_STUDENT",
+  "session": "123azerty",
+  "activation": "321qwerty",
+  "activated": false,
+  "authenticated": false,
+  "score": 0,
+  "profile": "https://yilmazchef.github.io/"
+}

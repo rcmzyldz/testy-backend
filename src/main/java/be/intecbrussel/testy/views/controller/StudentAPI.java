@@ -87,7 +87,7 @@ public class StudentAPI {
     public ResponseEntity<String> update(@NotNull @PathVariable("id") Long id, @RequestBody @Valid UpdateUserRequest request) {
        return studentRepository
                 .findById(id)
-                .map(entity -> request.toEntity().withId(entity.getId()))
+                .map(entity -> request.toEntity(entity))
                 .map(entity -> studentRepository.save(entity))
                 .map(response -> ResponseEntity.status(HttpStatus.ACCEPTED).body("Student is updated successfully."))
                 .orElseThrow(() -> {

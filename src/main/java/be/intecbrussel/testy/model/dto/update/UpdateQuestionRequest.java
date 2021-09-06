@@ -101,10 +101,13 @@ public class UpdateQuestionRequest implements java.io.Serializable, EntityMapper
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UpdateQuestionRequest)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof UpdateQuestionRequest))
+            return false;
         UpdateQuestionRequest that = (UpdateQuestionRequest) o;
-        return Objects.equals(getHeader(), that.getHeader()) && Objects.equals(getBody(), that.getBody()) && getChoices().containsAll(that.getChoices());
+        return Objects.equals(getHeader(), that.getHeader()) && Objects.equals(getBody(), that.getBody())
+                && getChoices().containsAll(that.getChoices());
     }
 
     @Override
@@ -146,6 +149,50 @@ public class UpdateQuestionRequest implements java.io.Serializable, EntityMapper
                 if (choiceId != null)
                     entity.addChoice(new ChoiceEntity(choiceId));
             }
+
+        return entity;
+    }
+
+    public QuestionEntity toEntity(QuestionEntity entityToUpdate) {
+
+        final var entity = new QuestionEntity();
+
+        if (this.id != null) {
+            entity.setId(this.getId());
+        } else {
+            entity.setId(entityToUpdate.getId());
+        }
+
+        if (this.header != null) {
+            entity.setHeader(this.getHeader());
+        } else {
+            entity.setHeader(entityToUpdate.getHeader());
+        }
+
+        if (this.body != null) {
+            entity.setBody(this.getBody());
+        } else {
+            entity.setBody(entityToUpdate.getBody());
+        }
+
+        if (this.answer != null) {
+            entity.setAnswer(this.getAnswer().toEntity());
+        } else {
+            entity.setAnswer(entityToUpdate.getAnswer());
+        }
+
+        if (!this.choices.isEmpty()) {
+            for (Long choiceId : getChoices()) {
+                if (choiceId != null)
+                    entity.addChoice(new ChoiceEntity(choiceId));
+            }
+
+        } else {
+            final var newChoices = entityToUpdate.getChoices();
+            for (ChoiceEntity entityUpdateChoice : newChoices) {
+                entity.addChoice(entityUpdateChoice);
+            }
+        }
 
         return entity;
     }
